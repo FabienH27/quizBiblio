@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>quizBiblio</title>
+    <link rel="stylesheet" href="build/tailwind.css">
+</head>
+<body class="bg-gray-800 font-medium ">
+
+    <header class="flex justify-between mt-2 max-w-6xl mx-auto">
+        <h1 class="text-white font-title font-bold text-3xl justify-end">Quiz<span class="text-teal-500">Biblio</span></h1>
+        <div class="flex self-center">
+            <a href="#" class="text-teal-500 mx-5 self-center">Se connecter</a>
+            <a href="#" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md">S'inscrire</a>
+        </div>
+    </header>
+
+    <section class="flex gap-4 h-screen max-w-6xl items-center -mt-10 mx-auto">
+        <article class="">
+            <h1 class="text-white text-5xl font-bold max-w-lg">Testez votre culture <span class="text-teal-500">littéraire</span> 
+                et <span class="text-teal-500">cinématographique</span> !</h1>
+            <p class="font-display text-white font-normal text-sm max-w-md my-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+            <a href="#" class="text-white mx-2 bg-teal-500 px-8 py-3 rounded-md">Commencer un quiz</a>
+        </article>
+        <aside>
+            <img src="images/appDemo.png" alt="app demo" width="600px">
+        </aside>
+    </section>
+
+    <section class="bg-gray-700 py-8">
+        <div class="container mx-auto">
+            <h1 class="text-white text-4xl text-center">Créez et jouez à de nombreux quiz !</h1>
+            <nav class="uppercase mt-8 text-gray-400 flex justify-evenly text-center">
+                <a href="#" class="font-bold text-teal-500">Tous les quiz</a>
+                <a href="#">Créer un quiz</a>
+                <a href="#">Mes quiz</a>
+            </nav>
+            <article class="grid grid-cols-2 gap-16 font-display p-2 mt-8 mx-auto " id="all-quiz">
+                <div class="bg-gray-800 flex p-5 mx-auto rounded-3xl shadow-2xl">
+                    <img src="images/CVT_HP.jpg" class="mx-5 w-28">
+                    <div class="text-white">
+                        <h1 class="text-2xl font-extrabold">Harry Potter</h1>
+                        <h2 class="text-gray-300 text-lg">Littérature</h2>
+                        <div class="text-sm my-2">
+                            <p>Mon Score : </p>
+                            <p>Classement : </p>
+                        </div>
+                        <div class="flex text-md font-semibold font-title">
+                            <p class="text-teal-500 w-32">10 Questions</p>
+                            <p class="w-32">Par Fabien H</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 flex p-5 mx-auto rounded-3xl max-w-md shadow-2xl">
+                    <img src="images/CVT_Vingt-mille-lieues-sous-les-mers.jpg" class="mx-5 w-28">
+                    <div class="text-white">
+                        <h1 class="text-2xl font-extrabold">Vingt Milles Lieues Sous les Mers</h1>
+                        <h2 class="text-gray-300 text-lg">Littérature</h2>
+                        <div class="text-sm my-2">
+                            <p>Mon Score : </p>
+                            <p>Classement : </p>
+                        </div>
+                        <div class="flex text-md font-semibold font-title">
+                            <p class="text-teal-500 w-32">16 Questions</p>
+                            <p class="w-32">Par Fabien H</p>
+                        </div>
+                    </div>
+                </div>         
+            </article>
+        </div>
+    </section>
+
+</body>
+</html>
