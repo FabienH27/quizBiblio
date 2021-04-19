@@ -12,23 +12,25 @@
     <header class="flex justify-between mt-2 max-w-6xl 3xl:max-w-screen-3xl mx-auto 3xl:text-5xl">
         <h1 class="text-white font-title font-bold text-3xl 3xl:text-6xl 3xl:m-8 justify-end">Quiz<span class="text-teal-500">Biblio</span></h1>
         <div class="flex self-center">
-            <a href="#" class="text-teal-500 mx-5 self-center">Se connecter</a>
+            <a href="#" class="text-teal-500 mx-5 self-center text-center">Se connecter</a>
             <a href="#" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5">S'inscrire</a>
         </div>
     </header>
 
-    <section class="flex gap-4 h-screen max-w-6xl 3xl:max-w-screen-3xl items-center -mt-10 mx-auto">
-        <article class="max-w-lg 3xl:max-w-screen-3xl">
-            <h1 class="text-white text-5xl 3xl:text-7xl font-bold">Testez votre culture <span class="text-teal-500">littéraire</span> 
-                et <span class="text-teal-500">cinématographique</span> !</h1>
-            <p class="font-display text-white font-normal text-sm 3xl:text-4xl max-w-md 3xl:max-w-3xl my-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-            <a href="#button-all-quiz" class="text-white bg-teal-500 px-8 py-3 
-                rounded-md hover:bg-teal-600 3xl:text-5xl 3xl:inline-block 3xl:px-14 3xl:py-8">Commencer un quiz</a>
-        </article>
-        <aside>
-            <img src="images/appDemo.png" alt="app demo" width="600px" class="3xl:max-w-screen-3xl">
-        </aside>
+    <section class="flex h-screen lg:max-w-6xl 3xl:max-w-screen-3xl items-center -mt-10 mx-auto">
+        <section class="lg:flex mx-auto text-center">
+            <article class="max-w-lg 3xl:max-w-screen-3xl mx-auto ">
+                <h1 class="text-white text-4xl lg:text-5xl 3xl:text-7xl font-bold">Testez votre culture <span class="text-teal-500">littéraire</span> 
+                    et <span class="text-teal-500">cinématographique</span> !</h1>
+                <p class="font-display text-white font-normal text-sm 3xl:text-4xl max-w-md 3xl:max-w-3xl my-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                <a href="#button-all-quiz" class="text-white bg-teal-500 px-8 py-3 
+                    rounded-md hover:bg-teal-600 3xl:text-5xl 3xl:inline-block 3xl:px-14 3xl:py-8">Commencer un quiz</a>
+            </article>
+            <aside class="mt-20 lg:mt-0">
+                <img src="images/appDemo.png" alt="app demo" width="600px" class="3xl:max-w-screen-3xl">
+            </aside>
+        </section>
     </section>
 
     <section class="bg-gray-700 pt-8 pb-52">
@@ -39,9 +41,9 @@
                 <button class="tablinks w-96" id="button-create-quiz" onclick="openMenu(event, 'create-quiz')">Créer un quiz</button>
                 <button class="tablinks w-96" id="button-my-quiz" onclick="openMenu(event, 'my-quiz')">Mes quiz</button>
             </div>
-            <article class="lg:grid-cols-2 gap-16 font-display p-2 mt-8 mx-auto tabcontent" id="all-quiz">
-                <a href="#" class="bg-gray-800 flex p-5 mx-auto my-5 rounded-3xl items-center 3xl:max-w-3xl shadow-2xl card">
-                    <img src="images/CVT_HP.jpg" class="mx-5 w-28 3xl:w-64 object-scale-down">
+            <article class="lg:grid-cols-2 gap-16 font-display p-2 mt-8 mx-auto tabcontent " id="all-quiz">
+                <a href="#" class="bg-gray-800 sm:flex text-center max-w-lg md:text-left p-5 mx-auto my-5 rounded-3xl items-center 3xl:max-w-3xl shadow-2xl card">
+                    <img src="images/CVT_HP.jpg" class="mx-auto md:mx-5 w-28 3xl:w-64 object-scale-down">
                     <div class="text-white">
                         <h1 class="text-2xl font-extrabold 3xl:text-6xl">Harry Potter</h1>
                         <h2 class="text-gray-300 text-lg 3xl:text-4xl 3xl:mt-2">Littérature</h2>
@@ -55,32 +57,32 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="bg-gray-800 flex p-5 mx-auto my-5 rounded-3xl max-w-m items-center 3xl:max-w-3xl shadow-2xl card">
-                    <img src="images/CVT_Vingt-mille-lieues-sous-les-mers.jpg" class="mx-5 w-28 3xl:w-64 object-scale-down">
+                <a href="#" class="bg-gray-800 sm:flex text-center max-w-lg md:text-left p-5 mx-auto my-5 rounded-3xl items-center 3xl:max-w-3xl shadow-2xl card">
+                    <img src="images/CVT_Vingt-mille-lieues-sous-les-mers.jpg" class="mx-auto md:mx-5 w-28 3xl:w-64 object-scale-down">
                     <div class="text-white">
-                        <h1 class="text-2xl font-extrabold 3xl:text-6xl">Vingt Milles Lieues Sous les Mers</h1>
+                        <h1 class="text-2xl font-extrabold 3xl:text-6xl w-72">Vingt Milles Lieues Sous les Mers</h1>
                         <h2 class="text-gray-300 text-lg 3xl:text-4xl 3xl:mt-2">Littérature</h2>
                         <div class="text-sm my-2 3xl:text-2xl">
                             <p>Mon Score : </p>
                             <p>Classement : </p>
                         </div>
-                        <div class="flex 3xl:flex-col text-md font-semibold font-title 3xl:text-3xl">
-                            <p class="text-teal-500 w-32 3xl:w-auto">5 Questions</p>
+                        <div class="flex justify-center md:justify-start 3xl:flex-col text-md font-semibold font-title 3xl:text-3xl">
+                            <p class="text-teal-500 w-32 3xl:w-auto">10 Questions</p>
                             <p class="w-32 3xl:w-auto">Par Fabien H</p>
                         </div>
                     </div>
-                </a>     
+                </a>   
             </article>
             
-            <article class="max-w-xl mx-auto text-white my-5 font-display tabcontent" id="create-quiz">
+            <article class="max-w-xl mx-auto text-white my-5 font-display tabcontent text-center md:text-left" id="create-quiz">
                 <h1 class="text-teal-500 text-2xl 3xl:text-6xl">Etape 1</h1>
-                <div class="ml-8 my-5">
+                <div class="md:ml-8 my-5">
                     <h2 class="text-2xl 3xl:text-5xl font-light">Titre</h2>
                     <input type="text" class="bg-gray-800 text-white my-4 3xl:text-4xl p-4 3xl:my-8 focus:outline-none rounded-md focus:placeholder-teal-500" placeholder="Titre du quiz">
                     <h2 class="text-2xl 3xl:text-5xl font-light">Description</h2>
-                    <textarea cols="50" placeholder="Décrivez ici votre quiz" class="bg-gray-800 p-4 my-4 3xl:my-8 3xl:text-4xl focus:outline-none focus:placeholder-teal-500 rounded-md border-gray-400 " width="600px"></textarea>
+                    <textarea placeholder="Décrivez ici votre quiz" class="bg-gray-800 w-72 p-4 my-4 3xl:my-8 3xl:text-4xl focus:outline-none focus:placeholder-teal-500 rounded-md border-gray-400 " width="600px"></textarea>
                     <h2 class="text-2xl 3xl:text-5xl font-light">Image (facultatif)</h2>
-                    <div class="flex mt-5">
+                    <div class="mt-5 flex ml-20">
                         <div class="flex" id="localImage">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 3xl:h-16 3xl:w-16 flex self-center" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
@@ -105,14 +107,14 @@
                         </button>
                     </div>
                 </div>
-                <div class="flex justify-end">
-                    <a href="#" class="text-white mx-2 r-0 bg-teal-500 px-8 py-3 rounded-md hover:bg-teal-600 3xl:text-4xl">Continuer</a>
+                <div class="flex md:justify-end justify-center">
+                    <a href="#" class="text-white mx- r-0 bg-teal-500 px-8 py-3 rounded-md hover:bg-teal-600 3xl:text-4xl">Continuer</a>
                 </div>
             </article>
 
             <article class="lg:grid-cols-2 gap-16 font-display p-2 mt-8 mx-auto tabcontent" id="my-quiz">
-                <div class="bg-gray-800 flex p-5 mx-auto my-5 rounded-3xl max-w-md items-center 3xl:max-w-3xl shadow-2xl card">
-                    <img src="images/CVT_HP.jpg" class="mx-5 w-28 3xl:w-64 object-scale-down">
+                <div href="#" class="bg-gray-800 sm:flex text-center max-w-lg md:text-left p-5 mx-auto my-5 rounded-3xl items-center 3xl:max-w-3xl shadow-2xl card">
+                    <img src="images/CVT_HP.jpg" class="mx-auto md:mx-5 w-28 3xl:w-64 object-scale-down">
                     <div class="text-white">
                         <a href="#" class="flex justify-end text-teal-500 hover:text-white 3xl:text-4xl">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 " viewBox="0 0 20 20" fill="currentColor">
@@ -131,9 +133,9 @@
                             <p class="w-32 3xl:w-auto">Par Fabien H</p>
                         </div>
                     </div>
-                </div>
-                <div class="bg-gray-800 flex p-5 mx-auto my-5 rounded-3xl max-w-md items-center 3xl:max-w-3xl shadow-2xl card">
-                    <img src="images/CVT_Vingt-mille-lieues-sous-les-mers.jpg" class="mx-5 w-28 3xl:w-64 object-scale-down">
+                </div>  
+                <div href="#" class="bg-gray-800 sm:flex text-center max-w-lg md:text-left p-5 mx-auto my-5 rounded-3xl items-center 3xl:max-w-3xl shadow-2xl card">
+                    <img src="images/CVT_Vingt-mille-lieues-sous-les-mers.jpg" class="mx-auto md:mx-5 w-28 3xl:w-64 object-scale-down">
                     <div class="text-white">
                         <a href="#" class="flex justify-end text-teal-500 hover:text-white 3xl:text-4xl">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 " viewBox="0 0 20 20" fill="currentColor">
@@ -148,32 +150,32 @@
                             <p>Classement : </p>
                         </div>
                         <div class="flex 3xl:flex-col text-md font-semibold font-title 3xl:text-3xl">
-                            <p class="text-teal-500 w-32 3xl:w-auto">10 Questions</p>
+                            <p class="text-teal-500 w-32 3xl:w-auto">5 Questions</p>
                             <p class="w-32 3xl:w-auto">Par Fabien H</p>
                         </div>
                     </div>
-                </div>       
+                </div>    
             </article>    
         </div>
     </section>
 
-    <footer class="flex justify-around mx-auto my-5">
-        <div class="text-white font-title self-center">
+    <footer class="md:flex justify-around mx-auto my-5">
+        <div class="text-white font-title self-center text-center">
             <h1 class="font-semibold text-3xl 3xl:text-6xl">QuizBiblio</h1>
             <p class="text-lg text-gray-400 3xl:text-4xl">Testez vos connaissances littéraires et cinématographiques.</p>
             <p class="3xl:text-4xl">© 2021 - Fabien Hannon </p>
         </div>
-        <form class="text-white font-title">
+        <form class="text-white font-title text-center mt-10 md:mt-0">
             <h1 class="font-semibold text-2xl 3xl:text-5xl">Un problème, une suggestion ?</h1>
-            <div class="my-2 flex">
+            <div class="my-2 md:flex max-w-md mx-auto md:mx-0">
                 <input type="text" placeholder="Prénom" class="bg-gray-700 p-2 3xl:p-5 3xl:mr-5 3xl:my-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500">
-                <input type="text" placeholder="Nom" class="ml-12 bg-gray-700 p-2 3xl:ml-5 3xl:my-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500">
+                <input type="text" placeholder="Nom" class="md:ml-10 mt-2 mb:mt-0 bg-gray-700 p-2 3xl:ml-5 3xl:my-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500">
             </div>
-            <div class="flex flex-col">
-                <input type="text" placeholder="Adresse e-mail" class="mb-2 3xl:my-5 bg-gray-700 3xl:p-5 3xl:text-4xl p-2 focus:outline-none focus:placeholder-teal-500">
-                <textarea placeholder="Ecrire ici votre message" class="bg-gray-700 3xl:my-5 p-2 3xl:p-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500"></textarea>
+            <div class="flex flex-col mx-auto">
+                <input type="text" placeholder="Adresse e-mail" class="mb-2 3xl:my-5 md:w-auto md:mx-0 w-80 mx-auto bg-gray-700 3xl:p-5 3xl:text-4xl p-2 focus:outline-none focus:placeholder-teal-500">
+                <textarea placeholder="Ecrire ici votre message" class="bg-gray-700 md:w-auto md:mx-0 w-80 mx-auto 3xl:my-5 p-2 3xl:p-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500"></textarea>
             </div>
-            <button type="submit" class="border-white border-2 focus:outline-none px-5 py-2 my-5 3xl:text-4xl items-center text-white hover:bg-white hover:text-gray-800 flex">Envoyer
+            <button type="submit" class="border-white border-2 mx-auto md:mx-0 focus:outline-none px-5 py-2 my-5 3xl:text-4xl items-center text-white hover:bg-white hover:text-gray-800 flex">Envoyer
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 3xl:h-16 3xl:w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg></button>
@@ -214,7 +216,7 @@
             document.querySelector('#urlInput').value= ""; 
         }
 
-        document.getElementById("button-all-quiz").click();
+        document.getElementById("button-create-quiz").click();
 
         function openMenu(evt, cityName) {
             // Declare all variables
