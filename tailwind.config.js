@@ -19,6 +19,11 @@ module.exports = {
       display: [
         'Karla', 'Nunito',' Halant', 'PT Serif'
       ]
+    },
+    extend:{
+      screens:{
+        '3xl':'2000px'
+      }
     }
   },
   variants: {
