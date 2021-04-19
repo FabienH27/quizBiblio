@@ -23,24 +23,24 @@
                 et <span class="text-teal-500">cinématographique</span> !</h1>
             <p class="font-display text-white font-normal text-sm max-w-md my-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-            <a href="#" class="text-white mx-2 bg-teal-500 px-8 py-3 rounded-md">Commencer un quiz</a>
+            <a href="#button-all-quiz" class="text-white mx-2 bg-teal-500 px-8 py-3 rounded-md hover:bg-teal-600">Commencer un quiz</a>
         </article>
         <aside>
             <img src="images/appDemo.png" alt="app demo" width="600px">
         </aside>
     </section>
 
-    <section class="bg-gray-700 py-8">
+    <section class="bg-gray-700 pt-8 pb-52">
         <div class="container mx-auto">
             <h1 class="text-white text-4xl text-center">Créez et jouez à de nombreux quiz !</h1>
-            <nav class="uppercase mt-8 text-gray-400 flex justify-evenly text-center">
-                <a href="#" class="font-bold text-teal-500">Tous les quiz</a>
-                <a href="#">Créer un quiz</a>
-                <a href="#">Mes quiz</a>
-            </nav>
-            <article class="grid grid-cols-2 gap-16 font-display p-2 mt-8 mx-auto " id="all-quiz">
-                <div class="bg-gray-800 flex p-5 mx-auto rounded-3xl shadow-2xl">
-                    <img src="images/CVT_HP.jpg" class="mx-5 w-28">
+            <div class="uppercase mt-8 text-gray-400 flex justify-evenly text-center tab">
+                <button class="tablinks" id="button-all-quiz" onclick="openMenu(event, 'all-quiz')">Tous les quiz</a>
+                <button class="tablinks" onclick="openMenu(event, 'create-quiz')">Créer un quiz</a>
+                <button class="tablinks" onclick="openMenu(event, 'my-quiz')">Mes quiz</a>
+            </div>
+            <article class="grid grid-cols-2 gap-16 font-display p-2 mt-8 mx-auto tabcontent" id="all-quiz">
+                <a href="#" class="bg-gray-800 flex p-5 mx-auto my-5 rounded-3xl max-w-md shadow-2xl card">
+                    <img src="images/CVT_HP.jpg" class="mx-5 w-28 object-scale-down">
                     <div class="text-white">
                         <h1 class="text-2xl font-extrabold">Harry Potter</h1>
                         <h2 class="text-gray-300 text-lg">Littérature</h2>
@@ -53,9 +53,9 @@
                             <p class="w-32">Par Fabien H</p>
                         </div>
                     </div>
-                </div>
-                <div class="bg-gray-800 flex p-5 mx-auto rounded-3xl max-w-md shadow-2xl">
-                    <img src="images/CVT_Vingt-mille-lieues-sous-les-mers.jpg" class="mx-5 w-28">
+                </a>
+                <a href="#" class="bg-gray-800 flex p-5 mx-auto my-5 rounded-3xl max-w-md shadow-2xl card">
+                    <img src="images/CVT_Vingt-mille-lieues-sous-les-mers.jpg" class="mx-5 w-28 object-scale-down">
                     <div class="text-white">
                         <h1 class="text-2xl font-extrabold">Vingt Milles Lieues Sous les Mers</h1>
                         <h2 class="text-gray-300 text-lg">Littérature</h2>
@@ -64,14 +64,178 @@
                             <p>Classement : </p>
                         </div>
                         <div class="flex text-md font-semibold font-title">
-                            <p class="text-teal-500 w-32">16 Questions</p>
+                            <p class="text-teal-500 w-32">5 Questions</p>
                             <p class="w-32">Par Fabien H</p>
                         </div>
                     </div>
-                </div>         
+                </a>       
             </article>
+            
+            <article class="max-w-xl mx-auto text-white my-5 font-display tabcontent" id="create-quiz">
+                <h1 class="text-teal-500 text-2xl">Etape 1</h1>
+                <div class="ml-8 my-5">
+                    <h2 class="text-2xl font-light">Titre</h2>
+                    <input type="text" class="bg-gray-800 text-white my-4 p-2 focus:outline-none rounded-md focus:placeholder-teal-500" placeholder="Titre du quiz">
+                    <h2 class="text-2xl font-light">Description</h2>
+                    <textarea cols="50" placeholder="Décrivez ici votre quiz" class="bg-gray-800 p-2 my-4 focus:outline-none focus:placeholder-teal-500 rounded-md border-gray-400 " width="600px"></textarea>
+                    <h2 class="text-2xl font-light">Image (facultatif)</h2>
+                    <div class="flex mt-5">
+                        <div class="flex" id="localImage">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 flex self-center" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="flex self-center">
+                                <input type="file" id="file" class="file">
+                                <label for="file" class="text-white cursor-pointer ml-5">Charger une image</label>
+                                <p class="file-name font-light ml-8"></p>
+                            </div>
+                        </div>
+                        <input type="text" placeholder="Entrer une URL" id="urlInput" class="hidden absolute p-2 w-80 bg-gray-800 focus:outline-none focus:placeholder-teal-500">
+                        <button class="flex ml-12 focus:outline-none" id="url" onclick="UrlClick()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                            </svg> 
+                            <h3>Depuis une page web</h3>
+                        </button>
+                        <button onclick="Reset()" class="-mt-3 ml-28">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden absolute" id="urlRemove" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <a href="#" class="text-white mx-2 r-0 bg-teal-500 px-8 py-3 rounded-md hover:bg-teal-600">Continuer</a>
+                </div>
+            </article>
+
+            <article class="grid grid-cols-2 gap-16 font-display p-2 mt-8 mx-auto tabcontent" id="my-quiz">
+                <div class="bg-gray-800 flex p-5 mx-auto my-5 rounded-3xl max-w-md shadow-2xl card">
+                    <img src="images/CVT_HP.jpg" class="mx-5 w-28 object-scale-down">
+                    <div class="text-white">
+                        <a href="#" class="flex justify-end text-teal-500 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 " viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                            </svg>
+                            <p>Editer</p>
+                        </a>
+                        <h1 class="text-2xl font-extrabold">Harry Potter</h1>
+                        <h2 class="text-gray-300 text-lg">Littérature</h2>
+                        <div class="text-sm my-2">
+                            <p>Mon Score : </p>
+                            <p>Classement : </p>
+                        </div>
+                        <div class="flex text-md font-semibold font-title">
+                            <p class="text-teal-500 w-32">10 Questions</p>
+                            <p class="w-32">Par Fabien H</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 flex p-5 mx-auto my-5 rounded-3xl max-w-md shadow-2xl card">
+                    <img src="images/CVT_Vingt-mille-lieues-sous-les-mers.jpg" class="mx-5 w-28 object-scale-down">
+                    <div class="text-white">
+                        <a href="#" class="flex justify-end text-teal-500 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 " viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                            </svg>
+                            <p>Editer</p>
+                        </a>
+                        <h1 class="text-2xl font-extrabold">Vingt Milles Lieues Sous les Mers</h1>
+                        <h2 class="text-gray-300 text-lg">Littérature</h2>
+                        <div class="text-sm my-2">
+                            <p>Mon Score : </p>
+                            <p>Classement : </p>
+                        </div>
+                        <div class="flex text-md font-semibold font-title">
+                            <p class="text-teal-500 w-32">5 Questions</p>
+                            <p class="w-32">Par Fabien H</p>
+                        </div>
+                    </div>
+                </div>       
+            </article>
+            
         </div>
     </section>
 
+    <footer class="flex justify-around mx-auto my-5">
+        <div class="text-white font-title self-center">
+            <h1 class="font-semibold text-3xl">QuizBiblio</h1>
+            <p class="text-lg text-gray-400">Testez vos connaissances littéraires et cinématographiques.</p>
+            <p>© 2021 - Fabien Hannon </p>
+        </div>
+        <form class="text-white font-title">
+            <h1 class="font-semibold text-2xl">Un problème, une suggestion ?</h1>
+            <div class="my-2 flex">
+                <input type="text" placeholder="Prénom" class="bg-gray-700 p-2 focus:outline-none focus:placeholder-teal-500">
+                <input type="text" placeholder="Nom" class="ml-12 bg-gray-700 p-2 focus:outline-none focus:placeholder-teal-500">
+            </div>
+            <div class="flex flex-col">
+                <input type="text" placeholder="Adresse e-mail" class="mb-2 bg-gray-700 p-2 focus:outline-none focus:placeholder-teal-500">
+                <textarea placeholder="Ecrire ici votre message" class="bg-gray-700 p-2 focus:outline-none focus:placeholder-teal-500"></textarea>
+            </div>
+            <button type="submit" class="border-white border-2 px-5 py-2 my-5 text-white hover:bg-white hover:text-gray-800 flex">Envoyer<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg></button>
+        </form>
+    </footer>
+
+    <script type="text/javascript">
+
+        const file = document.querySelector('#file');
+        file.addEventListener('change', (e) => {
+        // Get the selected file
+        const [file] = e.target.files;
+        // Get the file name and size
+        const { name: fileName, size } = file;
+        // Convert size in bytes to kilo bytes
+        const fileSize = (size / 1000).toFixed(2);
+        // Set the text content
+        const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+        document.querySelector('.file-name').textContent = fileNameAndSize;
+        });
+
+        function UrlClick(){
+            document.querySelector('#localImage').style.visibility = 'hidden';
+            document.querySelector('#urlInput').classList.replace('hidden', 'visible');
+            document.querySelector('#localImage').style.visibility = 'hidden';  
+            document.querySelector('#url').classList.add('hidden');        
+            document.querySelector('#urlRemove').classList.replace('hidden', 'visible');   
+            document.querySelector('#file').value = '';   
+            document.querySelector('.file-name').textContent = '';     
+        }
+
+        function Reset(){
+            document.querySelector('#localImage').style.visibility = 'visible';
+            document.querySelector('#urlInput').classList.replace('visible', 'hidden');
+            document.querySelector('#localImage').style.visibility = 'visible';  
+            document.querySelector('#url').classList.replace('hidden', 'visible');        
+            document.querySelector('#urlRemove').classList.replace('visible', 'hidden');  
+            document.querySelector('#urlInput').value= ""; 
+        }
+
+        document.getElementById("button-all-quiz").click();
+
+        function openMenu(evt, cityName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(cityName).style.display = "grid";
+            evt.currentTarget.className += " active";
+        }
+
+    </script>
 </body>
 </html>
