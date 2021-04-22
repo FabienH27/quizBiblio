@@ -22863,7 +22863,7 @@ video {
 
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500;700&family=Karla:wght@400;800&display=swap");
 
-.file {
+.file, .fileProposition {
   opacity: 0;
   width: 0.1px;
   height: 0.1px;
@@ -22917,6 +22917,49 @@ video {
 
 .card:hover{
   transform: scale(1.05);
+}
+
+.blackButton{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.whiteButton{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  --tw-text-opacity: 1;
+  color: rgba(20, 184, 166, var(--tw-text-opacity));
+}
+
+[data-placeholder]:empty:before{
+  content: attr(data-placeholder);
+}
+
+[data-placeholder]:empty:before::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(20, 184, 166, var(--tw-placeholder-opacity));
+}
+
+[data-placeholder]:empty:before:-ms-input-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(20, 184, 166, var(--tw-placeholder-opacity));
+}
+
+[data-placeholder]:empty:before::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(20, 184, 166, var(--tw-placeholder-opacity));
+}
+
+[data-placeholder]:empty:before {
+  opacity: 0.5;
 }
 
 @media (min-width: 640px) {
