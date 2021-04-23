@@ -1,5 +1,3 @@
-"use strict";
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49,18 +47,33 @@ var QuestionList = function (_React$Component2) {
       });
     };
 
+    _this2.displayProposition = [];
+
     _this2.handleChange = _this2.handleChange.bind(_this2);
+    _this2.appendData = _this2.appendData.bind(_this2);
+
     _this2.state = {
       value: "",
       count: 2,
       maxValue: 4,
       minValue: 2,
-      numPropositions: 2
+      numPropositions: 2,
+      showdata: _this2.displayProposition
     };
     return _this2;
   }
 
   _createClass(QuestionList, [{
+    key: "appendData",
+    value: function appendData() {
+      for (var i = 0; i < this.state.count; i++) {
+        this.displayProposition.push(React.createElement(Propositions, { key: i, id: i }));
+      }
+      this.setState({
+        showdata: this.displayProposition
+      });
+    }
+  }, {
     key: "handleChange",
     value: function handleChange(selectorFiles, newValue) {
       this.setState({
@@ -71,6 +84,10 @@ var QuestionList = function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
+      this.displayProposition = [];
+      for (var i = 0; i < this.state.count; i++) {
+        this.displayProposition.push(React.createElement(Propositions, { key: i, id: i }));
+      }
       return React.createElement(
         "article",
         { className: " p-5 " },
@@ -131,7 +148,7 @@ var QuestionList = function (_React$Component2) {
             React.createElement(
               "div",
               { className: "flex self-center" },
-              React.createElement(Upload, null)
+              React.createElement(Upload, { id: "file" })
             )
           ),
           React.createElement("div", {
@@ -151,11 +168,8 @@ var QuestionList = function (_React$Component2) {
         ),
         React.createElement(
           "div",
-          { className: "flex flex-wrap max-w-6xl mx-auto justify-center" },
-          React.createElement(Propositions, null),
-          React.createElement(Propositions, null),
-          React.createElement(Propositions, null),
-          React.createElement(Propositions, null)
+          { className: "flex flex-wrap max-w-6xl mx-auto justify-center mb-56" },
+          this.displayProposition
         )
       );
     }
@@ -175,9 +189,16 @@ var Propositions = function (_React$Component3) {
     _this3.state = {
       black: true,
       isActive: false,
-      correct: "Marquer comme bonne réponse"
+      correct: "Marquer comme bonne réponse",
+      content: null,
+      image: "Remplacer par une image",
+      file: null,
+      infos: "",
+      hasImage: false
     };
     _this3.handleClick = _this3.handleClick.bind(_this3);
+    _this3.handleImageChange = _this3.handleImageChange.bind(_this3);
+    _this3.handleDeleteClick = _this3.handleDeleteClick.bind(_this3);
     return _this3;
   }
 
@@ -191,12 +212,82 @@ var Propositions = function (_React$Component3) {
       });
     }
   }, {
+    key: "handleImageChange",
+    value: function handleImageChange(event) {
+      console.log(this.state);
+
+      this.setState({
+        hasImage: true,
+        file: URL.createObjectURL(event.target.files[0]),
+        infos: event.target.files[0].name + "\t " + (event.target.files[0].size / 1000).toFixed(2) + "KB"
+      });
+    }
+  }, {
+    key: "handleDeleteClick",
+    value: function handleDeleteClick() {
+      this.setState({
+        file: null,
+        infos: "",
+        content: null,
+        hasImage: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var btn_class = this.state.black ? "blackButton" : "whiteButton";
+      var hasImage = this.state.hasImage;
+      var contentImage = void 0;
+
+      if (!hasImage) {
+        this.state.content = React.createElement(
+          "div",
+          { className: "flex" },
+          React.createElement("input", {
+            type: "text",
+            placeholder: "proposition " + (this.props.id + 1),
+            className: "bg-gray-800 w-30 focus:outline-none text-center  placeholder-gray-300"
+          }),
+          React.createElement(
+            "svg",
+            {
+              xmlns: "http://www.w3.org/2000/svg",
+              className: "h-5 w-5 ml-2",
+              viewBox: "0 0 20 20",
+              fill: "currentColor"
+            },
+            React.createElement("path", { d: "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" })
+          )
+        );
+        contentImage = React.createElement(
+          "div",
+          null,
+          React.createElement("input", { type: "file", id: this.props.id, className: "fileProposition",
+            onChange: this.handleImageChange, accept: "image/png, image/jpeg" }),
+          React.createElement(
+            "label",
+            {
+              htmlFor: this.props.id,
+              className: "cursor-pointer md:w-40 3xl:text-4xl" },
+            " Remplacer par une image"
+          )
+        );
+      } else {
+        this.state.content = React.createElement(
+          "div",
+          null,
+          React.createElement("img", { src: this.state.file, className: "w-32" })
+        );
+        contentImage = React.createElement(
+          "button",
+          { onClick: this.handleDeleteClick },
+          "Supprimer l'image"
+        );
+      }
+
       return React.createElement(
         "div",
-        { className: "flex text-white my-5" },
+        { className: "text-white my-5 flex items-center" },
         React.createElement(
           "div",
           null,
@@ -215,8 +306,7 @@ var Propositions = function (_React$Component3) {
                 className: "h-6 w-6",
                 fill: "none",
                 viewBox: "0 0 24 24",
-                stroke: "currentColor"
-              },
+                stroke: "currentColor" },
               React.createElement("path", {
                 strokeLinecap: "round",
                 strokeLinejoin: "round",
@@ -227,22 +317,8 @@ var Propositions = function (_React$Component3) {
           ),
           React.createElement(
             "div",
-            { className: "bg-gray-800  text-center py-5 px-8 flex font-display text-xl rounded-lg" },
-            React.createElement("input", {
-              type: "text",
-              placeholder: "Proposition 1",
-              className: "bg-gray-800 w-30 focus:outline-none text-center placeholder-gray-300"
-            }),
-            React.createElement(
-              "svg",
-              {
-                xmlns: "http://www.w3.org/2000/svg",
-                className: "h-5 w-5 ml-2",
-                viewBox: "0 0 20 20",
-                fill: "currentColor"
-              },
-              React.createElement("path", { d: "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" })
-            )
+            { className: "bg-gray-800 text-center py-5 px-8 font-display text-xl rounded-lg" },
+            this.state.content
           )
         ),
         React.createElement(
@@ -267,15 +343,7 @@ var Propositions = function (_React$Component3) {
           React.createElement(
             "div",
             { className: "flex self-center" },
-            React.createElement("input", { type: "file", className: "fileProposition" }),
-            React.createElement(
-              "label",
-              {
-                htmlFor: "file",
-                className: "cursor-pointer md:w-40 3xl:text-4xl"
-              },
-              "Remplacer par une image"
-            )
+            contentImage
           )
         )
       );
@@ -285,8 +353,89 @@ var Propositions = function (_React$Component3) {
   return Propositions;
 }(React.Component);
 
-var InputNumber = function (_React$Component4) {
-  _inherits(InputNumber, _React$Component4);
+var Upload = function (_React$Component4) {
+  _inherits(Upload, _React$Component4);
+
+  function Upload(props) {
+    _classCallCheck(this, Upload);
+
+    var _this4 = _possibleConstructorReturn(this, (Upload.__proto__ || Object.getPrototypeOf(Upload)).call(this, props));
+
+    _this4.state = {
+      file: null,
+      infos: "",
+      hasImage: false
+    };
+    _this4.handleDeleteClick = _this4.handleDeleteClick.bind(_this4);
+    _this4.handleChange = _this4.handleChange.bind(_this4);
+    return _this4;
+  }
+
+  _createClass(Upload, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState({
+        hasImage: true,
+        file: URL.createObjectURL(event.target.files[0]),
+        infos: event.target.files[0].name + "\t " + (event.target.files[0].size / 1000).toFixed(2) + "KB"
+      });
+    }
+  }, {
+    key: "handleDeleteClick",
+    value: function handleDeleteClick() {
+      this.setState({
+        file: null,
+        infos: "",
+        hasImage: false
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var hasImage = this.state.hasImage;
+      var text = void 0;
+      if (!hasImage) {
+        text = React.createElement(
+          "div",
+          null,
+          React.createElement("input", { type: "file", onChange: this.handleChange, id: "file", className: "file", accept: "image/png, image/jpeg" }),
+          React.createElement(
+            "label",
+            { htmlFor: "file", className: "cursor-pointer ml-5 md:w-40 3xl:text-4xl" },
+            "Charger une image"
+          )
+        );
+      } else {
+        text = React.createElement(
+          "div",
+          null,
+          React.createElement(
+            "button",
+            { onClick: this.handleDeleteClick },
+            "Supprimer image"
+          ),
+          React.createElement(
+            "span",
+            { className: "file-name font-light ml-8 3xl:text-4xl text-white" },
+            this.state.infos
+          )
+        );
+      }
+
+      return React.createElement(
+        "div",
+        { className: "flex flex-col justify-center self-center place-items-center mx-auto" },
+        text,
+        React.createElement("img", { src: this.state.file, width: "60%" })
+      );
+    }
+  }]);
+
+  return Upload;
+}(React.Component);
+
+var InputNumber = function (_React$Component5) {
+  _inherits(InputNumber, _React$Component5);
 
   function InputNumber() {
     _classCallCheck(this, InputNumber);
@@ -368,87 +517,6 @@ var InputNumber = function (_React$Component4) {
   }]);
 
   return InputNumber;
-}(React.Component);
-
-var Upload = function (_React$Component5) {
-  _inherits(Upload, _React$Component5);
-
-  function Upload(props) {
-    _classCallCheck(this, Upload);
-
-    var _this5 = _possibleConstructorReturn(this, (Upload.__proto__ || Object.getPrototypeOf(Upload)).call(this, props));
-
-    _this5.state = {
-      file: null,
-      infos: "",
-      hasImage: false
-    };
-    _this5.handleDeleteClick = _this5.handleDeleteClick.bind(_this5);
-    _this5.handleChange = _this5.handleChange.bind(_this5);
-    return _this5;
-  }
-
-  _createClass(Upload, [{
-    key: "handleChange",
-    value: function handleChange(event, selectorFiles, newValue) {
-      this.setState({
-        hasImage: true,
-        file: URL.createObjectURL(event.target.files[0]),
-        infos: event.target.files[0].name + "\t " + (event.target.files[0].size / 1000).toFixed(2) + "KB"
-      });
-    }
-  }, {
-    key: "handleDeleteClick",
-    value: function handleDeleteClick() {
-      this.setState({
-        file: null,
-        infos: "",
-        hasImage: false
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var hasImage = this.state.hasImage;
-      var text = void 0;
-      if (!hasImage) {
-        text = React.createElement(
-          "div",
-          null,
-          React.createElement("input", { type: "file", onChange: this.handleChange, id: "file", className: "file", accept: "image/png, image/jpeg" }),
-          React.createElement(
-            "label",
-            { htmlFor: "file", className: "cursor-pointer ml-5 md:w-40 3xl:text-4xl" },
-            "Charger une image"
-          )
-        );
-      } else {
-        text = React.createElement(
-          "div",
-          null,
-          React.createElement(
-            "button",
-            { onClick: this.handleDeleteClick },
-            "Supprimer image"
-          ),
-          React.createElement(
-            "span",
-            { className: "file-name font-light ml-8 3xl:text-4xl text-white" },
-            this.state.infos
-          )
-        );
-      }
-
-      return React.createElement(
-        "div",
-        { className: "flex flex-col justify-center self-center place-items-center mx-auto" },
-        text,
-        React.createElement("img", { src: this.state.file, width: "60%" })
-      );
-    }
-  }]);
-
-  return Upload;
 }(React.Component);
 
 var domContainer = document.querySelector("#creation-menu");
