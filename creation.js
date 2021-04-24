@@ -119,7 +119,8 @@ var QuestionList = function (_React$Component2) {
                   xmlns: "http://www.w3.org/2000/svg",
                   className: "h-5 w-5 text-red-500 ",
                   viewBox: "0 0 20 20",
-                  fill: "currentColor" },
+                  fill: "currentColor"
+                },
                 React.createElement("path", {
                   fillRule: "evenodd",
                   d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z",
@@ -158,8 +159,13 @@ var QuestionList = function (_React$Component2) {
               React.createElement(Upload, { id: "file" })
             )
           ),
-          React.createElement("textarea", { className: "text-5xl my-5 text-teal-500\r font-bold bg-gray-700 decoration-clone focus:outline-none placeholder-teal-500 placeholder-opacity-50", id: "question",
-            placeholder: "Intitul\xE9 de la question", rows: 1, maxLength: "100" }),
+          React.createElement("textarea", {
+            className: "text-5xl my-5 text-teal-500\r font-bold bg-gray-700 decoration-clone focus:outline-none placeholder-teal-500 placeholder-opacity-50",
+            id: "question",
+            placeholder: "Intitul\xE9 de la question",
+            rows: 1,
+            maxLength: "100"
+          }),
           React.createElement(
             "div",
             null,
@@ -179,10 +185,25 @@ var QuestionList = function (_React$Component2) {
           "div",
           { className: " max-w-lg mx-auto font-display mt-8" },
           React.createElement("textarea", {
-            type: "text", onInput: this.auto_grow,
+            type: "text",
+            onInput: this.auto_grow,
             className: "w-full bg-gray-800 px-8 py-5\r focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg",
             placeholder: "Saisir une explication (facultatif)"
           })
+        ),
+        React.createElement(
+          "div",
+          { "class": "flex justify-end font-title mt-8" },
+          React.createElement(
+            "button",
+            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5" },
+            "Ajouter une question"
+          ),
+          React.createElement(
+            "button",
+            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5" },
+            "Valider le quiz"
+          )
         )
       );
     }
@@ -255,7 +276,8 @@ var Propositions = function (_React$Component3) {
         this.state.content = React.createElement(
           "div",
           { className: "flex" },
-          React.createElement("textarea", { rows: 1,
+          React.createElement("textarea", {
+            rows: 1,
             type: "text",
             placeholder: "proposition " + (this.props.id + 1),
             className: "bg-gray-800 w-30 focus:outline-none text-center  placeholder-gray-300"
@@ -317,7 +339,10 @@ var Propositions = function (_React$Component3) {
               { className: "items-start flex" },
               React.createElement(
                 "div",
-                { className: "flex text-white items-center w-36", id: "localImage" },
+                {
+                  className: "flex text-white items-center w-36",
+                  id: "localImage"
+                },
                 React.createElement(
                   "svg",
                   {

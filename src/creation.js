@@ -59,7 +59,7 @@ class QuestionList extends React.Component {
 
   auto_grow(element) {
     element.style.height = "5px";
-    element.style.height = (element.scrollHeight)+"px";
+    element.style.height = element.scrollHeight + "px";
   }
 
   render() {
@@ -78,7 +78,8 @@ class QuestionList extends React.Component {
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 text-red-500 "
                 viewBox="0 0 20 20"
-                fill="currentColor">
+                fill="currentColor"
+              >
                 <path
                   fillRule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -113,10 +114,14 @@ class QuestionList extends React.Component {
             contentEditable="true"
             data-placeholder="Intitulé de la question"
           ></div>*/}
-          <textarea className="text-5xl my-5 text-teal-500
-            font-bold bg-gray-700 decoration-clone focus:outline-none placeholder-teal-500 placeholder-opacity-50" id="question"
-            placeholder="Intitulé de la question" rows={1} maxLength="100" >
-          </textarea>
+          <textarea
+            className="text-5xl my-5 text-teal-500
+            font-bold bg-gray-700 decoration-clone focus:outline-none placeholder-teal-500 placeholder-opacity-50"
+            id="question"
+            placeholder="Intitulé de la question"
+            rows={1}
+            maxLength="100"
+          ></textarea>
           <div>
             <InputNumber
               count={this.state.count}
@@ -130,11 +135,20 @@ class QuestionList extends React.Component {
         </div>
         <div className=" max-w-lg mx-auto font-display mt-8">
           <textarea
-            type="text" onInput={this.auto_grow}
+            type="text"
+            onInput={this.auto_grow}
             className="w-full bg-gray-800 px-8 py-5
           focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg"
             placeholder="Saisir une explication (facultatif)"
           ></textarea>
+        </div>
+        <div class="flex justify-end font-title mt-8">
+          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5">
+            Ajouter une question
+          </button>
+          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5">
+            Valider le quiz
+          </button>
         </div>
       </article>
     );
@@ -197,7 +211,8 @@ class Propositions extends React.Component {
     if (!hasImage) {
       this.state.content = (
         <div className="flex">
-          <textarea rows={1}
+          <textarea
+            rows={1}
             type="text"
             placeholder={"proposition " + (this.props.id + 1)}
             className="bg-gray-800 w-30 focus:outline-none text-center  placeholder-gray-300"
@@ -224,7 +239,8 @@ class Propositions extends React.Component {
           <label
             htmlFor={this.props.id}
             className="cursor-pointer md:w-40 3xl:text-4xl"
-          >Remplacer par une image
+          >
+            Remplacer par une image
           </label>
         </div>
       );
@@ -242,9 +258,12 @@ class Propositions extends React.Component {
     return (
       <div className="text-white mt-8 flex items-center">
         <div>
-        <div className="flex justify-between items-center prop">
+          <div className="flex justify-between items-center prop">
             <div className="items-start flex">
-              <div className="flex text-white items-center w-36" id="localImage">
+              <div
+                className="flex text-white items-center w-36"
+                id="localImage"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-12 w-12"
