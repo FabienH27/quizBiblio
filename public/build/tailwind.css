@@ -22919,24 +22919,14 @@ video {
   transform: scale(1.05);
 }
 
-.blackButton{
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  --tw-text-opacity: 1;
-  color: rgba(255, 255, 255, var(--tw-text-opacity));
-}
-
-.whiteButton{
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
+.prop input:checked ~ label{
   --tw-text-opacity: 1;
   color: rgba(20, 184, 166, var(--tw-text-opacity));
+}
+
+textarea{
+  resize: none;
+  overflow: hidden;
 }
 
 [data-placeholder]:empty:before{

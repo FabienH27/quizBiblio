@@ -1,3 +1,4 @@
+maxlengthContentEditableModule.maxlengthContentEditable();
 class CreationMenu extends React.Component {
   render() {
     return <QuestionList />;
@@ -19,17 +20,17 @@ class QuestionList extends React.Component {
       maxValue: 4,
       minValue: 2,
       numPropositions: 2,
-      showdata: this.displayProposition
+      showdata: this.displayProposition,
     };
   }
 
-  appendData(){
-    for (var i = 0; i < this.state.count;i++){
+  appendData() {
+    for (var i = 0; i < this.state.count; i++) {
       this.displayProposition.push(<Propositions key={i} id={i} />);
     }
     this.setState({
-      showdata: this.displayProposition
-    })
+      showdata: this.displayProposition,
+    });
   }
 
   handleChange(selectorFiles, newValue) {
@@ -40,28 +41,33 @@ class QuestionList extends React.Component {
         (selectorFiles[0].size / 1000).toFixed(2) +
         "KB",
     });
-    setValue(newValue);
   }
 
   increment = () => {
     if (this.state.count >= this.state.maxValue) return;
     this.setState({
-      count: this.state.count + 1
+      count: this.state.count + 1,
     });
   };
 
   decrement = () => {
     if (this.state.count <= this.state.minValue) return;
     this.setState({
-      count: this.state.count - 1
+      count: this.state.count - 1,
     });
   };
 
+  auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
+  }
+
   render() {
     this.displayProposition = [];
-    for (var i = 0; i < this.state.count;i++){
+    for (var i = 0; i < this.state.count; i++) {
       this.displayProposition.push(<Propositions key={i} id={i} />);
     }
+
     return (
       <article className=" p-5 ">
         <div className="max-w-2xl mx-auto">
@@ -72,8 +78,7 @@ class QuestionList extends React.Component {
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 text-red-500 "
                 viewBox="0 0 20 20"
-                fill="currentColor"
-              >
+                fill="currentColor">
                 <path
                   fillRule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -102,11 +107,16 @@ class QuestionList extends React.Component {
               <Upload id="file" />
             </div>
           </div>
-          <div
+          {/*<div
             className="text-5xl my-5 text-teal-500 font-bold focus:outline-none"
+            id="question"
             contentEditable="true"
             data-placeholder="Intitulé de la question"
-          ></div>
+          ></div>*/}
+          <textarea className="text-5xl my-5 text-teal-500
+            font-bold bg-gray-700 decoration-clone focus:outline-none placeholder-teal-500 placeholder-opacity-50" id="question"
+            placeholder="Intitulé de la question" rows={1} maxLength="100" >
+          </textarea>
           <div>
             <InputNumber
               count={this.state.count}
@@ -115,8 +125,16 @@ class QuestionList extends React.Component {
             />
           </div>
         </div>
-        <div className="flex flex-wrap max-w-6xl mx-auto justify-center mb-56">
-             {this.displayProposition}
+        <div className="flex flex-wrap max-w-2xl self-center justify-evenly mx-auto ">
+          {this.displayProposition}
+        </div>
+        <div className=" max-w-lg mx-auto font-display mt-8">
+          <textarea
+            type="text" onInput={this.auto_grow}
+            className="w-full bg-gray-800 px-8 py-5
+          focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg"
+            placeholder="Saisir une explication (facultatif)"
+          ></textarea>
         </div>
       </article>
     );
@@ -129,37 +147,29 @@ class Propositions extends React.Component {
     this.state = {
       black: true,
       isActive: false,
-      correct: "Marquer comme bonne réponse",
+      correct: "Bonne réponse",
       content: null,
       image: "Remplacer par une image",
       file: null,
       infos: "",
-      hasImage: false
+      hasImage: false,
+      selectedProposition: null,
     };
-    this.handleClick = this.handleClick.bind(this);
+    //this.handleClick = this.handleClick.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.onValueChange = this.onValueChange.bind(this);
   }
 
-  handleClick() {
-    this.setState({
-      black: !this.state.black,
-      correct: this.state.isActive ? "Marquer comme bonne réponse" : "Bonne réponse",
-      isActive: !this.state.isActive,
-    });
-  }
-
-  handleImageChange(event){
-    console.log(this.state);
-
+  handleImageChange(event) {
     this.setState({
       hasImage: true,
       file: URL.createObjectURL(event.target.files[0]),
       infos:
-      event.target.files[0].name +
-      "\t " +
-      (event.target.files[0].size / 1000).toFixed(2) +
-      "KB"  
+        event.target.files[0].name +
+        "\t " +
+        (event.target.files[0].size / 1000).toFixed(2) +
+        "KB",
     });
   }
 
@@ -167,87 +177,120 @@ class Propositions extends React.Component {
     this.setState({
       file: null,
       infos: "",
-      content:null,
+      content: null,
       hasImage: false,
-    })
+    });
+  }
+
+  onValueChange(event) {
+    this.setState({
+      isActive: !this.state.isActive,
+      selectedProposition: event.target.id,
+    });
   }
 
   render() {
-    let btn_class = this.state.black ? "blackButton" : "whiteButton";
     let hasImage = this.state.hasImage;
     let contentImage;
+    let text = this.state.correct;
 
-    if(!hasImage){
-        this.state.content = <div className="flex">
-        <input
-          type="text"
-          placeholder={"proposition " + (this.props.id+1)}
-          className="bg-gray-800 w-30 focus:outline-none text-center  placeholder-gray-300"
+    if (!hasImage) {
+      this.state.content = (
+        <div className="flex">
+          <textarea rows={1}
+            type="text"
+            placeholder={"proposition " + (this.props.id + 1)}
+            className="bg-gray-800 w-30 focus:outline-none text-center  placeholder-gray-300"
           />
           <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 ml-2"
-          viewBox="0 0 20 20"
-          fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 ml-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
           >
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
           </svg>
-      </div>
-      contentImage = <div>
-        <input type="file" id={this.props.id} className="fileProposition"
-          onChange={this.handleImageChange} accept="image/png, image/jpeg" />
-        <label
-          htmlFor={this.props.id}
-          className="cursor-pointer md:w-40 3xl:text-4xl"> Remplacer par une image
-        </label>
-      </div>
-    }else{
-      this.state.content = <div>
-        <img src={this.state.file} className="w-32"/>
-      </div>;
-      contentImage = <button onClick={this.handleDeleteClick}>Supprimer l'image</button>
+        </div>
+      );
+      contentImage = (
+        <div>
+          <input
+            type="file"
+            id={this.props.id}
+            className="fileProposition"
+            onChange={this.handleImageChange}
+            accept="image/png, image/jpeg"
+          />
+          <label
+            htmlFor={this.props.id}
+            className="cursor-pointer md:w-40 3xl:text-4xl"
+          >Remplacer par une image
+          </label>
+        </div>
+      );
+    } else {
+      this.state.content = (
+        <div>
+          <img src={this.state.file} className="w-48" />
+        </div>
+      );
+      contentImage = (
+        <button onClick={this.handleDeleteClick}>Supprimer l'image</button>
+      );
     }
 
     return (
-      <div className="text-white my-5 flex items-center">
+      <div className="text-white mt-8 flex items-center">
         <div>
-          <div className={btn_class} onClick={this.handleClick}>
-            <p className="text-sm mr-1 ">{this.state.correct}</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+        <div className="flex justify-between items-center prop">
+            <div className="items-start flex">
+              <div className="flex text-white items-center w-36" id="localImage">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-12 w-12"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                {contentImage}
+              </div>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id={"prop" + this.props.id}
+                name="proposition"
+                className="hidden"
+                onChange={this.onValueChange}
               />
-            </svg>
+              <label htmlFor={"prop" + this.props.id} className="flex">
+                <p className="text-sm mr-1 ">{text}</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                  />
+                </svg>
+              </label>
+            </div>
           </div>
           <div className="bg-gray-800 text-center py-5 px-8 font-display text-xl rounded-lg">
             {this.state.content}
-          </div>
-        </div>
-        <div className="flex text-white items-center mt-8" id="localImage">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-          />
-          </svg>
-          <div className="flex self-center">
-            {contentImage}
           </div>
         </div>
       </div>
@@ -256,25 +299,25 @@ class Propositions extends React.Component {
 }
 
 class Upload extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       file: null,
       infos: "",
-      hasImage: false
-    }
+      hasImage: false,
+    };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event) {
     this.setState({
       hasImage: true,
       file: URL.createObjectURL(event.target.files[0]),
       infos:
-      event.target.files[0].name +
-      "\t " +
-      (event.target.files[0].size / 1000).toFixed(2) +
-      "KB"
+        event.target.files[0].name +
+        "\t " +
+        (event.target.files[0].size / 1000).toFixed(2) +
+        "KB",
     });
   }
 
@@ -283,22 +326,39 @@ class Upload extends React.Component {
       file: null,
       infos: "",
       hasImage: false,
-    })
+    });
   }
 
   render() {
     const hasImage = this.state.hasImage;
     let text;
-    if(!hasImage) {
-      text = <div>
-        <input type="file" onChange={this.handleChange} id="file" className="file" accept="image/png, image/jpeg"/>
-        <label htmlFor="file" className="cursor-pointer ml-5 md:w-40 3xl:text-4xl">Charger une image</label>
-    </div>
-    }else{
-      text = <div>
-        <button onClick={this.handleDeleteClick}>Supprimer image</button>
-        <span className="file-name font-light ml-8 3xl:text-4xl text-white">{this.state.infos}</span>
-      </div>
+    if (!hasImage) {
+      text = (
+        <div>
+          <input
+            type="file"
+            onChange={this.handleChange}
+            id="file"
+            className="file"
+            accept="image/png, image/jpeg"
+          />
+          <label
+            htmlFor="file"
+            className="cursor-pointer ml-5 md:w-40 3xl:text-4xl"
+          >
+            Charger une image
+          </label>
+        </div>
+      );
+    } else {
+      text = (
+        <div>
+          <button onClick={this.handleDeleteClick}>Supprimer image</button>
+          <span className="file-name font-light ml-8 3xl:text-4xl text-white">
+            {this.state.infos}
+          </span>
+        </div>
+      );
     }
 
     return (
@@ -318,8 +378,9 @@ class InputNumber extends React.Component {
           Nombre de propositions
         </h1>
         <div className="inline-flex items-center border-2 border-gray-500 rounded-md bg-gray-800 w-20">
-          <span
-            className="px-3 text-gray-400 w-10 text-center bg-gray-800">{this.props.count}</span>
+          <span className="px-3 text-gray-400 w-10 text-center bg-gray-800">
+            {this.props.count}
+          </span>
           <div className="flex flex-col ml-4 text-gray-500 border-l-2 py-1 border-gray-500">
             <button
               type="button"

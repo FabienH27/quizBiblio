@@ -47,23 +47,13 @@
 .card:hover{
     transform: scale(1.05);
 }
-
-.blackButton{
-  @apply flex;
-  @apply justify-end;
-  @apply items-center;
-  @apply mb-2;
-  @apply cursor-pointer;
-  @apply text-white;
+.prop input:checked ~ label{
+  @apply text-teal-500;
 }
 
-.whiteButton{
-  @apply flex;
-  @apply justify-end;
-  @apply items-center;
-  @apply mb-2;
-  @apply cursor-pointer;
-  @apply text-teal-500;
+textarea{
+  @apply resize-none;
+  @apply overflow-hidden;
 }
 
 [data-placeholder]:empty:before{

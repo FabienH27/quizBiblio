@@ -6,6 +6,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+maxlengthContentEditableModule.maxlengthContentEditable();
+
 var CreationMenu = function (_React$Component) {
   _inherits(CreationMenu, _React$Component);
 
@@ -79,7 +81,12 @@ var QuestionList = function (_React$Component2) {
       this.setState({
         value: selectorFiles[0].name + "\t" + (selectorFiles[0].size / 1000).toFixed(2) + "KB"
       });
-      setValue(newValue);
+    }
+  }, {
+    key: "auto_grow",
+    value: function auto_grow(element) {
+      element.style.height = "5px";
+      element.style.height = element.scrollHeight + "px";
     }
   }, {
     key: "render",
@@ -88,6 +95,7 @@ var QuestionList = function (_React$Component2) {
       for (var i = 0; i < this.state.count; i++) {
         this.displayProposition.push(React.createElement(Propositions, { key: i, id: i }));
       }
+
       return React.createElement(
         "article",
         { className: " p-5 " },
@@ -111,8 +119,7 @@ var QuestionList = function (_React$Component2) {
                   xmlns: "http://www.w3.org/2000/svg",
                   className: "h-5 w-5 text-red-500 ",
                   viewBox: "0 0 20 20",
-                  fill: "currentColor"
-                },
+                  fill: "currentColor" },
                 React.createElement("path", {
                   fillRule: "evenodd",
                   d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z",
@@ -151,11 +158,8 @@ var QuestionList = function (_React$Component2) {
               React.createElement(Upload, { id: "file" })
             )
           ),
-          React.createElement("div", {
-            className: "text-5xl my-5 text-teal-500 font-bold focus:outline-none",
-            contentEditable: "true",
-            "data-placeholder": "Intitul\xE9 de la question"
-          }),
+          React.createElement("textarea", { className: "text-5xl my-5 text-teal-500\r font-bold bg-gray-700 decoration-clone focus:outline-none placeholder-teal-500 placeholder-opacity-50", id: "question",
+            placeholder: "Intitul\xE9 de la question", rows: 1, maxLength: "100" }),
           React.createElement(
             "div",
             null,
@@ -168,8 +172,17 @@ var QuestionList = function (_React$Component2) {
         ),
         React.createElement(
           "div",
-          { className: "flex flex-wrap max-w-6xl mx-auto justify-center mb-56" },
+          { className: "flex flex-wrap max-w-2xl self-center justify-evenly mx-auto " },
           this.displayProposition
+        ),
+        React.createElement(
+          "div",
+          { className: " max-w-lg mx-auto font-display mt-8" },
+          React.createElement("textarea", {
+            type: "text", onInput: this.auto_grow,
+            className: "w-full bg-gray-800 px-8 py-5\r focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg",
+            placeholder: "Saisir une explication (facultatif)"
+          })
         )
       );
     }
@@ -189,33 +202,24 @@ var Propositions = function (_React$Component3) {
     _this3.state = {
       black: true,
       isActive: false,
-      correct: "Marquer comme bonne réponse",
+      correct: "Bonne réponse",
       content: null,
       image: "Remplacer par une image",
       file: null,
       infos: "",
-      hasImage: false
+      hasImage: false,
+      selectedProposition: null
     };
-    _this3.handleClick = _this3.handleClick.bind(_this3);
+    //this.handleClick = this.handleClick.bind(this);
     _this3.handleImageChange = _this3.handleImageChange.bind(_this3);
     _this3.handleDeleteClick = _this3.handleDeleteClick.bind(_this3);
+    _this3.onValueChange = _this3.onValueChange.bind(_this3);
     return _this3;
   }
 
   _createClass(Propositions, [{
-    key: "handleClick",
-    value: function handleClick() {
-      this.setState({
-        black: !this.state.black,
-        correct: this.state.isActive ? "Marquer comme bonne réponse" : "Bonne réponse",
-        isActive: !this.state.isActive
-      });
-    }
-  }, {
     key: "handleImageChange",
     value: function handleImageChange(event) {
-      console.log(this.state);
-
       this.setState({
         hasImage: true,
         file: URL.createObjectURL(event.target.files[0]),
@@ -233,17 +237,25 @@ var Propositions = function (_React$Component3) {
       });
     }
   }, {
+    key: "onValueChange",
+    value: function onValueChange(event) {
+      this.setState({
+        isActive: !this.state.isActive,
+        selectedProposition: event.target.id
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var btn_class = this.state.black ? "blackButton" : "whiteButton";
       var hasImage = this.state.hasImage;
       var contentImage = void 0;
+      var text = this.state.correct;
 
       if (!hasImage) {
         this.state.content = React.createElement(
           "div",
           { className: "flex" },
-          React.createElement("input", {
+          React.createElement("textarea", { rows: 1,
             type: "text",
             placeholder: "proposition " + (this.props.id + 1),
             className: "bg-gray-800 w-30 focus:outline-none text-center  placeholder-gray-300"
@@ -262,21 +274,27 @@ var Propositions = function (_React$Component3) {
         contentImage = React.createElement(
           "div",
           null,
-          React.createElement("input", { type: "file", id: this.props.id, className: "fileProposition",
-            onChange: this.handleImageChange, accept: "image/png, image/jpeg" }),
+          React.createElement("input", {
+            type: "file",
+            id: this.props.id,
+            className: "fileProposition",
+            onChange: this.handleImageChange,
+            accept: "image/png, image/jpeg"
+          }),
           React.createElement(
             "label",
             {
               htmlFor: this.props.id,
-              className: "cursor-pointer md:w-40 3xl:text-4xl" },
-            " Remplacer par une image"
+              className: "cursor-pointer md:w-40 3xl:text-4xl"
+            },
+            "Remplacer par une image"
           )
         );
       } else {
         this.state.content = React.createElement(
           "div",
           null,
-          React.createElement("img", { src: this.state.file, className: "w-32" })
+          React.createElement("img", { src: this.state.file, className: "w-48" })
         );
         contentImage = React.createElement(
           "button",
@@ -287,63 +305,79 @@ var Propositions = function (_React$Component3) {
 
       return React.createElement(
         "div",
-        { className: "text-white my-5 flex items-center" },
+        { className: "text-white mt-8 flex items-center" },
         React.createElement(
           "div",
           null,
           React.createElement(
             "div",
-            { className: btn_class, onClick: this.handleClick },
+            { className: "flex justify-between items-center prop" },
             React.createElement(
-              "p",
-              { className: "text-sm mr-1 " },
-              this.state.correct
+              "div",
+              { className: "items-start flex" },
+              React.createElement(
+                "div",
+                { className: "flex text-white items-center w-36", id: "localImage" },
+                React.createElement(
+                  "svg",
+                  {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    className: "h-12 w-12",
+                    fill: "none",
+                    viewBox: "0 0 24 24",
+                    stroke: "currentColor"
+                  },
+                  React.createElement("path", {
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    strokeWidth: 2,
+                    d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  })
+                ),
+                contentImage
+              )
             ),
             React.createElement(
-              "svg",
-              {
-                xmlns: "http://www.w3.org/2000/svg",
-                className: "h-6 w-6",
-                fill: "none",
-                viewBox: "0 0 24 24",
-                stroke: "currentColor" },
-              React.createElement("path", {
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                strokeWidth: 2,
-                d: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-              })
+              "div",
+              null,
+              React.createElement("input", {
+                type: "radio",
+                id: "prop" + this.props.id,
+                name: "proposition",
+                className: "hidden",
+                onChange: this.onValueChange
+              }),
+              React.createElement(
+                "label",
+                { htmlFor: "prop" + this.props.id, className: "flex" },
+                React.createElement(
+                  "p",
+                  { className: "text-sm mr-1 " },
+                  text
+                ),
+                React.createElement(
+                  "svg",
+                  {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    className: "h-6 w-6",
+                    fill: "none",
+                    viewBox: "0 0 24 24",
+                    stroke: "currentColor"
+                  },
+                  React.createElement("path", {
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    strokeWidth: 2,
+                    d: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                  })
+                )
+              )
             )
           ),
           React.createElement(
             "div",
             { className: "bg-gray-800 text-center py-5 px-8 font-display text-xl rounded-lg" },
             this.state.content
-          )
-        ),
-        React.createElement(
-          "div",
-          { className: "flex text-white items-center mt-8", id: "localImage" },
-          React.createElement(
-            "svg",
-            {
-              xmlns: "http://www.w3.org/2000/svg",
-              className: "h-10 w-10",
-              fill: "none",
-              viewBox: "0 0 24 24",
-              stroke: "currentColor"
-            },
-            React.createElement("path", {
-              strokeLinecap: "round",
-              strokeLinejoin: "round",
-              strokeWidth: 2,
-              d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-            })
-          ),
-          React.createElement(
-            "div",
-            { className: "flex self-center" },
-            contentImage
           )
         )
       );
@@ -398,10 +432,19 @@ var Upload = function (_React$Component4) {
         text = React.createElement(
           "div",
           null,
-          React.createElement("input", { type: "file", onChange: this.handleChange, id: "file", className: "file", accept: "image/png, image/jpeg" }),
+          React.createElement("input", {
+            type: "file",
+            onChange: this.handleChange,
+            id: "file",
+            className: "file",
+            accept: "image/png, image/jpeg"
+          }),
           React.createElement(
             "label",
-            { htmlFor: "file", className: "cursor-pointer ml-5 md:w-40 3xl:text-4xl" },
+            {
+              htmlFor: "file",
+              className: "cursor-pointer ml-5 md:w-40 3xl:text-4xl"
+            },
             "Charger une image"
           )
         );
@@ -459,8 +502,7 @@ var InputNumber = function (_React$Component5) {
           { className: "inline-flex items-center border-2 border-gray-500 rounded-md bg-gray-800 w-20" },
           React.createElement(
             "span",
-            {
-              className: "px-3 text-gray-400 w-10 text-center bg-gray-800" },
+            { className: "px-3 text-gray-400 w-10 text-center bg-gray-800" },
             this.props.count
           ),
           React.createElement(
