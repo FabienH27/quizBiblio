@@ -98,16 +98,16 @@ var QuestionList = function (_React$Component2) {
 
       return React.createElement(
         "article",
-        { className: " p-5 " },
+        { className: "p-5" },
         React.createElement(
           "div",
-          { className: "max-w-2xl mx-auto" },
+          { className: "max-w-2xl mx-auto 3xl:max-w-screen-xl" },
           React.createElement(
             "div",
             { className: "flex font-display text-white" },
             React.createElement(
               "h1",
-              { className: "text-2xl my-5" },
+              { className: "text-2xl my-5 3xl:text-4xl" },
               "Question 1"
             ),
             React.createElement(
@@ -129,7 +129,7 @@ var QuestionList = function (_React$Component2) {
               ),
               React.createElement(
                 "h1",
-                null,
+                { className: "3xl:text-xl" },
                 "Supprimer"
               )
             )
@@ -178,30 +178,30 @@ var QuestionList = function (_React$Component2) {
         ),
         React.createElement(
           "div",
-          { className: "flex flex-wrap max-w-2xl self-center justify-evenly mx-auto " },
+          { className: "flex flex-wrap max-w-2xl 3xl:max-w-7xl self-center justify-evenly mx-auto " },
           this.displayProposition
         ),
         React.createElement(
           "div",
-          { className: " max-w-lg mx-auto font-display mt-8" },
+          { className: " max-w-xl mx-auto font-display mt-8" },
           React.createElement("textarea", {
             type: "text",
-            onInput: this.auto_grow,
-            className: "w-full bg-gray-800 px-8 py-5\r focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg",
-            placeholder: "Saisir une explication (facultatif)"
+            onInput: this.auto_grow, maxLength: "255",
+            className: "w-full  bg-gray-800 px-8 py-5\r focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg 3xl:text-xl",
+            placeholder: "Saisir une explication (facultatif - 255 caract\xE8res )"
           })
         ),
         React.createElement(
           "div",
-          { "class": "flex justify-end font-title mt-8" },
+          { className: "flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title mt-8" },
           React.createElement(
             "button",
-            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5" },
+            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
             "Ajouter une question"
           ),
           React.createElement(
             "button",
-            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5" },
+            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
             "Valider le quiz"
           )
         )
@@ -229,7 +229,7 @@ var Propositions = function (_React$Component3) {
       file: null,
       infos: "",
       hasImage: false,
-      selectedProposition: null
+      selectedProposition: "prop1"
     };
     //this.handleClick = this.handleClick.bind(this);
     _this3.handleImageChange = _this3.handleImageChange.bind(_this3);
@@ -275,12 +275,12 @@ var Propositions = function (_React$Component3) {
       if (!hasImage) {
         this.state.content = React.createElement(
           "div",
-          { className: "flex" },
+          { className: "flex justify-center items-center" },
           React.createElement("textarea", {
-            rows: 1,
+            rows: 1, maxLength: 50,
             type: "text",
             placeholder: "proposition " + (this.props.id + 1),
-            className: "bg-gray-800 w-30 focus:outline-none text-center  placeholder-gray-300"
+            className: "bg-gray-800 w-30 focus:outline-none text-center placeholder-gray-300 3xl:text-3xl 3xl:my-2"
           }),
           React.createElement(
             "svg",
@@ -307,8 +307,7 @@ var Propositions = function (_React$Component3) {
             "label",
             {
               htmlFor: this.props.id,
-              className: "cursor-pointer md:w-40 3xl:text-4xl"
-            },
+              className: "cursor-pointer md:w-40 3xl:text-xl" },
             "Remplacer par une image"
           )
         );
@@ -320,14 +319,14 @@ var Propositions = function (_React$Component3) {
         );
         contentImage = React.createElement(
           "button",
-          { onClick: this.handleDeleteClick },
+          { onClick: this.handleDeleteClick, className: "hover:text-teal-500 focus:outline-none" },
           "Supprimer l'image"
         );
       }
 
       return React.createElement(
         "div",
-        { className: "text-white mt-8 flex items-center" },
+        { className: "text-white mt-8 flex items-center 3xl:w-6/12 justify-center" },
         React.createElement(
           "div",
           null,
@@ -339,10 +338,7 @@ var Propositions = function (_React$Component3) {
               { className: "items-start flex" },
               React.createElement(
                 "div",
-                {
-                  className: "flex text-white items-center w-36",
-                  id: "localImage"
-                },
+                { className: "flex text-white items-center w-36 3xl:w-80", id: "localImage" },
                 React.createElement(
                   "svg",
                   {
@@ -377,7 +373,7 @@ var Propositions = function (_React$Component3) {
                 { htmlFor: "prop" + this.props.id, className: "flex" },
                 React.createElement(
                   "p",
-                  { className: "text-sm mr-1 " },
+                  { className: "text-sm mr-1 text-center 3xl:text-xl" },
                   text
                 ),
                 React.createElement(
@@ -468,8 +464,7 @@ var Upload = function (_React$Component4) {
             "label",
             {
               htmlFor: "file",
-              className: "cursor-pointer ml-5 md:w-40 3xl:text-4xl"
-            },
+              className: "cursor-pointer ml-5 md:w-40 3xl:text-3xl" },
             "Charger une image"
           )
         );
@@ -479,12 +474,12 @@ var Upload = function (_React$Component4) {
           null,
           React.createElement(
             "button",
-            { onClick: this.handleDeleteClick },
+            { onClick: this.handleDeleteClick, className: "3xl:text-3xl" },
             "Supprimer image"
           ),
           React.createElement(
             "span",
-            { className: "file-name font-light ml-8 3xl:text-4xl text-white" },
+            { className: "file-name font-light ml-8 3xl:text-3xl text-white" },
             this.state.infos
           )
         );
@@ -494,7 +489,7 @@ var Upload = function (_React$Component4) {
         "div",
         { className: "flex flex-col justify-center self-center place-items-center mx-auto" },
         text,
-        React.createElement("img", { src: this.state.file, width: "60%" })
+        React.createElement("img", { src: this.state.file, width: "50%", className: "mt-2" })
       );
     }
   }]);
@@ -519,7 +514,7 @@ var InputNumber = function (_React$Component5) {
         { className: "flex" },
         React.createElement(
           "h1",
-          { className: "w-28 text-right mr-2 inline text-white font-display leading-5 my-auto" },
+          { className: "w-28 text-right mr-2 inline text-white font-display leading-5 my-auto 3xl:text-xl" },
           "Nombre de propositions"
         ),
         React.createElement(

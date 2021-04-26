@@ -69,10 +69,10 @@ class QuestionList extends React.Component {
     }
 
     return (
-      <article className=" p-5 ">
-        <div className="max-w-2xl mx-auto">
+      <article className="p-5">
+        <div className="max-w-2xl mx-auto 3xl:max-w-screen-xl">
           <div className="flex font-display text-white">
-            <h1 className="text-2xl my-5">Question 1</h1>
+            <h1 className="text-2xl my-5 3xl:text-4xl">Question 1</h1>
             <button className="flex items-center focus:outline-none ml-10">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ class QuestionList extends React.Component {
                   clipRule="evenodd"
                 />
               </svg>
-              <h1>Supprimer</h1>
+              <h1 className="3xl:text-xl">Supprimer</h1>
             </button>
           </div>
           <div className="flex text-white" id="localImage">
@@ -108,12 +108,6 @@ class QuestionList extends React.Component {
               <Upload id="file" />
             </div>
           </div>
-          {/*<div
-            className="text-5xl my-5 text-teal-500 font-bold focus:outline-none"
-            id="question"
-            contentEditable="true"
-            data-placeholder="Intitulé de la question"
-          ></div>*/}
           <textarea
             className="text-5xl my-5 text-teal-500
             font-bold bg-gray-700 decoration-clone focus:outline-none placeholder-teal-500 placeholder-opacity-50"
@@ -130,23 +124,23 @@ class QuestionList extends React.Component {
             />
           </div>
         </div>
-        <div className="flex flex-wrap max-w-2xl self-center justify-evenly mx-auto ">
+        <div className="flex flex-wrap max-w-2xl 3xl:max-w-7xl self-center justify-evenly mx-auto ">
           {this.displayProposition}
         </div>
-        <div className=" max-w-lg mx-auto font-display mt-8">
+        <div className=" max-w-xl mx-auto font-display mt-8">
           <textarea
             type="text"
-            onInput={this.auto_grow}
-            className="w-full bg-gray-800 px-8 py-5
-          focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg"
-            placeholder="Saisir une explication (facultatif)"
+            onInput={this.auto_grow} maxLength="255"
+            className="w-full  bg-gray-800 px-8 py-5
+              focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg 3xl:text-xl"
+            placeholder="Saisir une explication (facultatif - 255 caractères )"
           ></textarea>
         </div>
-        <div class="flex justify-end font-title mt-8">
-          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5">
+        <div className="flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title mt-8">
+          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
             Ajouter une question
           </button>
-          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5">
+          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
             Valider le quiz
           </button>
         </div>
@@ -167,7 +161,7 @@ class Propositions extends React.Component {
       file: null,
       infos: "",
       hasImage: false,
-      selectedProposition: null,
+      selectedProposition: "prop1",
     };
     //this.handleClick = this.handleClick.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
@@ -210,12 +204,12 @@ class Propositions extends React.Component {
 
     if (!hasImage) {
       this.state.content = (
-        <div className="flex">
+        <div className="flex justify-center items-center">
           <textarea
-            rows={1}
+            rows={1} maxLength={50}
             type="text"
             placeholder={"proposition " + (this.props.id + 1)}
-            className="bg-gray-800 w-30 focus:outline-none text-center  placeholder-gray-300"
+            className="bg-gray-800 w-30 focus:outline-none text-center placeholder-gray-300 3xl:text-3xl 3xl:my-2"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -238,8 +232,7 @@ class Propositions extends React.Component {
           />
           <label
             htmlFor={this.props.id}
-            className="cursor-pointer md:w-40 3xl:text-4xl"
-          >
+            className="cursor-pointer md:w-40 3xl:text-xl">
             Remplacer par une image
           </label>
         </div>
@@ -251,19 +244,16 @@ class Propositions extends React.Component {
         </div>
       );
       contentImage = (
-        <button onClick={this.handleDeleteClick}>Supprimer l'image</button>
+        <button onClick={this.handleDeleteClick} className="hover:text-teal-500 focus:outline-none">Supprimer l'image</button>
       );
     }
 
     return (
-      <div className="text-white mt-8 flex items-center">
+      <div className="text-white mt-8 flex items-center 3xl:w-6/12 justify-center">
         <div>
           <div className="flex justify-between items-center prop">
             <div className="items-start flex">
-              <div
-                className="flex text-white items-center w-36"
-                id="localImage"
-              >
+              <div className="flex text-white items-center w-36 3xl:w-80"id="localImage">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-12 w-12"
@@ -287,10 +277,10 @@ class Propositions extends React.Component {
                 id={"prop" + this.props.id}
                 name="proposition"
                 className="hidden"
-                onChange={this.onValueChange}
+                onChange={this.onValueChange} 
               />
               <label htmlFor={"prop" + this.props.id} className="flex">
-                <p className="text-sm mr-1 ">{text}</p>
+                <p className="text-sm mr-1 text-center 3xl:text-xl">{text}</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -363,8 +353,7 @@ class Upload extends React.Component {
           />
           <label
             htmlFor="file"
-            className="cursor-pointer ml-5 md:w-40 3xl:text-4xl"
-          >
+            className="cursor-pointer ml-5 md:w-40 3xl:text-3xl">
             Charger une image
           </label>
         </div>
@@ -372,8 +361,8 @@ class Upload extends React.Component {
     } else {
       text = (
         <div>
-          <button onClick={this.handleDeleteClick}>Supprimer image</button>
-          <span className="file-name font-light ml-8 3xl:text-4xl text-white">
+          <button onClick={this.handleDeleteClick} className="3xl:text-3xl">Supprimer image</button>
+          <span className="file-name font-light ml-8 3xl:text-3xl text-white">
             {this.state.infos}
           </span>
         </div>
@@ -383,7 +372,7 @@ class Upload extends React.Component {
     return (
       <div className="flex flex-col justify-center self-center place-items-center mx-auto">
         {text}
-        <img src={this.state.file} width="60%" />
+        <img src={this.state.file} width="50%" className="mt-2" />
       </div>
     );
   }
@@ -393,7 +382,7 @@ class InputNumber extends React.Component {
   render() {
     return (
       <div className="flex">
-        <h1 className="w-28 text-right mr-2 inline text-white font-display leading-5 my-auto">
+        <h1 className="w-28 text-right mr-2 inline text-white font-display leading-5 my-auto 3xl:text-xl">
           Nombre de propositions
         </h1>
         <div className="inline-flex items-center border-2 border-gray-500 rounded-md bg-gray-800 w-20">
