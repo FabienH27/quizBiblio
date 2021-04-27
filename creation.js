@@ -14,26 +14,76 @@ var CreationMenu = function (_React$Component) {
   function CreationMenu() {
     _classCallCheck(this, CreationMenu);
 
-    return _possibleConstructorReturn(this, (CreationMenu.__proto__ || Object.getPrototypeOf(CreationMenu)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (CreationMenu.__proto__ || Object.getPrototypeOf(CreationMenu)).call(this));
+
+    _this.state = {
+      count: 0
+    };
+
+    _this.displayQuestion = [];
+    _this.appendQuestion = _this.appendQuestion.bind(_this);
+    _this.removeQuestion = _this.removeQuestion.bind(_this);
+    return _this;
   }
 
   _createClass(CreationMenu, [{
+    key: "appendQuestion",
+    value: function appendQuestion() {
+      this.setState({
+        count: this.state.count + 1
+      });
+    }
+  }, {
+    key: "removeQuestion",
+    value: function removeQuestion() {
+      this.setState({
+        count: this.state.count - 1
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return React.createElement(QuestionList, null);
+      this.displayQuestion = [React.createElement(Question, { key: 0, id: 0 })];
+      for (var i = 1; i <= this.state.count; i++) {
+        this.displayQuestion.push(React.createElement(Question, { key: i, id: i }));
+      }
+      return React.createElement(
+        "div",
+        { className: "my-5" },
+        this.displayQuestion,
+        React.createElement(
+          "div",
+          { className: "flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title py-12" },
+          React.createElement(
+            "button",
+            { onClick: this.appendQuestion, type: "submit", className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
+            "Ajouter une question"
+          ),
+          React.createElement(
+            "button",
+            { onClick: this.removeQuestion, type: "submit", className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
+            "Supprimer une question"
+          ),
+          React.createElement(
+            "button",
+            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
+            "Valider le quiz"
+          )
+        )
+      );
     }
   }]);
 
   return CreationMenu;
 }(React.Component);
 
-var QuestionList = function (_React$Component2) {
-  _inherits(QuestionList, _React$Component2);
+var Question = function (_React$Component2) {
+  _inherits(Question, _React$Component2);
 
-  function QuestionList(props) {
-    _classCallCheck(this, QuestionList);
+  function Question(props) {
+    _classCallCheck(this, Question);
 
-    var _this2 = _possibleConstructorReturn(this, (QuestionList.__proto__ || Object.getPrototypeOf(QuestionList)).call(this, props));
+    var _this2 = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 
     _this2.increment = function () {
       if (_this2.state.count >= _this2.state.maxValue) return;
@@ -50,32 +100,19 @@ var QuestionList = function (_React$Component2) {
     };
 
     _this2.displayProposition = [];
-
     _this2.handleChange = _this2.handleChange.bind(_this2);
-    _this2.appendData = _this2.appendData.bind(_this2);
 
     _this2.state = {
       value: "",
       count: 2,
       maxValue: 4,
       minValue: 2,
-      numPropositions: 2,
-      showdata: _this2.displayProposition
+      numPropositions: 2
     };
     return _this2;
   }
 
-  _createClass(QuestionList, [{
-    key: "appendData",
-    value: function appendData() {
-      for (var i = 0; i < this.state.count; i++) {
-        this.displayProposition.push(React.createElement(Propositions, { key: i, id: i }));
-      }
-      this.setState({
-        showdata: this.displayProposition
-      });
-    }
-  }, {
+  _createClass(Question, [{
     key: "handleChange",
     value: function handleChange(selectorFiles, newValue) {
       this.setState({
@@ -95,7 +132,6 @@ var QuestionList = function (_React$Component2) {
       for (var i = 0; i < this.state.count; i++) {
         this.displayProposition.push(React.createElement(Propositions, { key: i, id: i }));
       }
-
       return React.createElement(
         "article",
         { className: "p-5" },
@@ -108,30 +144,7 @@ var QuestionList = function (_React$Component2) {
             React.createElement(
               "h1",
               { className: "text-2xl my-5 3xl:text-4xl" },
-              "Question 1"
-            ),
-            React.createElement(
-              "button",
-              { className: "flex items-center focus:outline-none ml-10" },
-              React.createElement(
-                "svg",
-                {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  className: "h-5 w-5 text-red-500 ",
-                  viewBox: "0 0 20 20",
-                  fill: "currentColor"
-                },
-                React.createElement("path", {
-                  fillRule: "evenodd",
-                  d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z",
-                  clipRule: "evenodd"
-                })
-              ),
-              React.createElement(
-                "h1",
-                { className: "3xl:text-xl" },
-                "Supprimer"
-              )
+              "Question " + (this.props.id + 1)
             )
           ),
           React.createElement(
@@ -190,26 +203,12 @@ var QuestionList = function (_React$Component2) {
             className: "w-full  bg-gray-800 px-8 py-5\r focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg 3xl:text-xl",
             placeholder: "Saisir une explication (facultatif - 255 caract\xE8res )"
           })
-        ),
-        React.createElement(
-          "div",
-          { className: "flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title mt-8" },
-          React.createElement(
-            "button",
-            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
-            "Ajouter une question"
-          ),
-          React.createElement(
-            "button",
-            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
-            "Valider le quiz"
-          )
         )
       );
     }
   }]);
 
-  return QuestionList;
+  return Question;
 }(React.Component);
 
 var Propositions = function (_React$Component3) {
@@ -264,6 +263,10 @@ var Propositions = function (_React$Component3) {
         isActive: !this.state.isActive,
         selectedProposition: event.target.id
       });
+
+      for (var i = 0; i < document.getElementsByName("proposition").length; i++) {
+        document.getElementsByName("proposition")[i].parentNode.parentNode.parentNode.classList.remove("valid");
+      }document.getElementById(event.target.id).parentNode.parentNode.parentNode.classList.add("valid");
     }
   }, {
     key: "render",

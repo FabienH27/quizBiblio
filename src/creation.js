@@ -1,18 +1,58 @@
 maxlengthContentEditableModule.maxlengthContentEditable();
 class CreationMenu extends React.Component {
+  state = {
+    count: 0, 
+  }
+
+  constructor() {
+    super()
+    this.displayQuestion = [];
+    this.appendQuestion = this.appendQuestion.bind(this);
+    this.removeQuestion = this.removeQuestion.bind(this);
+  };
+
+  appendQuestion(){
+    this.setState({
+      count: this.state.count + 1
+    })
+  }
+
+  removeQuestion(){
+    this.setState({
+      count: this.state.count - 1
+    });   
+  }
+
   render() {
-    return <QuestionList />;
+    this.displayQuestion = [<Question key={0} id={0} />];
+    for (var i = 1; i <= this.state.count; i++) {
+      this.displayQuestion.push(<Question key={i} id={i} />);
+    }
+    return(
+      <div className="my-5">
+        {this.displayQuestion}
+        <div className="flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title py-12">
+          <button onClick={this.appendQuestion} type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
+            Ajouter une question
+          </button>
+          <button onClick={this.removeQuestion} type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
+            Supprimer une question
+          </button>
+          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
+            Valider le quiz
+          </button>
+        </div>
+      </div>
+    ) 
   }
 }
 
-class QuestionList extends React.Component {
+class Question extends React.Component {
   constructor(props) {
     super(props);
 
     this.displayProposition = [];
-
     this.handleChange = this.handleChange.bind(this);
-    this.appendData = this.appendData.bind(this);
 
     this.state = {
       value: "",
@@ -20,17 +60,7 @@ class QuestionList extends React.Component {
       maxValue: 4,
       minValue: 2,
       numPropositions: 2,
-      showdata: this.displayProposition,
     };
-  }
-
-  appendData() {
-    for (var i = 0; i < this.state.count; i++) {
-      this.displayProposition.push(<Propositions key={i} id={i} />);
-    }
-    this.setState({
-      showdata: this.displayProposition,
-    });
   }
 
   handleChange(selectorFiles, newValue) {
@@ -67,13 +97,12 @@ class QuestionList extends React.Component {
     for (var i = 0; i < this.state.count; i++) {
       this.displayProposition.push(<Propositions key={i} id={i} />);
     }
-
     return (
       <article className="p-5">
         <div className="max-w-2xl mx-auto 3xl:max-w-screen-xl">
           <div className="flex font-display text-white">
-            <h1 className="text-2xl my-5 3xl:text-4xl">Question 1</h1>
-            <button className="flex items-center focus:outline-none ml-10">
+            <h1 className="text-2xl my-5 3xl:text-4xl">{"Question " + (this.props.id + 1)}</h1>
+            {/*<button className="flex items-center focus:outline-none ml-10">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 text-red-500 "
@@ -87,7 +116,7 @@ class QuestionList extends React.Component {
                 />
               </svg>
               <h1 className="3xl:text-xl">Supprimer</h1>
-            </button>
+            </button>*/}
           </div>
           <div className="flex text-white" id="localImage">
             <svg
@@ -135,14 +164,6 @@ class QuestionList extends React.Component {
               focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg 3xl:text-xl"
             placeholder="Saisir une explication (facultatif - 255 caractères )"
           ></textarea>
-        </div>
-        <div className="flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title mt-8">
-          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
-            Ajouter une question
-          </button>
-          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
-            Valider le quiz
-          </button>
         </div>
       </article>
     );
@@ -195,6 +216,10 @@ class Propositions extends React.Component {
       isActive: !this.state.isActive,
       selectedProposition: event.target.id,
     });
+
+    for (var i = 0; i < document.getElementsByName("proposition").length; i++)
+      document.getElementsByName("proposition")[i].parentNode.parentNode.parentNode.classList.remove("valid");
+    document.getElementById(event.target.id).parentNode.parentNode.parentNode.classList.add("valid");
   }
 
   render() {
