@@ -19,16 +19,16 @@
 
     <section class="flex h-screen lg:max-w-6xl 3xl:max-w-screen-3xl items-center -mt-10 mx-auto">
         <section class="lg:flex mx-auto">
-            <article class="max-w-lg 3xl:max-w-screen-3xl mx-auto mt-8">
-                <h1 class="text-white text-4xl lg:text-5xl 3xl:text-7xl font-bold">Testez votre culture <span class="text-teal-500">littéraire, cinématographique</span>
+            <article class="max-w-lg 3xl:max-w-6xl mx-auto mt-8">
+                <h1 class="text-white text-4xl lg:text-5xl 3xl:text-7xl font-bold text-center lg:text-left">Testez votre culture <span class="text-teal-500">littéraire, cinématographique</span>
                     et <span class="text-teal-500">musicale</span> !</h1>
-                <p class="font-display text-white font-normal text-sm 3xl:text-4xl max-w-md 3xl:max-w-3xl my-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                <p class="font-display text-white font-normal text-sm 3xl:text-4xl text-center lg:text-left max-w-md 3xl:max-w-3xl my-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                <a href="#button-all-quiz" class="text-white bg-teal-500 px-8 py-3 
+                <a href="#button-all-quiz" class="text-white bg-teal-500 px-8 py-3 w-20
                     rounded-md hover:bg-teal-600 3xl:text-5xl 3xl:inline-block 3xl:px-14 3xl:py-8">Commencer un quiz</a>
             </article>
-            <aside class="mt-20 lg:mt-0">
-                <img src="images/appDemo.png" alt="app demo" width="600px" class="3xl:max-w-screen-3xl">
+            <aside class="mt-20 lg:mt-0 3xl:max-w-screen-3xl ">
+                <img src="images/appDemo.png" alt="app demo" width="1000px">
             </aside>
         </section>
     </section>
@@ -74,16 +74,16 @@
                 </a>   
             </article>
             
-            <article class=" text-white max-w-2xl mx-auto my-5 font-display tabcontent text-center md:text-left" id="create-quiz">
+            <article class=" text-white max-w-2xl 3xl:max-w-7xl mx-auto my-5 font-display tabcontent text-center md:text-left" id="create-quiz">
                 <h1 class="text-teal-500 text-2xl 3xl:text-6xl">Etape 1</h1>
-                <div class="md:ml-8 my-5 max-w-md mx-auto">
+                <div class="md:ml-8 my-5 max-w-2xl mx-auto">
                     <h2 class="text-2xl 3xl:text-5xl font-light">Titre</h2>
-                    <input type="text" class="bg-gray-800 text-white my-4 3xl:text-4xl p-4 3xl:my-8 focus:outline-none rounded-md focus:placeholder-teal-500 w-96" placeholder="Titre du quiz">
+                    <input type="text" maxlength="40" class="bg-gray-800 text-white my-4 3xl:text-4xl p-4 3xl:my-8 focus:outline-none rounded-md focus:placeholder-teal-500 w-96" placeholder="Titre du quiz">
                     <h2 class="text-2xl 3xl:text-5xl font-light">Description</h2>
                     <textarea placeholder="Décrivez ici votre quiz (200 caractères)" class="bg-gray-800 p-4 my-4 3xl:my-8
                         3xl:text-4xl focus:outline-none focus:placeholder-teal-500 rounded-md border-gray-400 3xl:max-w-7xl" rows="4" cols="50" maxlength="200"></textarea>
                     <h2 class="text-2xl 3xl:text-5xl font-light">Image (facultatif)</h2>
-                    <div class="mt-5 flex justify-center md:ml-20 ml-5-">
+                    <div class="mt-5 flex justify-center self-center 3xl:ml-72 ">
                         <div class="flex" id="localImage">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 3xl:h-16 3xl:w-16 flex self-center" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
@@ -162,12 +162,12 @@
     <footer class="md:flex justify-around mx-auto my-5">
         <div class="text-white font-title self-center text-center">
             <h1 class="font-semibold text-3xl 3xl:text-6xl">QuizBiblio</h1>
-            <p class="text-lg text-gray-400 3xl:text-4xl max-w-lg">Testez vos connaissances littéraires, cinématographiques et musicales.</p>
+            <p class="text-lg text-gray-400 3xl:text-4xl max-w-lg mx-auto 3xl:max-w-5xl">Testez vos connaissances littéraires, cinématographiques et musicales.</p>
             <p class="3xl:text-4xl">© 2021 - Fabien Hannon </p>
         </div>
         <form class="text-white font-title text-center mt-10 md:mt-0">
             <h1 class="font-semibold text-2xl 3xl:text-5xl">Un problème, une suggestion ?</h1>
-            <div class="my-2 md:flex max-w-md mx-auto md:mx-0">
+            <div class="my-2 md:flex mx-auto md:mx-0">
                 <input type="text" placeholder="Prénom" class="bg-gray-700 p-2 3xl:p-5 3xl:mr-5 3xl:my-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500">
                 <input type="text" placeholder="Nom" class="md:ml-10 mt-2 mb:mt-0 bg-gray-700 p-2 3xl:ml-5 3xl:my-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500">
             </div>
