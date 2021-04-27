@@ -83,23 +83,23 @@
                     <textarea placeholder="Décrivez ici votre quiz (200 caractères)" class="bg-gray-800 p-4 my-4 3xl:my-8
                         3xl:text-4xl focus:outline-none focus:placeholder-teal-500 rounded-md border-gray-400 3xl:max-w-7xl" rows="4" cols="50" maxlength="200"></textarea>
                     <h2 class="text-2xl 3xl:text-5xl font-light">Image (facultatif)</h2>
-                    <div class="mt-5 flex justify-around md:ml-20 ml-5-">
+                    <div class="mt-5 flex justify-center md:ml-20 ml-5-">
                         <div class="flex" id="localImage">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 3xl:h-16 3xl:w-16 flex self-center" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
                             </svg>
                             <div class="flex self-center">
                                 <input type="file" id="file" class="file">
-                                <label for="file" class="text-white cursor-pointer ml-5 md:w-40 3xl:text-4xl">Charger une image</label>
+                                <label for="file" class="text-white cursor-pointer ml-5 md:w-40 3xl:w-96 3xl:text-4xl">Charger une image</label>
                                 <p class="file-name font-light ml-8 3xl:text-4xl"></p>
                             </div>
                         </div>
                         <input type="text" placeholder="Entrer une URL" id="urlInput" class="3xl:text-4xl hidden absolute p-2 w-80 bg-gray-800 focus:outline-none focus:placeholder-teal-500">
-                        <button class="flex focus:outline-none" id="url" onclick="UrlClick()">
+                        <button class="flex focus:outline-none ml-24" id="url" onclick="UrlClick()">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 3xl:h-16 3xl:w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                             </svg> 
-                            <h3 class="3xl:text-4xl flex self-center md:w-40">Depuis une page web</h3>
+                            <h3 class="3xl:text-4xl flex self-center md:w-40 3xl:w-96">Depuis une page web</h3>
                         </button>
                         <button onclick="Reset()" class="-mt-3 ml-28 hidden" id="urlRemove">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 absolute" fill="none" viewBox="0 0 24 24" stroke="currentColor">

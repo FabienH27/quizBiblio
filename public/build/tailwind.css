@@ -585,9 +585,9 @@ video {
   }
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 2500px) {
   .container {
-    max-width: 2000px;
+    max-width: 2500px;
   }
 }
 
@@ -9205,7 +9205,7 @@ video {
 }
 
 .max-w-screen-3xl {
-  max-width: 2000px;
+  max-width: 2500px;
 }
 
 .min-h-0 {
@@ -22883,7 +22883,7 @@ video {
   font-size: 17px;
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 2500px) {
   .tab button {
     font-size: 3rem;
     line-height: 1;
@@ -22987,9 +22987,9 @@ textarea{
     }
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 2500px) {
     .sm\:container {
-      max-width: 2000px;
+      max-width: 2500px;
     }
   }
 
@@ -31607,7 +31607,7 @@ textarea{
   }
 
   .sm\:max-w-screen-3xl {
-    max-width: 2000px;
+    max-width: 2500px;
   }
 
   .sm\:min-h-0 {
@@ -45128,9 +45128,9 @@ textarea{
     }
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 2500px) {
     .md\:container {
-      max-width: 2000px;
+      max-width: 2500px;
     }
   }
 
@@ -53748,7 +53748,7 @@ textarea{
   }
 
   .md\:max-w-screen-3xl {
-    max-width: 2000px;
+    max-width: 2500px;
   }
 
   .md\:min-h-0 {
@@ -67269,9 +67269,9 @@ textarea{
     }
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 2500px) {
     .lg\:container {
-      max-width: 2000px;
+      max-width: 2500px;
     }
   }
 
@@ -75889,7 +75889,7 @@ textarea{
   }
 
   .lg\:max-w-screen-3xl {
-    max-width: 2000px;
+    max-width: 2500px;
   }
 
   .lg\:min-h-0 {
@@ -89410,9 +89410,9 @@ textarea{
     }
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 2500px) {
     .xl\:container {
-      max-width: 2000px;
+      max-width: 2500px;
     }
   }
 
@@ -98030,7 +98030,7 @@ textarea{
   }
 
   .xl\:max-w-screen-3xl {
-    max-width: 2000px;
+    max-width: 2500px;
   }
 
   .xl\:min-h-0 {
@@ -111551,9 +111551,9 @@ textarea{
     }
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 2500px) {
     .\32xl\:container {
-      max-width: 2000px;
+      max-width: 2500px;
     }
   }
 
@@ -120171,7 +120171,7 @@ textarea{
   }
 
   .\32xl\:max-w-screen-3xl {
-    max-width: 2000px;
+    max-width: 2500px;
   }
 
   .\32xl\:min-h-0 {
@@ -133657,7 +133657,7 @@ textarea{
   }
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 2500px) {
   .\33xl\:container {
     width: 100%;
   }
@@ -133692,9 +133692,9 @@ textarea{
     }
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 2500px) {
     .\33xl\:container {
-      max-width: 2000px;
+      max-width: 2500px;
     }
   }
 
@@ -142312,7 +142312,7 @@ textarea{
   }
 
   .\33xl\:max-w-screen-3xl {
-    max-width: 2000px;
+    max-width: 2500px;
   }
 
   .\33xl\:min-h-0 {
