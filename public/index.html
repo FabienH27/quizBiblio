@@ -107,6 +107,14 @@
                             </svg>
                         </button>
                     </div>
+                    <div class="flex items-center">
+                        <button class="mt-5 bg-gray-800 p-2 rounded-lg focus:outline-none hover:bg-gray-900 hover:text-teal-500"
+                            onclick="DeleteImages()">Supprimer l'image</button>
+                        <div class="ml-1 mt-2">
+                            <p class="text-gray-400 mt-2">Formats acceptés: <span class="text-teal-500">JPEG, PNG</span></p>
+                            <p class="text-gray-400">Taille maximale: <span class="text-teal-500">2Mo</span></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="flex md:justify-end justify-center">
                     <a href="#" class="text-white mx- r-0 bg-teal-500 px-8 py-3 rounded-md hover:bg-teal-600 3xl:text-4xl">Continuer</a>
@@ -218,18 +226,22 @@
         // Get the file name and size
         const { name: fileName, size } = file;
         // Convert size in bytes to kilo bytes
-
-        if(size > 220000){
+        if(size > 2000000){
             alert('File is too large');
-            document.querySelector('.file-name').textContent = fileNameAndSize;
         }else{
             const fileSize = (size / 1000).toFixed(2);
             // Set the text content
             const fileNameAndSize = `${fileName} - ${fileSize}KB`;
             document.querySelector('.file-name').textContent = fileNameAndSize;
         }
-
         });
+
+        function DeleteImages(){
+            document.querySelector('#file').value = '';   
+            document.querySelector('.file-name').textContent = '';  
+            document.querySelector('#urlInput').value = '';  
+        }
+
         function UrlClick(){
             document.querySelector('#localImage').style.visibility = 'hidden';
             document.querySelector('#urlInput').classList.replace('hidden', 'visible');
