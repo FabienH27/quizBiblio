@@ -22863,7 +22863,8 @@ video {
 
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500;700&family=Karla:wght@400;800&display=swap");
 
-.file, .fileProposition {
+.file,
+.fileProposition {
   opacity: 0;
   width: 0.1px;
   height: 0.1px;
@@ -22911,25 +22912,25 @@ video {
   display: none;
 }
 
-.card{
-  transition: transform .1s ease-in-out;
+.card {
+  transition: transform 0.1s ease-in-out;
 }
 
-.card:hover{
+.card:hover {
   transform: scale(1.05);
 }
 
-.prop input:checked ~ label{
+.prop input:checked ~ label {
   --tw-text-opacity: 1;
   color: rgba(20, 184, 166, var(--tw-text-opacity));
 }
 
-textarea{
+textarea {
   resize: none;
   overflow: hidden;
 }
 
-[data-placeholder]:empty:before{
+[data-placeholder]:empty:before {
   content: attr(data-placeholder);
 }
 
@@ -22950,6 +22951,18 @@ textarea{
 
 [data-placeholder]:empty:before {
   opacity: 0.5;
+}
+
+.proposition{
+  display: none;
+}
+
+.proposition:checked + label {
+  --tw-border-opacity: 1;
+  border-color: rgba(20, 184, 166, var(--tw-border-opacity));
+  border-width: 4px;
+  --tw-text-opacity: 1;
+  color: rgba(20, 184, 166, var(--tw-text-opacity))
 }
 
 @media (min-width: 640px) {
