@@ -56,17 +56,17 @@ var CreationMenu = function (_React$Component) {
           { className: "flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title py-12" },
           React.createElement(
             "button",
-            { onClick: this.appendQuestion, type: "submit", className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
+            { onClick: this.appendQuestion, type: "submit", className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none" },
             "Ajouter une question"
           ),
           React.createElement(
             "button",
-            { onClick: this.removeQuestion, type: "submit", className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
+            { onClick: this.removeQuestion, type: "submit", className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none" },
             "Supprimer une question"
           ),
           React.createElement(
             "button",
-            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none" },
+            { className: "text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none" },
             "Valider le quiz"
           )
         )

@@ -32,13 +32,13 @@ class CreationMenu extends React.Component {
       <div className="my-5">
         {this.displayQuestion}
         <div className="flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title py-12">
-          <button onClick={this.appendQuestion} type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
+          <button onClick={this.appendQuestion} type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
             Ajouter une question
           </button>
-          <button onClick={this.removeQuestion} type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
+          <button onClick={this.removeQuestion} type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
             Supprimer une question
           </button>
-          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl focus:bg-teal-600 focus:outline-none">
+          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
             Valider le quiz
           </button>
         </div>
