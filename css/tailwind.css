@@ -56,12 +56,6 @@ textarea {
   @apply overflow-hidden;
 }
 
-[data-placeholder]:empty:before {
-  content: attr(data-placeholder);
-  @apply placeholder-teal-500;
-  @apply opacity-50;
-}
-
 .proposition{
   @apply hidden;
 }

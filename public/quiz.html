@@ -7,86 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>quizBiblio</title>
     <link rel="stylesheet" href="build/tailwind.css">
-    <style>
-        /*:root {
-            --white: #ffffff;
-            --light: #f0eff3;
-            --black: #000000;
-            --dark-blue: #1f2029;
-            --dark-light: #353746;
-            --red: #da2c4d;
-            --yellow: #f8ab37;
-            --grey: #ecedf3;
-        }
-
-        [type="radio"]:checked,
-        [type="radio"]:not(:checked) {
-            visibility: hidden;
-        }
-
-        .checkbox-budget:checked+label,
-        .checkbox-budget:not(:checked)+label {
-            position: relative;
-            display: inline-block;
-            padding: 0;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            width: 260px;
-            line-height: 52px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            text-align: center;
-            border-radius: 4px;
-            overflow: hidden;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .checkbox-budget:not(:checked)+label {
-            background-color: var(--dark-light);
-        }
-
-        .checkbox-budget:checked+label {
-            background-color: transparent;
-        }
-
-        .checkbox-budget:checked+label::before,
-        .checkbox-budget:not(:checked)+label::before {
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 4px;
-            background-color: green;
-            z-index: -1;
-        }
-
-        .checkbox-budget:checked+label span,
-        .checkbox-budget:not(:checked)+label span {
-            position: relative;
-            display: block;
-        }
-
-        .checkbox-budget:checked+label span::before,
-        .checkbox-budget:not(:checked)+label span::before {
-            position: absolute;
-            content: attr(data-hover);
-            top: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-        }*/
-
-    </style>
 </head>
 
 <body class="bg-gray-800 font-medium">
     <header class="flex justify-between mt-2 max-w-6xl 3xl:max-w-screen-3xl mx-auto 3xl:text-5xl">
-        <h1 class="text-white font-title font-bold text-3xl 3xl:text-6xl 3xl:m-8 justify-end">Quiz<span
-                class="text-teal-500">Biblio</span></h1>
+        <a href="index.html" class="text-white font-title font-bold text-3xl 3xl:text-6xl 3xl:m-8 justify-end">Quiz<span class="text-teal-500">Biblio</span></a>
         <div class="flex self-center">
             <a href="login.html" class="text-teal-500 mx-5 self-center text-center">Se connecter</a>
             <a href="register.html"
@@ -94,18 +19,18 @@
         </div>
     </header>
 
-    <section class="mx-auto mt-10">
-        <img src="images/CVT_HP.jpg" alt="Harry Potter image" class="mx-auto" />
-        <div class="max-w-lg mx-auto text-center">
-            <h1 class="text-white text-5xl mt-5">Harry Potter</h1>
-            <h2 class="text-gray-400 mt-2">Par Fabien H</h2>
-            <p class="text-white mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    <section class="mx-auto mt-10 lg:flex max-w-3xl justify-center items-center">
+        <img src="images/CVT_HP.jpg" alt="Harry Potter image" class="mx-auto w-48 3xl:w-64" />
+        <div class="ml-8 text-center lg:text-left">
+            <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">Harry Potter</h1>
+            <h2 class="text-gray-400 mt-2 3xl:text-xl">Par Fabien H</h2>
+            <p class="text-white mt-2 3xl:text-2xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
         </div>
     </section>
 
-    <button class="flex items-center text-teal-500 mx-auto text-3xl mt-10 focus:outline-none hover:text-white">Commencer
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1" viewBox="0 0 20 20" fill="currentColor">
+    <button class="flex items-center text-teal-500 mx-auto text-3xl 3xl:text-6xl my-10 focus:outline-none hover:text-white">Commencer
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1 3xl:h-16 3xl:w-16" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"
                 clip-rule="evenodd" />
@@ -113,58 +38,41 @@
     </button>
 
     <section>
-        <section class="max-w-xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 rounded-lg font-title shadow-lg">
-            <h2 class="font-semibold">Question 1</h2>
-            <h1 class="text-teal-500 text-4xl mt-2 font-bold">Intitulé de la question</h1>
+        <section class="max-w-xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
+            <h2 class="font-semibold 3xl:text-2xl">Question 1</h2>
+            <h1 class="text-teal-500 text-4xl mt-2 font-bold 3xl:text-6xl">Intitulé de la question</h1>
             <div class="hidden">
-                <p class="text-teal-500 mt-2 font-bold">Bonne réponse !</p>
-                <p class="font-display">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                <p class="text-teal-500 mt-2 font-bold 3xl:text-2xl">Bonne réponse !</p>
+                <p class="font-display 3xl:text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
             </div>
         </section>
-        <section class="max-w-sm mx-auto my-5 text-white font-display">
-            <!--<label class="bg-gray-700 rounded-lg px-8 py-4 my-2 flex shadow-lg hover:text-teal-500">
-                Proposition 1
-                <input type="radio" name="proposition" >
-            </label>
-            <label class="bg-gray-700 rounded-lg px-8 py-4 my-2 flex shadow-lg hover:text-teal-500 focus:outline-none">
-                Proposition 2
-                <input type="radio" name="proposition">
-            </label>
-            <label class="bg-gray-700 rounded-lg px-8 py-4 my-2 flex shadow-lg hover:text-teal-500 focus:outline-none">
-                Proposition 3
-                <input type="radio" name="proposition">
-            </label>
-            <label class="bg-gray-700 rounded-lg px-8 py-4 my-2 flex shadow-lg hover:text-teal-500 focus:outline-none">
-                Proposition 4
-                <input type="radio" name="proposition">
-            </label>-->
-            <div class="h-15">
+        <section class="max-w-lg 3xl:max-w-3xl mx-auto my-5 text-white font-display md:grid grid-cols-2 gap-10 items-baseline ">
+            <div>
                 <input class="proposition" type="radio" name="proposition" id="proposition-1" checked>
-                <label class=" bg-gray-700 rounded-lg px-8 py-4 my-2 flex justify-center shadow-lg" for="proposition-1">
+                <label class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8" for="proposition-1">
                     Proposition 1
                 </label>
             </div>
-            <div class="h-15">
-                <input class="proposition" type="radio" name="proposition" id="proposition-2" >
-                <label class=" bg-gray-700 rounded-lg px-8 py-4 my-2 flex justify-center shadow-lg" for="proposition-2">
-                   Proposition 2
+            <div>
+                <input class="proposition" type="radio" name="proposition" id="proposition-2">
+                <label class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8" for="proposition-2">
+                    Proposition 2
                 </label>
             </div>
             <div>
-                <input class="proposition" type="radio" name="proposition" id="proposition-3" >
-                <label class="bg-gray-700 rounded-lg px-8 py-4 my-2 flex justify-center shadow-lg" for="proposition-3">
-                   Proposition 3
+                <input class="proposition" type="radio" name="proposition" id="proposition-3">
+                <label class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8" for="proposition-3">
+                    Proposition 3
                 </label>
             </div>
             <div>
-                <input class="proposition" type="radio" name="proposition" id="proposition-4" >
-                <label class=" bg-gray-700 rounded-lg px-8 py-4 my-2 flex justify-center shadow-lg" for="proposition-4">
-                   Proposition 4
+                <input class="proposition" type="radio" name="proposition" id="proposition-4">
+                <label class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8" for="proposition-4">
+                    Proposition 4
                 </label>
             </div>
         </section>
     </section>
 </body>
-
 </html>
