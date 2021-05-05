@@ -1,0 +1,21 @@
+{% extends 'quizApps/base.html' %}
+{% load static %}
+
+{% block body %}
+    <section class="flex flex-col items-center mt-48">
+        <section class="bg-gray-700 mx-auto 3xl:py-16 py-5 font-bold px-12">
+            <h1 class="text-white pb-5 text-3xl text-center 3xl:text-7xl">Se connecter</h1>
+            <form action="#" method="POST" class="flex flex-col text-white mx-auto">
+                <label class="mt-5 3xl:mt-8 3xl:text-4xl" for="email">Adresse e-mail</label>
+                <input type="text" placeholder="Adresse e-mail" name="email" class="bg-gray-800 p-2 focus:outline-none focus:placeholder-teal-500 3xl:text-3xl 3xl:p-5" autocomplete="email">
+                <label class="mt-5 3xl:mt-8 3xl:text-4xl" for="password">Mot de passe</label>
+                <input type="password" name="password" class="bg-gray-800 p-2 focus:outline-none focus:placeholder-teal-500 3xl:p-5 3xl:text-3xl" autocomplete="current-password">
+                <button class="text-white bg-teal-500 px-8 py-3 mt-5 rounded-md hover:bg-teal-600 3xl:text-5xl 3xl:mt-16 3xl:inline-block text-center">Se connecter</button>
+            </form>
+        </section>
+        <a href="{% url 'register' %}" class="font-display text-white text-sm my-2 3xl:text-3xl">Vous n'avez pas de compte ? S'inscrire</a>
+    </section>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

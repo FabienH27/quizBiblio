@@ -21,8 +21,8 @@
                 </button>
             </div>
             <div :class="{'flex': open, 'hidden': !open}"  class=" flex-grow pb-4 md:pb-0 hidden md:flex justify-center md:justify-end md:flex-row items-center">
-                <a href="login.html" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold hover:bg-gray-200 rounded-lg">Se connecter</a>
-                <a href="register.html" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5">S'inscrire</a>
+                <a href="{% url 'login' %}" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold rounded-lg hover:text-white">Se connecter</a>
+                <a href="{% url 'register' %}" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 hover:bg-white hover:text-teal-500">S'inscrire</a>
             </div>
         </div>
     </header>
@@ -30,6 +30,7 @@
     {% block body %}
     {% endblock %}
 
+    {% block footer %}
     <footer class="md:flex justify-around mx-auto my-5">
         <div class="text-white font-title self-center text-center">
             <h1 class="font-semibold text-3xl 3xl:text-6xl">QuizBiblio</h1>
@@ -52,6 +53,7 @@
             </svg></button>
         </form>
     </footer>
+    {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     {% block scripts %}
