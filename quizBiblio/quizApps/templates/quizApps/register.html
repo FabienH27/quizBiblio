@@ -1,26 +1,88 @@
 {% extends 'quizApps/base.html' %}
 {% load static %}
 
+{% block styles %}
+<style>
+    #hint_id_username, #hint_id_password1, #hint_id_password2, #hint_id_email {
+        color: #9CA3AF;
+    }
+
+    input {
+        background-color: rgba(31, 41, 55, var(--tw-bg-opacity));
+        padding: 8px;
+        width: 100%;
+        color: white;
+    }
+
+    label {
+          color: white;     
+    }
+
+    p, ul{
+        font-size: 80%;
+        color: #9CA3AF;
+        width: 260px;
+    }
+    .errorlist {
+        color:#EF4444;
+    }
+
+    input:-webkit-autofill,
+    textarea:-webkit-autofill,
+    select:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px rgba(31, 41, 55, var(--tw-bg-opacity)) inset !important;
+        -webkit-text-fill-color: white !important;
+    }
+
+</style>
+{% endblock %}
+
 {% block body %}
-<section class="flex flex-col items-center mt-20">
-    <section class="bg-gray-700 mx-auto 3xl:py-16 py-5 font-bold px-16">
-        <h1 class="text-white pb-5 text-3xl text-center 3xl:text-7xl">S'inscrire</h1>
-        <form action="#" method="POST" class="flex flex-col text-white mx-auto">
-            <label class="mt-5 3xl:mt-8 3xl:text-4xl" for="pseudo">Pseudonyme</label>
-            <input type="text" placeholder="Pseudonyme" name="pseudo" class="bg-gray-800 p-2 focus:outline-none focus:placeholder-teal-500 3xl:text-3xl 3xl:p-5" autocomplete="pseudo">
-            <label class="mt-5 3xl:mt-8 3xl:text-4xl" for="email">Adresse e-mail</label>
-            <input type="text" placeholder="Adresse e-mail" name="email" class="bg-gray-800 p-2 focus:outline-none focus:placeholder-teal-500 3xl:text-3xl 3xl:p-5" autocomplete="email">
-            <label class="mt-5 3xl:mt-8 3xl:text-4xl" for="password">Mot de passe</label>
-            <input type="password" name="password" class="bg-gray-800 p-2 focus:outline-none focus:placeholder-teal-500 3xl:text-3xl 3xl:p-5" autocomplete="new-password">
-            <label class="mt-5 3xl:mt-8 3xl:text-4xl" for="password" >Mot de passe (Confirmation) </label>
-            <input type="password" name="password" class="bg-gray-800 p-2 focus:outline-none focus:placeholder-teal-500 3xl:text-3xl 3xl:p-5" autocomplete="new-password">
-            <button class="text-white bg-teal-500 px-8 py-3 mt-5 rounded-md hover:bg-teal-600 3xl:text-5xl 3xl:mt-16 3xl:inline-block text-center">S'inscrire</button>
+
+<section class="flex flex-col items-center mt-8">
+    <section class="bg-gray-700 mx-auto 3xl:py-16 py-5 font-bold px-16 max-w-sm">
+        <h1 class="text-white pb-5 text-4xl text-center 3xl:text-7xl">S'inscrire</h1>
+        <form method="post" class="flex flex-col mx-auto">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="my-2">
+                    <label>{{field.label}}</label>
+                    <div class="flex">
+                        {{field}}
+                        <button class="focus:outline-none focus:text-teal-500 hover:text-teal-500 text-white" onclick="showInfos('{{field.name}}')" type="button"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                          </svg></button>    
+                    </div>
+                    {{ field.errors }}
+                    <p id="info-{{field.name}}" class="hidden">{{field.help_text}}</p>
+                </div>
+            {% endfor %}
+            <button type="submit" class="w-full py-3 rounded bg-teal-500 text-white hover:bg-white hover:text-teal-500 focus:outline-none my-1">S'inscrire</button>
         </form>
     </section>
     <a href="{% url 'login' %}" class="font-display text-white text-sm my-2 3xl:text-3xl">Vous avez déjà un compte ? Se connecter</a>
 </section>
-
 {% endblock %}
 
 {% block footer %}
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    document.getElementById('info-password1').nextSibling.classList.toggle('hidden');
+
+    function showInfos(name){
+        if(name == 'username')
+            document.getElementById('info-username').classList.toggle('hidden');
+        if(name == 'email')
+            document.getElementById('info-email').classList.toggle('hidden');
+        if(name == 'password1'){
+            document.getElementById('info-password1').nextSibling.classList.toggle('hidden');
+        }
+        if(name == 'password2')
+            document.getElementById('info-password2').classList.toggle('hidden');
+    }
+
+</script>
+
 {% endblock %}

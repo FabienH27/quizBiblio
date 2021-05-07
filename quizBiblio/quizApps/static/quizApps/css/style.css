@@ -22930,29 +22930,6 @@ textarea {
   overflow: hidden;
 }
 
-[data-placeholder]:empty:before {
-  content: attr(data-placeholder);
-}
-
-[data-placeholder]:empty:before::-moz-placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgba(20, 184, 166, var(--tw-placeholder-opacity));
-}
-
-[data-placeholder]:empty:before:-ms-input-placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgba(20, 184, 166, var(--tw-placeholder-opacity));
-}
-
-[data-placeholder]:empty:before::placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgba(20, 184, 166, var(--tw-placeholder-opacity));
-}
-
-[data-placeholder]:empty:before {
-  opacity: 0.5;
-}
-
 .proposition{
   display: none;
 }
@@ -22963,6 +22940,11 @@ textarea {
   border-width: 4px;
   --tw-text-opacity: 1;
   color: rgba(20, 184, 166, var(--tw-text-opacity))
+}
+
+input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 @media (min-width: 640px) {
