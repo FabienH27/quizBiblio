@@ -8,7 +8,6 @@ from django.contrib.auth import (
     authenticate, get_user_model, password_validation,
 )
 
-
 class UsernameField(forms.CharField):
     def to_python(self, value):
         return unicodedata.normalize('NFKC', super().to_python(value))
@@ -54,6 +53,14 @@ class RegisterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self._meta.model.USERNAME_FIELD in self.fields:
             self.fields[self._meta.model.USERNAME_FIELD].widget.attrs['autofocus'] = True
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        try:
+            match = User.objects.filter(email=email)
+        except User.DoesNotExist:
+            return email
+        raise forms.ValidationError('Cette adresse e-mail existe déjà.')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
