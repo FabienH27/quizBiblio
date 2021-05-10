@@ -22,8 +22,13 @@
                 </button>
             </div>
             <div :class="{'flex': open, 'hidden': !open}"  class=" flex-grow pb-4 md:pb-0 hidden md:flex justify-center md:justify-end md:flex-row items-center">
+                {% if not request.user.is_authenticated %}
                 <a href="{% url 'login' %}" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold rounded-lg hover:text-white">Se connecter</a>
                 <a href="{% url 'register' %}" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 hover:bg-white hover:text-teal-500">S'inscrire</a>
+                {% else %}
+                <p class="text-white px-5 border-r-2 border-white">{{request.user}}</p>
+                <a href="" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold rounded-lg hover:text-white">Se déconnecter</a> 
+                {% endif %}
             </div>
         </div>
     </header>
