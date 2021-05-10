@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import views as auth_views
@@ -38,6 +38,7 @@ def register(request):
             form.save()
             email = form.cleaned_data['email']
             raw_password = form.cleaned_data.get('password1')
+            print(email)
             user = authenticate(email, password=raw_password)
             login(user)
             return redirect('index')
@@ -59,3 +60,7 @@ def login(request):
 class LoginView(auth_views.LoginView):
     form_class = LoginForm
     template_name = 'quizApps/login.html'
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
