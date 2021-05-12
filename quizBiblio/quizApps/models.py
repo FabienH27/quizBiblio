@@ -18,13 +18,14 @@ class UserQuiz(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
 
+class Proposition(models.Model):
+    propositionText = models.CharField(_('proposition'), max_length=255)
+    image = models.ImageField(upload_to='uploads/',blank=True, null=True)
+    question = models.ForeignKey('Question', on_delete=models.CASCADE,related_name='+')
+
 class Question(models.Model):
     questionText = models.CharField(_('question'), max_length=255)
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     description = models.TextField(_('description'))
     quiz = models.ManyToManyField(Quiz)
-
-class Proposition(models.Model):
-    propositionText = models.CharField(_('proposition'), max_length=255)
-    image = models.ImageField(upload_to='uploads/',blank=True, null=True)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    bonneReponse = models.ForeignKey('Proposition', on_delete=models.CASCADE,related_name='+')

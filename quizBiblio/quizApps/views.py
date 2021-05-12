@@ -1,10 +1,10 @@
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import views as auth_views
-from django.urls import reverse_lazy
-from django.views import generic
 from .forms import LoginForm, RegisterForm
+from django.views.generic import ListView
+
+from .models import Quiz, Question, UserQuiz, Proposition, CustomUser
 
 def index(request):
     return render(request, 'quizApps/index.html')
@@ -31,3 +31,10 @@ class LoginView(auth_views.LoginView):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+def create_quiz(request):
+    if request.method == 'POST':
+        print(request)
+        return redirect('index')
+    else:
+        return render(request, 'quizApps/quiz-creation.html')

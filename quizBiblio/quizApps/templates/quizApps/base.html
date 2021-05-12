@@ -28,7 +28,7 @@
                 {% else %}
                 <div class="text-white px-5 border-r-2 border-white flex">
                     {% if 'quizApps.add_userquiz' in perms %}
-                    <a href="" class="hover:text-teal-500">Créer un quiz</a>
+                    <a href="{% url 'create-quiz' %}" class="hover:text-teal-500">Créer un quiz</a>
                     {% endif %}
                     <p class="ml-8">{{request.user}}</p>
                 </div>

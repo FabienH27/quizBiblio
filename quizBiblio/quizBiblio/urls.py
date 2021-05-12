@@ -25,4 +25,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/', views.register, name='register'),
     path("logout/", views.logout_view, name="logout"),
+    path('create-quiz/', views.create_quiz, name='create-quiz')
 ]

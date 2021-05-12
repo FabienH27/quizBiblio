@@ -95,28 +95,13 @@ class Question extends React.Component {
   render() {
     this.displayProposition = [];
     for (var i = 0; i < this.state.count; i++) {
-      this.displayProposition.push(<Propositions key={i} id={i} />);
+      this.displayProposition.push(<Propositions key={i} id={i} question={this.props.id} />);
     }
     return (
       <article className="p-5">
         <div className="max-w-2xl mx-auto 3xl:max-w-screen-xl">
           <div className="flex font-display text-white">
             <h1 className="text-2xl my-5 3xl:text-4xl">{"Question " + (this.props.id + 1)}</h1>
-            {/*<button className="flex items-center focus:outline-none ml-10">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-red-500 "
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <h1 className="3xl:text-xl">Supprimer</h1>
-            </button>*/}
           </div>
           <div className="flex text-white" id="localImage">
             <svg
@@ -134,13 +119,13 @@ class Question extends React.Component {
               />
             </svg>
             <div className="flex self-center">
-              <Upload id="file" />
+              <Upload id="file" name={"imageQ" + (this.props.id + 1)}/>
             </div>
           </div>
           <textarea
             className="text-5xl my-5 text-teal-500
             font-bold bg-gray-700 decoration-clone focus:outline-none placeholder-teal-500 placeholder-opacity-50"
-            id="question"
+            id="question" name={"question" + (this.props.id + 1)}
             placeholder="Intitulé de la question"
             rows={1}
             maxLength="100"
@@ -158,7 +143,7 @@ class Question extends React.Component {
         </div>
         <div className=" max-w-xl mx-auto font-display mt-8">
           <textarea
-            type="text"
+            type="text" name={"explication-q" + (this.props.id + 1)}
             onInput={this.auto_grow} maxLength="255"
             className="w-full  bg-gray-800 px-8 py-5
               focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg 3xl:text-xl"
@@ -232,7 +217,7 @@ class Propositions extends React.Component {
         <div className="flex justify-center items-center">
           <textarea
             rows={1} maxLength={50}
-            type="text"
+            type="text" name={"proposition" + (this.props.question+1) + "-" + (this.props.id + 1)}
             placeholder={"proposition " + (this.props.id + 1)}
             className="bg-gray-800 w-30 focus:outline-none text-center placeholder-gray-300 3xl:text-3xl 3xl:my-2"
           />
@@ -249,7 +234,7 @@ class Propositions extends React.Component {
       contentImage = (
         <div>
           <input
-            type="file"
+            type="file" name={"imageProp" + (this.props.id)}
             id={this.props.id}
             className="fileProposition"
             onChange={this.handleImageChange}
