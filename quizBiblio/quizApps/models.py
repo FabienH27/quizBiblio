@@ -7,6 +7,7 @@ class CustomUser(AbstractUser):
 
 class Quiz(models.Model):
     title = models.CharField(_('title'), max_length=30)
+    description = models.TextField(_('description'), blank=True, null=True)
     theme = models.CharField(_('theme'), max_length=255)
     image = models.ImageField(_('image'), blank=True, null=True)
     user = models.ManyToManyField(CustomUser, through='UserQuiz', related_name='quiz')
@@ -28,4 +29,3 @@ class Question(models.Model):
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     description = models.TextField(_('description'))
     quiz = models.ManyToManyField(Quiz)
-    bonneReponse = models.ForeignKey('Proposition', on_delete=models.CASCADE,related_name='+')

@@ -1,4 +1,3 @@
-maxlengthContentEditableModule.maxlengthContentEditable();
 class CreationMenu extends React.Component {
   state = {
     count: 0, 
@@ -32,13 +31,13 @@ class CreationMenu extends React.Component {
       <div className="my-5">
         {this.displayQuestion}
         <div className="flex 3xl:max-w-7xl max-w-3xl mx-auto justify-end font-title py-12">
-          <button onClick={this.appendQuestion} type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
+          <button onClick={this.appendQuestion} type="button" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
             Ajouter une question
           </button>
-          <button onClick={this.removeQuestion} type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
+          <button onClick={this.removeQuestion} type="button" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
             Supprimer une question
           </button>
-          <button className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
+          <button type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
             Valider le quiz
           </button>
         </div>
@@ -234,7 +233,7 @@ class Propositions extends React.Component {
       contentImage = (
         <div>
           <input
-            type="file" name={"imageProp" + (this.props.id)}
+            type="file" name={"imageProp" + (this.props.id+1)}
             id={this.props.id}
             className="fileProposition"
             onChange={this.handleImageChange}

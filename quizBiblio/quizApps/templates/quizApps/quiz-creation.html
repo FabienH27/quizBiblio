@@ -1,16 +1,14 @@
 {% extends 'quizApps/base.html' %}
 {% load static %}
 
-<!-- TODO: add name to input so form can get them -->
-
 {% block body %}
 <form method="post">
     {% csrf_token %}
     <section class="text-center max-w-3xl mx-auto text-white font-display my-16 lg:flex lg:text-left">
         <article class="3xl:w-4/12">
             <div id="imageInput">
-                <input type="file" id="file" class="file" name="quizImage" accept="image/*">
-                <label for="file" class="text-white cursor-pointer ml-5 md:w-40 3xl:w-96 3xl:text-4xl flex flex-col items-center">
+                <input type="file" id="quizImage" class="file" name="quizImage" accept="image/*">
+                <label for="quizImage" class="text-white cursor-pointer ml-5 md:w-40 3xl:w-96 3xl:text-4xl flex flex-col items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>Charger une image</label>
@@ -45,7 +43,6 @@
 <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-<script src="https://unpkg.com/maxlength-contenteditable@1.0.1/dist/maxlength-contenteditable.js"></script>
 <script>
     var autoExpand = function (field) {
 
@@ -71,7 +68,7 @@
 </script>
 
 <script>
-    const file = document.querySelector('#file');
+    const file = document.querySelector('#quizImage');
     file.addEventListener('change', (e) => {
         // Get the selected file
         const [file] = e.target.files;

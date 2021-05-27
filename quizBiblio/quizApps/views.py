@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import views as auth_views
 from .forms import LoginForm, RegisterForm
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
 
 from .models import Quiz, Question, UserQuiz, Proposition, CustomUser
 
@@ -32,9 +33,39 @@ def logout_view(request):
     logout(request)
     return redirect('index')
 
+@login_required
 def create_quiz(request):
     if request.method == 'POST':
-        print(request)
+        quizTitle = request.POST.get('quizTitle')
+        quizDescription = request.POST.get('quizDescription')
+        quizImage = request.POST.get('quizImage')
+        quizUser = request.user.id
+        nbQuestion = request.POST.get('numberQuestion')
+        quiz, created = Quiz.objects.update_or_create(
+            title=quizTitle,
+            description=quizDescription,
+            theme = "ThemeTest",
+            image = quizImage,
+        )
+        user = CustomUser.objects.get(id=quizUser)
+        quiz.user.add(user)
+        #looping over questions
+        for i in range(int(nbQuestion)):
+            question, created = Question.objects.update_or_create(
+                questionText= request.POST.get("question"+(str(i+1))),
+                image = request.POST.get('imageQfile'+(str(i+1))),
+                description=request.POST.get('explication-q'+(str(i+1))),
+            )
+            question.quiz.add(quiz)
+
+            propCount = request.POST.get('q'+(str(i+1))+'-propCount')
+            #Looping over possible answers
+            for j in range(int(propCount)):
+                proposition, created = Proposition.objects.update_or_create(
+                    propositionText= request.POST.get('proposition'+(str(i+1))+'-'+(str(j+1))),
+                    image = request.POST.get('image'), 
+                    question = question
+                )
         return redirect('index')
     else:
         return render(request, 'quizApps/quiz-creation.html')
