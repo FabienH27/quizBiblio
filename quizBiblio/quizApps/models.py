@@ -9,7 +9,7 @@ class Quiz(models.Model):
     title = models.CharField(_('title'), max_length=30)
     description = models.TextField(_('description'), blank=True, null=True)
     theme = models.CharField(_('theme'), max_length=255)
-    image = models.ImageField(_('image'), blank=True, null=True)
+    image = models.ImageField(_('image'), blank=True, null=True, upload_to='uploads/')
     user = models.ManyToManyField(CustomUser, through='UserQuiz', related_name='quiz')
 
 class UserQuiz(models.Model):

@@ -40,6 +40,7 @@ class CreationMenu extends React.Component {
           <button type="submit" className="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 3xl:text-2xl hover:bg-teal-600 focus:outline-none">
             Valider le quiz
           </button>
+          <input className="hidden" type="text" name="numberQuestion" value={this.state.count+1} readOnly />
         </div>
       </div>
     ) 
@@ -86,11 +87,6 @@ class Question extends React.Component {
     });
   };
 
-  auto_grow(element) {
-    element.style.height = "5px";
-    element.style.height = element.scrollHeight + "px";
-  }
-
   render() {
     this.displayProposition = [];
     for (var i = 0; i < this.state.count; i++) {
@@ -118,7 +114,7 @@ class Question extends React.Component {
               />
             </svg>
             <div className="flex self-center">
-              <Upload id="file" name={"imageQ" + (this.props.id + 1)}/>
+              <Upload id="file" /*name={"imageQ" + (this.props.id + 1)}*//>
             </div>
           </div>
           <textarea
@@ -130,7 +126,7 @@ class Question extends React.Component {
             maxLength="100"
           ></textarea>
           <div>
-            <InputNumber
+            <InputNumber question={(this.props.id+1)}
               count={this.state.count}
               increment={this.increment}
               decrement={this.decrement}
@@ -143,7 +139,7 @@ class Question extends React.Component {
         <div className=" max-w-xl mx-auto font-display mt-8">
           <textarea
             type="text" name={"explication-q" + (this.props.id + 1)}
-            onInput={this.auto_grow} maxLength="255"
+            maxLength="255"
             className="w-full  bg-gray-800 px-8 py-5
               focus:outline-none focus:placeholder-teal-500 placeholder-gray-500 text-white text-lg 3xl:text-xl"
             placeholder="Saisir une explication (facultatif - 255 caractères )"
@@ -200,9 +196,8 @@ class Propositions extends React.Component {
       isActive: !this.state.isActive,
       selectedProposition: event.target.id,
     });
-
-    for (var i = 0; i < document.getElementsByName("proposition").length; i++)
-      document.getElementsByName("proposition")[i].parentNode.parentNode.parentNode.classList.remove("valid");
+    for (var i = 0; i < document.getElementsByName("q"+(this.props.question + 1)+"-prop").length; i++)
+      document.getElementsByName("q"+(this.props.question + 1)+"-prop")[i].parentNode.parentNode.parentNode.classList.remove("valid");
     document.getElementById(event.target.id).parentNode.parentNode.parentNode.classList.add("valid");
   }
 
@@ -228,22 +223,6 @@ class Propositions extends React.Component {
           >
             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
           </svg>
-        </div>
-      );
-      contentImage = (
-        <div>
-          <input
-            type="file" name={"imageProp" + (this.props.id+1)}
-            id={this.props.id}
-            className="fileProposition"
-            onChange={this.handleImageChange}
-            accept="image/png, image/jpeg"
-          />
-          <label
-            htmlFor={this.props.id}
-            className="cursor-pointer md:w-40 3xl:text-xl">
-            Remplacer par une image
-          </label>
         </div>
       );
     } else {
@@ -277,18 +256,32 @@ class Propositions extends React.Component {
                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                   />
                 </svg>
+                <div>
+                  <input
+                    type="file" name={"q"+(this.props.question+1) + "-imageProp" + (this.props.id+1)}
+                    id={this.props.id}
+                    className="fileProposition"
+                    onChange={this.handleImageChange}
+                    accept="image/png, image/jpeg"
+                  />
+                  <label
+                    htmlFor={this.props.id}
+                    className="cursor-pointer md:w-40 3xl:text-xl">
+                    Remplacer par une image
+                  </label>
+                </div>
                 {contentImage}
               </div>
             </div>
             <div>
               <input
                 type="radio"
-                id={"prop" + this.props.id}
-                name="proposition"
+                id={"q"+ (this.props.question+1) + "-prop" + (this.props.id+1)}
+                name={"q"+(this.props.question + 1)+"-prop"}
                 className="hidden"
                 onChange={this.onValueChange} 
               />
-              <label htmlFor={"prop" + this.props.id} className="flex">
+              <label htmlFor={"q"+ (this.props.question+1) + "-prop" + (this.props.id+1)} className="flex">
                 <p className="text-sm mr-1 text-center 3xl:text-xl">{text}</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -395,9 +388,7 @@ class InputNumber extends React.Component {
           Nombre de propositions
         </h1>
         <div className="inline-flex items-center border-2 border-gray-500 rounded-md bg-gray-800 w-20">
-          <span className="px-3 text-gray-400 w-10 text-center bg-gray-800">
-            {this.props.count}
-          </span>
+          <input className="px-3 text-gray-400 w-10 text-center bg-gray-800" value={this.props.count} readOnly name={"q"+this.props.question+"-propCount"} />
           <div className="flex flex-col ml-4 text-gray-500 border-l-2 py-1 border-gray-500">
             <button
               type="button"

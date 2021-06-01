@@ -31,6 +31,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quizApps',
+    'tailwind',
+    'quizApps'
 ]
 
 MIDDLEWARE = [
@@ -134,3 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'quizApps.CustomUser'
 AUTHENTICATION_BACKENDS = ['quizApps.backends.EmailBackend'] # new
 LOGIN_REDIRECT_URL = '/'
+
+TAILWIND_APP_NAME = 'quizApps'
+
+NPM_BIN_PATH = r"D:\Programs\nodejs\npm.cmd"

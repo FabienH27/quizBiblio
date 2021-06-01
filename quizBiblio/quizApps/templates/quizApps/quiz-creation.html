@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <section class="text-center max-w-3xl mx-auto text-white font-display my-16 lg:flex lg:text-left">
         <article class="3xl:w-4/12">
@@ -16,7 +16,7 @@
             <div id="imagePreview" class="hidden">
                 <p class="file-name font-light ml-8 3xl:text-4xl"></p>
                 <img id="quizImg" src="#" alt="quiz image" />
-                <button type="button" onclick="Reset()">Supprimer l'image</button>
+                <button type="button" onclick="DeleteImages()">Supprimer l'image</button>
             </div>
             <!--<img src="{% static 'quizApps/images/CVT_HP.jpg' %}" alt="couverture HP" class="mx-auto object-scale-down w-96 ">-->
         </article>
@@ -90,9 +90,9 @@
     });
 
     function DeleteImages() {
-        document.querySelector('#file').value = '';
-        document.querySelector('.file-name').textContent = '';
-        document.querySelector('#urlInput').value = '';
+        document.querySelector('#quizImg').src = '';
+        document.getElementById("imagePreview").classList.add('hidden');
+        document.getElementById("imageInput").classList.remove('hidden');
     }
 
     function UrlClick() {
@@ -107,13 +107,13 @@
 
     function Reset() {
         document.querySelector('#localImage').style.visibility = 'visible';
-        document.querySelector('#urlRemove').classList.replace('visible', 'hidden');
+        document.querySelector('#quizImg').classList.replace('visible', 'hidden');
         document.querySelector('#urlInput').value = "";
     }
 </script>
 
 <!-- Load our React component. -->
-<script src="{% static 'quizApps/js/build/creation.js' %}" type="text/babel"></script>
+<script src="{% static 'quizApps/creation.js' %}" type="text/babel"></script>
 {% endblock %}
 </body>
 
