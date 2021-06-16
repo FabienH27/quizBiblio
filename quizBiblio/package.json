@@ -1,21 +1,17 @@
 {
   "name": "quiz-biblio",
   "version": "1.0.0",
-  "description": "Un site de quiz",
+  "description": "A quiz application made with Django & Tailwind CSS",
+  "main": "index.js",
   "scripts": {
-    "build": "postcss css/tailwind.css -o public/build/tailwind.css"
+    "build": "postcss quizApps/static/quizApps/css/tailwind.css -o quizApps/static/quizApps/css/style.css"
   },
   "keywords": [],
-  "author": "",
+  "author": "FabienH27",
   "license": "ISC",
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-react-app": "^3.1.2",
-    "postcss-cli": "^8.3.1"
-  },
-  "devDependencies": {
     "autoprefixer": "^10.2.6",
-    "postcss": "^8.3.4",
+    "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.1.4"
   },
   "repository": {

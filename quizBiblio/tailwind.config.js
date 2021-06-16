@@ -1,29 +1,33 @@
-const colors = require("tailwindcss/colors");
+const colors = require('tailwindcss/colors')
 
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
-      transparent: "transparent",
-      current: "currentColor",
+      transparent: 'transparent',
+      current: 'currentColor',
       white: colors.white,
       teal: colors.teal,
       gray: colors.coolGray,
       red: colors.red,
     },
     fontFamily: {
-      title: ["Fira Sans", "Open Sans", "Nunito Sans"],
-      display: ["Karla", "Nunito", " Halant", "PT Serif"],
+      title: [
+        'Fira Sans', 'Open Sans', 'Nunito Sans'
+      ],
+      display: [
+        'Karla', 'Nunito',' Halant', 'PT Serif'
+      ]
     },
-    extend: {
-      screens: {
-        "3xl": "2500px",
-      },
-    },
+    extend:{
+      screens:{
+        '3xl':'2500px'
+      }
+    }
   },
   variants: {
     extend: {},
   },
   plugins: [],
-};
+}
