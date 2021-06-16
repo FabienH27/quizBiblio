@@ -1,11 +1,11 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import views as auth_views
-from .forms import LoginForm, RegisterForm
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 
 from .models import Quiz, Question, UserQuiz, Proposition, CustomUser
+from .forms import QuizForm, PropositionForm, QuestionForm, LoginForm, RegisterForm
 
 def index(request):
     return render(request, 'quizApps/index.html')
@@ -36,7 +36,11 @@ def logout_view(request):
 @login_required
 def create_quiz(request):
     if request.method == 'POST':
-        test = Quiz(request.POST, request.FILES)
+        quiz = QuizForm(request.POST, request.FILES)
+
+        question = QuestionForm(request.POST,request.FILES)
+        print(question)
+        return render(request, 'quizApps/quiz-creation.html', {'quiz': quiz,'question':question})
 
         #quizTitle = request.POST.get('quizTitle')
         #quizDescription = request.POST.get('quizDescription')
@@ -72,6 +76,22 @@ def create_quiz(request):
         #            image = request.FILES.get("q"+(str(i+1))+"-imageProp"+(str(j+1))), 
         #            question = question
         #        )
-        return redirect('index')
     else:
-        return render(request, 'quizApps/quiz-creation.html')
+        quiz = QuizForm()
+        return render(request, 'quizApps/quiz-creation.html', {'form':quiz})
+
+
+def play_quiz(request):
+    quiz = Quiz.objects.get(id=9)
+    questions = Question.objects.filter(quiz=quiz)
+    userquiz = UserQuiz.objects.get(quiz=quiz)
+    props = Proposition.objects.filter(question__in=questions)
+
+    questionList = {}
+    for question in questions:
+        questionList.update({question:props.filter(question=question)})
+
+    return render(request, 'quizApps/play-quiz.html', {"quiz":quiz,
+    "userquiz": userquiz, "propositions":props,
+    "questions":questionList
+    })

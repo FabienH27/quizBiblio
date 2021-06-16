@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from quizApps import views
 from quizApps.views import LoginView
@@ -25,5 +27,8 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/', views.register, name='register'),
     path("logout/", views.logout_view, name="logout"),
-    path('create-quiz/', views.create_quiz, name='create-quiz')
+    path('create-quiz/', views.create_quiz, name='create-quiz'),
+    path('play-quiz', views.play_quiz, name='play-quiz'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

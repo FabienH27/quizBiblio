@@ -21,17 +21,23 @@
             <!--<img src="{% static 'quizApps/images/CVT_HP.jpg' %}" alt="couverture HP" class="mx-auto object-scale-down w-96 ">-->
         </article>
         <article class="mt-5 lg:ml-5 3xl:w-6/12 3xl:mt-28">
-            <div class="flex justify-center text-center focus:outline-none">
-                <textarea name="quizTitle" class="bg-gray-800 text-center text-6xl focus:outline-none" maxlength="40" placeholder="Titre"
+            <div class="flex justify-center text-center flex-col focus:outline-none">
+                <textarea name="title" class="bg-gray-800 text-center text-6xl focus:outline-none" maxlength="40" placeholder="Titre"
                     rows="1"></textarea>
+                <div class="non-field-errors text-center text-red-500">
+                    {{quiz.errors.title}}
+                </div>
             </div>
             <div class="flex justify-center">
-                <textarea maxlength="250" name="quizDescription" class="text-gray-400 text-center
+                <textarea maxlength="250" name="description" class="text-gray-400 text-center
                     bg-gray-800 focus:outline-none 3xl:text-xl" cols="65" rows="4"
                     placeholder="Décrivez votre quiz ici (250 caractères maximum)"></textarea>
             </div>
         </article>
     </section>
+    <div class="non-field-errors text-center text-red-500">
+        {{question.errors}}
+    </div>
     <section class="bg-gray-700" id="creation-menu">
     </section>
 </form>

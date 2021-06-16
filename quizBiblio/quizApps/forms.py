@@ -1,6 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model
 from django import forms
+from django.forms import ModelForm
+
+from .models import *
 
 class RegisterForm(UserCreationForm):
     class Meta:
@@ -15,3 +18,21 @@ class RegisterForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label="Email / Nom d'utilisateur")
+
+class QuizForm(forms.ModelForm):
+    class Meta:
+        model = Quiz
+        fields = ['title','description','image']
+
+class PropositionForm(forms.Form):
+    class Meta:
+        model = Proposition
+        fields = ['propositionText','image']
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+class QuestionForm(forms.Form):
+    class Meta:
+        model = Question
+        fields = ['questionText','image','description']

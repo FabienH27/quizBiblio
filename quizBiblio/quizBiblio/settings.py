@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tailwind',
     'quizApps'
 ]
 
@@ -110,7 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -140,6 +138,7 @@ AUTH_USER_MODEL = 'quizApps.CustomUser'
 AUTHENTICATION_BACKENDS = ['quizApps.backends.EmailBackend'] # new
 LOGIN_REDIRECT_URL = '/'
 
-TAILWIND_APP_NAME = 'quizApps'
-
 NPM_BIN_PATH = r"D:\Programs\nodejs\npm.cmd"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
+MEDIA_URL = 'uploads/'
