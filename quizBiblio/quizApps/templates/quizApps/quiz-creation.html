@@ -1,0 +1,126 @@
+{% extends 'quizApps/base.html' %}
+{% load static %}
+
+{% block body %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <section class="text-center max-w-3xl mx-auto text-white font-display my-16 lg:flex lg:text-left">
+        <article class="3xl:w-4/12">
+            <div id="imageInput">
+                <input type="file" id="quizImage" class="file" name="quizImage" accept="image/*">
+                <label for="quizImage" class="text-white cursor-pointer ml-5 md:w-40 3xl:w-96 3xl:text-4xl flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>Charger une image</label>
+            </div>
+            <div id="imagePreview" class="hidden">
+                <p class="file-name font-light ml-8 3xl:text-4xl"></p>
+                <img id="quizImg" src="#" alt="quiz image" />
+                <button type="button" onclick="DeleteImages()">Supprimer l'image</button>
+            </div>
+            <!--<img src="{% static 'quizApps/images/CVT_HP.jpg' %}" alt="couverture HP" class="mx-auto object-scale-down w-96 ">-->
+        </article>
+        <article class="mt-5 lg:ml-5 3xl:w-6/12 3xl:mt-28">
+            <div class="flex justify-center text-center flex-col focus:outline-none">
+                <textarea name="title" class="bg-gray-800 text-center text-6xl focus:outline-none" maxlength="40" placeholder="Titre"
+                    rows="1"></textarea>
+                <div class="non-field-errors text-center text-red-500">
+                    {{quiz.errors.title}}
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <textarea maxlength="250" name="description" class="text-gray-400 text-center
+                    bg-gray-800 focus:outline-none 3xl:text-xl" cols="65" rows="4"
+                    placeholder="Décrivez votre quiz ici (250 caractères maximum)"></textarea>
+            </div>
+        </article>
+    </section>
+    <div class="non-field-errors text-center text-red-500">
+        {{question.errors}}
+    </div>
+    <section class="bg-gray-700" id="creation-menu">
+    </section>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script>
+    var autoExpand = function (field) {
+
+        // Reset field height
+        field.style.height = 'inherit';
+
+        // Get the computed styles for the element
+        var computed = window.getComputedStyle(field);
+
+        // Calculate the height
+        var height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+            + parseInt(computed.getPropertyValue('padding-top'), 10)
+            + field.scrollHeight
+            + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+            + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+        field.style.height = height + 'px';
+    };
+
+    document.addEventListener('input', function (event) {
+        if (event.target.tagName.toLowerCase() !== 'textarea') return;
+        autoExpand(event.target);
+    }, false);
+</script>
+
+<script>
+    const file = document.querySelector('#quizImage');
+    file.addEventListener('change', (e) => {
+        // Get the selected file
+        const [file] = e.target.files;
+
+        // Get the file name and size
+        const { name: fileName, size } = file;
+        // Convert size in bytes to kilo bytes
+        if (size > 2000000) {
+            alert('File is too large');
+        } else {
+            const fileSize = (size / 1000).toFixed(2);
+            // Set the text content
+            const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+            document.getElementById("imagePreview").classList.toggle('hidden');
+            document.getElementById("imageInput").classList.toggle('hidden');
+            document.querySelector('.file-name').textContent = fileNameAndSize;
+            document.getElementById('quizImg').src = URL.createObjectURL(file)
+        }
+    });
+
+    function DeleteImages() {
+        document.querySelector('#quizImg').src = '';
+        document.getElementById("imagePreview").classList.add('hidden');
+        document.getElementById("imageInput").classList.remove('hidden');
+    }
+
+    function UrlClick() {
+        document.querySelector('#localImage').style.visibility = 'hidden';
+        document.querySelector('#urlInput').classList.replace('hidden', 'visible');
+        document.querySelector('#localImage').style.visibility = 'hidden';
+        document.querySelector('#url').classList.add('hidden');
+        document.querySelector('#urlRemove').classList.replace('hidden', 'visible');
+        document.querySelector('#file').value = '';
+        document.querySelector('.file-name').textContent = '';
+    }
+
+    function Reset() {
+        document.querySelector('#localImage').style.visibility = 'visible';
+        document.querySelector('#quizImg').classList.replace('visible', 'hidden');
+        document.querySelector('#urlInput').value = "";
+    }
+</script>
+
+<!-- Load our React component. -->
+<script src="{% static 'quizApps/creation.js' %}" type="text/babel"></script>
+{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+{% extends 'quizApps/base.html' %}
+{% load static %}
+
+{% block body %}
+<section class="mx-auto mt-10 lg:flex max-w-3xl justify-center items-center">
+    <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-48 3xl:w-64" />
+    <div class="ml-8 text-center lg:text-left">
+        <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">{{quiz.title}}</h1>
+        <h2 class="text-gray-400 mt-2 3xl:text-xl">{{userquiz}}</h2>
+        <p class="text-white mt-2 3xl:text-2xl">{{quiz.description}}</p>
+    </div>
+</section>
+
+<button class="flex items-center text-teal-500 mx-auto text-3xl 3xl:text-6xl my-10 focus:outline-none hover:text-white">Commencer
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1 3xl:h-16 3xl:w-16" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"
+            clip-rule="evenodd" />
+    </svg>
+</button>
+
+<section class="mb-36">
+
+    {% for question, props in questions.items %}
+        <section class="max-w-xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
+            <h2 class="font-semibold 3xl:text-2xl">Question {{forloop.counter}}</h2>
+            {% if question.image %}
+            <img src="{{MEDIA_URL}}{{question.image.url}}" alt="{{question.title}} image" class="mx-auto w-48 3xl:w-64" />
+            {% endif %}
+            <h1 class="text-teal-500 text-4xl mt-2 font-bold 3xl:text-6xl">{{question.questionText}}</h1>
+            <div class="hidden">
+                <p class="text-teal-500 mt-2 font-bold 3xl:text-2xl">Bonne réponse !</p>
+                <p class="font-display 3xl:text-xl">{{question.description}}</p>
+            </div>
+        </section>
+        <section class="max-w-lg 3xl:max-w-3xl mx-auto my-5 text-white font-display md:grid grid-cols-2 gap-10 items-baseline">
+            {% for prop in props %}
+            <div>
+                <input class="proposition" type="radio" name="proposition-{{question.id}}" id="proposition-{{question.id}}-{{forloop.counter}}">
+                <label class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8" for="proposition-1">
+                    {{prop}}
+                </label>
+            </div>
+            {% endfor %}
+        </section>  
+    {% endfor %}
+</section>
+{% endblock %}
