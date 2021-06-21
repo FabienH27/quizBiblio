@@ -1,8 +1,11 @@
 from django.contrib.auth import login, logout
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 from django.contrib.auth import views as auth_views
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+
+import random, json
 
 from .models import Quiz, Question, UserQuiz, Proposition, CustomUser
 from .forms import QuizForm, PropositionForm, QuestionForm, LoginForm, RegisterForm
@@ -80,18 +83,78 @@ def create_quiz(request):
         quiz = QuizForm()
         return render(request, 'quizApps/quiz-creation.html', {'form':quiz})
 
-
+@login_required
 def play_quiz(request):
-    quiz = Quiz.objects.get(id=9)
+    quiz = Quiz.objects.get(id=1)
     questions = Question.objects.filter(quiz=quiz)
-    userquiz = UserQuiz.objects.get(quiz=quiz)
+    userquiz = UserQuiz.objects.get(quiz=quiz, user=request.user)
     props = Proposition.objects.filter(question__in=questions)
 
-    questionList = {}
+    questionsDict = {}
     for question in questions:
-        questionList.update({question:props.filter(question=question)})
+        questionsDict.update({question:props.filter(question=question)})
+
+    # RANDOMIZE QUESTIONS
+    #questionList = list(questionsDict.items())
+    #random.shuffle(questionList)
+    #questionsDict = dict(questionList)
+
+    if request.method == 'POST':
+        validList = []
+        choices = []
+        score = userquiz.score
+        for i in range(len(questions)):
+            choice = request.POST.get("question-"+(str(i+1)))
+            choices.append(choice)
+            validChoice = Question.objects.values_list('correct_id',flat=True).get(id=questions[i].id)
+            validList.append(validChoice)
+            if int(choice) == int(validChoice):
+                score += 10
+            
+        userquiz.score = score
+        userquiz.save()
+        request.session['validList'] = validList
+        request.session['choices'] = choices
+        request.session['score'] = score
+        request.session['nbQuestion'] = len(questionsDict)
+        return HttpResponseRedirect(reverse("results"))
+        #return render(request, 'quizApps/results.html', {"quiz":quiz,
+        #    "userquiz": userquiz, "propositions":props,
+        #    "questions":questionsDict, "validList":validList, "choices": choices,"nbQuestion": len(questionsDict), "score":score
+        #    })
 
     return render(request, 'quizApps/play-quiz.html', {"quiz":quiz,
     "userquiz": userquiz, "propositions":props,
-    "questions":questionList
+    "questions":questionsDict, "nbQuestion": len(questionsDict)
     })
+
+
+def results_view(request):
+    validList = request.session.get('validList', False)
+    choices = request.session.get('choices', False)
+    score = request.session.get('score', False)
+    nbQuestion = request.session.get('nbQuestion', False)
+    quiz = Quiz.objects.get(id=1)
+    questions = Question.objects.filter(quiz=quiz)
+    userquiz = UserQuiz.objects.get(quiz=quiz, user=request.user)
+    props = Proposition.objects.filter(question__in=questions)
+
+    questionsDict = {}
+    for question in questions:
+        questionsDict.update({question:props.filter(question=question)})
+
+    return render(request, 'quizApps/results.html', {"quiz":quiz,
+        "userquiz": userquiz, "propositions":props,
+        "questions":questionsDict, "validList":validList, "choices": choices,"nbQuestion": len(questionsDict), "score":score
+    })
+
+
+def get_question(request):
+    if request.is_ajax and request.method == 'GET':
+        choice = request.GET.get("choice")
+        question = request.GET.get("id")
+        validChoice = Question.objects.values_list('correct_id',flat=True).get(id=question)
+        valid = json.dumps(validChoice)
+        return JsonResponse({'valid':valid})
+
+    return HttpResponse("success")

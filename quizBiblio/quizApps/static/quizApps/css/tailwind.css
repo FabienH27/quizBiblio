@@ -47,9 +47,6 @@
 .card:hover {
   transform: scale(1.05);
 }
-.prop input:checked ~ label {
-  @apply text-teal-500;
-}
 
 textarea {
   @apply resize-none;

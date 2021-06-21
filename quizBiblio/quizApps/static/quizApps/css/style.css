@@ -22920,11 +22920,6 @@ video {
   transform: scale(1.05);
 }
 
-.prop input:checked ~ label {
-  --tw-text-opacity: 1;
-  color: rgba(20, 184, 166, var(--tw-text-opacity));
-}
-
 textarea {
   resize: none;
   overflow: hidden;

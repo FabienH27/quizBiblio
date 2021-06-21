@@ -6,7 +6,10 @@
     <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-48 3xl:w-64" />
     <div class="ml-8 text-center lg:text-left">
         <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">{{quiz.title}}</h1>
-        <h2 class="text-gray-400 mt-2 3xl:text-xl">{{userquiz}}</h2>
+        <div class="flex mt-2">
+            <h2 class="text-gray-400 mt-2 3xl:text-xl">Par {{userquiz}}</h2>
+            <h3 class="text-gray-400 mt-2 3xl:text-xl ml-10">&#x1F516; {{quiz.theme}}</h3>
+        </div>
         <p class="text-white mt-2 3xl:text-2xl">{{quiz.description}}</p>
     </div>
 </section>
@@ -19,8 +22,8 @@
     </svg>
 </button>
 
-<section class="mb-36">
-
+<form class="mb-36" action="{% url 'play-quiz' %}" method="post" id="quiz">
+    {% csrf_token %}
     {% for question, props in questions.items %}
         <section class="max-w-xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
             <h2 class="font-semibold 3xl:text-2xl">Question {{forloop.counter}}</h2>
@@ -33,16 +36,36 @@
                 <p class="font-display 3xl:text-xl">{{question.description}}</p>
             </div>
         </section>
-        <section class="max-w-lg 3xl:max-w-3xl mx-auto my-5 text-white font-display md:grid grid-cols-2 gap-10 items-baseline">
+        <section class="max-w-lg 3xl:max-w-3xl mx-auto my-5 text-white font-display md:grid grid-cols-2 gap-10 flex justify-center items-center">
             {% for prop in props %}
             <div>
-                <input class="proposition" type="radio" name="proposition-{{question.id}}" id="proposition-{{question.id}}-{{forloop.counter}}">
-                <label class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8" for="proposition-1">
-                    {{prop}}
+                <input class="proposition" type="radio" name="question-{{question.id}}" value="{{prop.id}}" id="{{prop.id}}">
+                <label class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 cursor-pointer" for="{{prop.id}}">
+                    {% if prop.image %}
+                        <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}"/>
+                    {% else %}
+                        {{prop}}
+                    {% endif %}
                 </label>
             </div>
             {% endfor %}
         </section>  
     {% endfor %}
-</section>
+    <input type="submit" id="submitBtn" class="mx-auto block bg-teal-500 px-8 py-4 text-white font-display font-bold rounded text-xl cursor-pointer hover:bg-white hover:text-teal-500">
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    let nbQuestions = "{{nbQuestion}}";
+    for(let i =1; i <=nbQuestions;i++){
+        let prop = $("input[name=question-"+ i +"]:checked");
+        prop.attr("selected",false);
+    }
+
+    window.addEventListener("pageshow", () => {
+        $('#quiz')[0].reset();
+    });
+</script>
 {% endblock %}
