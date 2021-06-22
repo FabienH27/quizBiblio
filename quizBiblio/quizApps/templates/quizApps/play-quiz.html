@@ -29,7 +29,6 @@
 </button>
 <div class="hidden">
     <p id="timer" class="text-center text-white text-4xl font-title">0</p>
-    <p class="text-center text-white uppercase text-md font-title">Secondes</p>
 </div>
 {% endif %}
 
@@ -134,13 +133,20 @@
                 $('form').css('opacity', 0);
             }
             $("#start+div").removeClass("hidden");
-            var start = Date.now();
-            output = 0;
-            setInterval(function () {
-                var delta = Date.now() - start; // milliseconds elapsed since start
-                output = Math.floor(delta / 1000); // in seconds
-                $("#timer").text(output);
-            }, 1000); // update about every second
+            var initialTime = Date.now();
+
+            setInterval(() => {
+                var timeDifference = Date.now() - initialTime;
+                var formatted = convertTime(timeDifference);
+                $("#timer").text('' + formatted);
+            })
+
+            function convertTime(miliseconds) {
+            var totalSeconds = Math.floor(miliseconds/1000);
+            var minutes = Math.floor(totalSeconds/60);
+            var seconds = totalSeconds - minutes * 60;
+            return minutes + ':' + seconds + "s";
+            }
             $("#start").addClass("hidden");
         }
 

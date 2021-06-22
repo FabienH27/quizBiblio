@@ -5,13 +5,23 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
-import random, json
+import random
+import json
 
 from .models import Quiz, Question, UserQuiz, Proposition, CustomUser
 from .forms import QuizForm, PropositionForm, QuestionForm, LoginForm, RegisterForm
 
+
 def index(request):
-    return render(request, 'quizApps/index.html')
+    quizzes = Quiz.objects.all()
+    #questions = Question.objects.all()
+    #userquizzes = UserQuiz.objects.all()
+    #questionsDict = {}
+    #for quiz in quizzes:
+    #    questionsDict.update({quiz: questions.filter(quiz=quiz).count()})
+
+    return render(request, 'quizApps/index.html', {"quizzes": quizzes})
+
 
 def register(request):
     if request.user.is_authenticated:
@@ -21,45 +31,48 @@ def register(request):
             form = RegisterForm(request.POST)
             if form.is_valid():
                 user = form.save()
-                login(request,user)
+                login(request, user)
                 return redirect('index')
         else:
             form = RegisterForm()
         return render(request, 'quizApps/register.html', {'form': form})
 
+
 class LoginView(auth_views.LoginView):
     form_class = LoginForm
     template_name = 'quizApps/login.html'
-    redirect_authenticated_user=True
+    redirect_authenticated_user = True
+
 
 def logout_view(request):
     logout(request)
     return redirect('index')
+
 
 @login_required
 def create_quiz(request):
     if request.method == 'POST':
         quiz = QuizForm(request.POST, request.FILES)
 
-        question = QuestionForm(request.POST,request.FILES)
+        question = QuestionForm(request.POST, request.FILES)
         print(question)
-        return render(request, 'quizApps/quiz-creation.html', {'quiz': quiz,'question':question})
+        return render(request, 'quizApps/quiz-creation.html', {'quiz': quiz, 'question': question})
 
         #quizTitle = request.POST.get('quizTitle')
         #quizDescription = request.POST.get('quizDescription')
         #quizImage = request.FILES.get('quizImage')
         #quizUser = request.user.id
         #nbQuestion = request.POST.get('numberQuestion')
-        #quiz, created = Quiz.objects.update_or_create(
+        # quiz, created = Quiz.objects.update_or_create(
         #    title=quizTitle,
         #    description=quizDescription,
         #    theme = "ThemeTest",
         #    image = quizImage,
-        #)
+        # )
         #user = CustomUser.objects.get(id=quizUser)
-        #quiz.user.add(user)
-        ##looping over questions
-        #for i in range(int(nbQuestion)):
+        # quiz.user.add(user)
+        # looping over questions
+        # for i in range(int(nbQuestion)):
         #    question, created = Question.objects.update_or_create(
         #        questionText= request.POST.get("question"+(str(i+1))),
         #        image = request.FILES.get('imageQfile'+(str(i+1))),
@@ -67,7 +80,7 @@ def create_quiz(request):
         #    )
         #    question.quiz.add(quiz)
         #    propCount = request.POST.get('q'+(str(i+1))+'-propCount')
-        #    
+        #
         #    #Looping over possible answers
         #    for j in range(int(propCount)):
         #        if request.POST.get("q"+(str(i+1))+"-imageProp"+(str(j+1))) is None:
@@ -76,12 +89,13 @@ def create_quiz(request):
         #            text = request.POST.get('proposition'+(str(i+1))+'-'+(str(j+1)))
         #        proposition, created = Proposition.objects.update_or_create(
         #            propositionText= text,
-        #            image = request.FILES.get("q"+(str(i+1))+"-imageProp"+(str(j+1))), 
+        #            image = request.FILES.get("q"+(str(i+1))+"-imageProp"+(str(j+1))),
         #            question = question
         #        )
     else:
         quiz = QuizForm()
-        return render(request, 'quizApps/quiz-creation.html', {'form':quiz})
+        return render(request, 'quizApps/quiz-creation.html', {'form': quiz})
+
 
 @login_required
 def play_quiz(request, quiz_id):
@@ -92,7 +106,7 @@ def play_quiz(request, quiz_id):
 
     questionsDict = {}
     for question in questions:
-        questionsDict.update({question:props.filter(question=question)})
+        questionsDict.update({question: props.filter(question=question)})
 
     # RANDOMIZE QUESTIONS
     questionList = list(questionsDict.items())
@@ -106,11 +120,12 @@ def play_quiz(request, quiz_id):
         for i in range(len(questions)):
             choice = request.POST.get("question-"+(str(i+1)))
             choices.append(choice)
-            validChoice = Question.objects.values_list('correct_id',flat=True).get(id=questions[i].id)
+            validChoice = Question.objects.values_list(
+                'correct_id', flat=True).get(id=questions[i].id)
             validList.append(validChoice)
             if int(choice) == int(validChoice):
                 score += 10
-            
+
         userquiz.score = score
         userquiz.save()
         request.session['validList'] = validList
@@ -124,12 +139,16 @@ def play_quiz(request, quiz_id):
         score = request.session.get('score', False)
         nbQuestion = request.session.get('nbQuestion', False)
 
-        if(validList) : del(request.session['validList'])
-        if(choices) : del(request.session['choices'])
-        if(score) : del(request.session['score'])
-        if(nbQuestion) : del(request.session['nbQuestion'])
-        
-    return render(request, 'quizApps/play-quiz.html', {"quiz":quiz,
-        "userquiz": userquiz, "propositions":props,
-        "questions":questionsDict, "validList":validList, "choices": choices,"nbQuestion": len(questionsDict), "score":score
-    })
+        if(validList):
+            del(request.session['validList'])
+        if(choices):
+            del(request.session['choices'])
+        if(score):
+            del(request.session['score'])
+        if(nbQuestion):
+            del(request.session['nbQuestion'])
+
+    return render(request, 'quizApps/play-quiz.html', {"quiz": quiz,
+                                                       "userquiz": userquiz, "propositions": props,
+                                                       "questions": questionsDict, "validList": validList, "choices": choices, "nbQuestion": len(questionsDict), "score": score
+                                                       })
