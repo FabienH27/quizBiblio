@@ -28,9 +28,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path("logout/", views.logout_view, name="logout"),
     path('create-quiz/', views.create_quiz, name='create-quiz'),
-    path('play-quiz', views.play_quiz, name='play-quiz'),
-    path('getQuestion', views.get_question, name='get_question'),
-    path('results-quiz/', views.results_view, name='results')
+    path('play-quiz/<int:quiz_id>', views.play_quiz, name='play-quiz'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

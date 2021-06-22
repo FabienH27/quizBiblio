@@ -53,10 +53,22 @@ textarea {
   @apply overflow-hidden;
 }
 
-.proposition{
+.proposition {
   @apply hidden;
 }
 
 .proposition:checked + label {
-  @apply border-teal-500 border-4 text-teal-500
+  @apply border-teal-500 border-4 text-teal-500;
+}
+
+#start > svg {
+  transition: transform 0.2s ease-in-out;
+}
+
+#start:hover > svg {
+  transform: translate(5px, 0);
+}
+
+form {
+  transition: all 0.5s ease-in-out;
 }
