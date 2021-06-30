@@ -4,24 +4,19 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.core.exceptions import ValidationError
 
 import random
 import json
 
 from .models import Quiz, Question, UserQuiz, Proposition, CustomUser
-from .forms import QuizForm, PropositionForm, QuestionForm, LoginForm, RegisterForm
+from .forms import QuizForm, PropositionForm, QuestionForm, LoginForm, RegisterForm, ContactForm
+from django.core.mail import send_mail
 
 
 def index(request):
     quizzes = Quiz.objects.all()
-    #questions = Question.objects.all()
-    #userquizzes = UserQuiz.objects.all()
-    #questionsDict = {}
-    #for quiz in quizzes:
-    #    questionsDict.update({quiz: questions.filter(quiz=quiz).count()})
-
     return render(request, 'quizApps/index.html', {"quizzes": quizzes})
-
 
 def register(request):
     if request.user.is_authenticated:
@@ -53,10 +48,13 @@ def logout_view(request):
 def create_quiz(request):
     if request.method == 'POST':
         quiz = QuizForm(request.POST, request.FILES)
-
-        question = QuestionForm(request.POST, request.FILES)
-        print(question)
-        return render(request, 'quizApps/quiz-creation.html', {'quiz': quiz, 'question': question})
+        quizTitle = request.POST.get('quizTitle')
+        message = {}
+        if request.POST.get("question1"):
+            print("something")
+        else:
+            message.update({"question1":"Veuillez saisir une question"})
+        return render(request, 'quizApps/quiz-creation.html', {'quiz': quiz, "message": message})
 
         #quizTitle = request.POST.get('quizTitle')
         #quizDescription = request.POST.get('quizDescription')
@@ -116,12 +114,16 @@ def play_quiz(request, quiz_id):
     if request.method == 'POST':
         validList = []
         choices = []
+        messages = []
         score = userquiz.score
         for i in range(len(questions)):
             choice = request.POST.get("question-"+(str(i+1)))
+            if choice is None:
+                choice = -1
             choices.append(choice)
-            validChoice = Question.objects.values_list(
-                'correct_id', flat=True).get(id=questions[i].id)
+            #validChoice = Question.objects.values_list(
+            #    'correct_id', flat=True).get(id=questions[i].id)
+            validChoice = Proposition.objects.values_list('pk', flat=True).get(is_correct=1, question_id=questions[i].id)
             validList.append(validChoice)
             if int(choice) == int(validChoice):
                 score += 10
@@ -152,3 +154,23 @@ def play_quiz(request, quiz_id):
                                                        "userquiz": userquiz, "propositions": props,
                                                        "questions": questionsDict, "validList": validList, "choices": choices, "nbQuestion": len(questionsDict), "score": score
                                                        })
+
+def contact_view(request):
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            sender = form.cleaned_data['sender']
+            cc_myself = form.cleaned_data['cc_myself']
+
+            recipients = ['info@example.com']
+            if cc_myself:
+                recipients.append(sender)
+
+            send_mail(subject, message, sender, recipients)
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = ContactForm
+    return render(request, 'quizApps/contact.html', {"form": form})

@@ -38,13 +38,14 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'quizApps',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quizApps'
+    'nested_admin',
 ]
 
 MIDDLEWARE = [
@@ -137,8 +138,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'quizApps.CustomUser'
 AUTHENTICATION_BACKENDS = ['quizApps.backends.EmailBackend'] # new
 LOGIN_REDIRECT_URL = '/'
-
-NPM_BIN_PATH = r"D:\Programs\nodejs\npm.cmd"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 MEDIA_URL = 'uploads/'

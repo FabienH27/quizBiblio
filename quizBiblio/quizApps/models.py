@@ -1,13 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
+
+# Create your models here.
 
 
-#def validate_title(title):
-#    if title is None:
-#        raise ValidationError("Veuillez saisir un titre",
-#                            params={'title': title})
+class Theme(models.Model):
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
 
 class CustomUser(AbstractUser):
     email = models.EmailField(
@@ -15,45 +19,48 @@ class CustomUser(AbstractUser):
 
 
 class Quiz(models.Model):
-    title = models.CharField(_('title'), max_length=30)
+    title = models.CharField(_('titre'), max_length=30, unique=True, error_messages={
+                             'unique': 'Ce titre est déjà utilisé.'})
     description = models.TextField(_('description'), blank=True, null=True)
-    theme = models.CharField(_('theme'), max_length=40, default='defaultTheme')
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
     image = models.ImageField(_('image'), blank=True,
-                              null=True, upload_to='./')
-    user = models.ManyToManyField(
-        CustomUser, through='UserQuiz', related_name='quiz')
+                              null=True, upload_to='uploads/')
+    utilisateur = models.ManyToManyField(
+        get_user_model(), through='UserQuiz', related_name='quiz', blank=False)
 
     def __str__(self):
         return self.title
+
 
 class UserQuiz(models.Model):
     score = models.IntegerField(_('score'), blank=True, null=True)
     time = models.DateTimeField(
         _('time'), auto_now_add=False, blank=True, null=True)
-    is_creator = models.BooleanField(default=False)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    is_creator = models.BooleanField(default=True)
+    utilisateur = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,editable=False)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return self.utilisateur.username
 
 
 class Proposition(models.Model):
     propositionText = models.CharField(_('proposition'), max_length=255)
-    image = models.ImageField(upload_to='./', blank=True, null=True)
+    image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     question = models.ForeignKey(
         'Question', on_delete=models.CASCADE, related_name='+')
-    question = models.ForeignKey('Question', on_delete=models.DO_NOTHING )
+    is_correct = models.BooleanField(("Est correcte"), default=False)
 
     def __str__(self):
         return self.propositionText
 
+
 class Question(models.Model):
-    questionText = models.CharField(_('question'), max_length=255)
-    image = models.ImageField(upload_to='./', blank=True, null=True)
-    description = models.TextField(_('description'))
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, blank=True, null=True)
-    correct = models.ForeignKey('Proposition', on_delete=models.DO_NOTHING, blank=True,null=True, related_name='correct_prop')
+    question = models.CharField(_('question'), max_length=255)
+    image = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    explication = models.TextField(_('Explication'), blank=True, null=True)
+    quiz = models.ForeignKey(
+        Quiz, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.questionText
+        return self.question

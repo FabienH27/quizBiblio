@@ -1,0 +1,8 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% block branding %}
+{% block extrastyle %}
+  <link rel='stylesheet' href="{% static 'admin/css/admin.css' %}">
+{% endblock %}
+<img src="{% static 'admin/Quiz-biblio-Dark.png' %}" alt="" class="brand_img">
+{% endblock %}

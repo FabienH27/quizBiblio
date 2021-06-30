@@ -19,7 +19,7 @@
 
 {% if not validList %}
 <button id="start"
-    class="flex items-center text-teal-500 mx-auto text-3xl 3xl:text-6xl mt-10 mb-5 focus:outline-none hover:text-white">Commencer
+    class="flex items-center text-teal-500 mx-auto text-3xl 3xl:text-6xl mt-10 focus:outline-none hover:text-white">Commencer
     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1 3xl:h-16 3xl:w-16" viewBox="0 0 20 20"
         fill="currentColor">
         <path fill-rule="evenodd"
@@ -33,7 +33,7 @@
 {% endif %}
 
 
-<form class="mb-36 opacity-0" action="{% url 'play-quiz' quiz.id %}" method="post" id="quiz">
+<form class="opacity-0 hidden my-14" action="{% url 'play-quiz' quiz.id %}" method="post" id="quiz">
     {% csrf_token %}
     {% for question, props in questions.items %}
     <section
@@ -64,7 +64,7 @@
         </p>
         {% else %}
         <div>
-            <input class="proposition" type="radio" name="question-{{question.id}}" value="{{prop.id}}"
+            <input class="proposition" type="checkbox" name="question-{{question.id}}" value="{{prop.id}}"
                 id="{{prop.id}}">
             <label
                 class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 cursor-pointer"
@@ -153,7 +153,7 @@
         if(!valids){
             document.getElementById("start").addEventListener("click", hello);
         }else{
-            $('form').css('opacity', 1);    
+            $('form').css('opacity', 1).removeClass("hidden");    
         }
     });
 </script>
