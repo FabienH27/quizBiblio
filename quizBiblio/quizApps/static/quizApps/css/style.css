@@ -22920,17 +22920,7 @@ video {
   transform: scale(1.05);
 }
 
-.prop input:checked ~ label {
-  --tw-text-opacity: 1;
-  color: rgba(20, 184, 166, var(--tw-text-opacity));
-}
-
-textarea {
-  resize: none;
-  overflow: hidden;
-}
-
-.proposition{
+.proposition {
   display: none;
 }
 
@@ -22939,8 +22929,37 @@ textarea {
   border-color: rgba(20, 184, 166, var(--tw-border-opacity));
   border-width: 4px;
   --tw-text-opacity: 1;
-  color: rgba(20, 184, 166, var(--tw-text-opacity))
+  color: rgba(20, 184, 166, var(--tw-text-opacity));
 }
+
+#start > svg {
+  transition: transform 0.2s ease-in-out;
+}
+
+#start:hover > svg {
+  transform: translate(5px, 0);
+}
+
+form {
+  transition: all 0.5s ease-in-out;
+}
+
+textarea {
+  overflow: hidden;
+  resize: none;
+}
+
+/*input[type="text"], input[type="email"], textarea {
+  @apply bg-gray-700 p-2 3xl:p-5 3xl:mr-5 3xl:my-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500 text-white;  
+}
+
+.fieldWrapper input{
+  @apply mb-2;
+}
+
+#id_sender, #id_message, #id_subject{
+  @apply w-full;
+}*/
 
 @media (min-width: 640px) {
   .sm\:container {

@@ -1,0 +1,76 @@
+{% extends 'quizApps/base.html' %}
+{% load static %}
+
+{% block body %}
+<section class="mx-auto mt-10 lg:flex max-w-3xl justify-center items-center">
+    <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-48 3xl:w-64" />
+    <div class="ml-8 text-center lg:text-left">
+        <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">{{quiz.title}}</h1>
+        <div class="flex mt-2">
+            <h2 class="text-gray-400 mt-2 3xl:text-xl">Par {{userquiz}}</h2>
+            <h3 class="text-gray-400 mt-2 3xl:text-xl ml-10">&#x1F516; {{quiz.theme}}</h3>
+        </div>
+        <p class="text-white mt-2 3xl:text-2xl">{{quiz.description}}</p>
+        <p class="text-white mt-2 text-2xl">&#x1F3C6; <span id="score">{{score}}</span> points</p>
+    </div>
+</section>
+
+<section class="mb-36">
+    <h1 class="text-center text-3xl text-gray-400 my-5">Vos résultats</h1>
+    {% for question, props in questions.items %}
+    <section
+        class="lg:max-w-2xl max-w-xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
+        <h2 class="font-semibold 3xl:text-2xl">Question {{forloop.counter}}</h2>
+        {% if question.image %}
+        <img src="{{MEDIA_URL}}{{question.image.url}}" alt="{{question.title}} image" class="mx-auto w-48 3xl:w-64" />
+        {% endif %}
+        <h1 class="text-teal-500 text-4xl mt-2 font-bold 3xl:text-6xl">{{question.questionText}}</h1>
+        <div class="hidden" id="infos-{{question.id}}">
+            <p id="message-{{question.id}}" class="text-teal-500 mt-2 font-bold 3xl:text-2xl">Bonne réponse !</p>
+            <p id="desc" class="font-display 3xl:text-xl">{{question.description}}</p>
+        </div>
+    </section>
+    <section
+        class="max-w-xl 3xl:max-w-3xl mx-auto my-5 text-white font-display md:grid grid-cols-2 gap-10 flex justify-center items-center">
+        {% for prop in props %}
+        <p class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 "
+            id="{{prop.id}}">
+            {% if prop.image %}
+            <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" />
+            {% else %}
+            {{prop}}
+            {% endif %}
+        </p>
+        {% endfor %}
+    </section>
+    {% endfor %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+{{validList|json_script:'valid'}}
+{{choices|json_script:'choices'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        let valids = JSON.parse(document.getElementById("valid").textContent);
+        let choices = JSON.parse(document.getElementById("choices").textContent);
+        let nbQuestions = "{{nbQuestion}}";
+        for (let i = 0; i < nbQuestions; i++) {
+            $("#infos-" + (i + 1)).removeClass("hidden");
+            message = $("#message-" + (i + 1));
+            let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
+            let choice = $("#" + choices[i]);
+            if (choice.attr("id") == valid.attr("id")) {
+                message.text("Bonne réponse \u{1F60E}")
+                choice.addClass("border-4 border-teal-400");
+            } else {
+                message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
+                choice.addClass("border-4 border-red-500");
+            }
+        }
+    });
+</script>
+{% endblock %}

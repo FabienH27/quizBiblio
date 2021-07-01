@@ -47,19 +47,40 @@
 .card:hover {
   transform: scale(1.05);
 }
-.prop input:checked ~ label {
-  @apply text-teal-500;
-}
 
-textarea {
-  @apply resize-none;
-  @apply overflow-hidden;
-}
-
-.proposition{
+.proposition {
   @apply hidden;
 }
 
 .proposition:checked + label {
-  @apply border-teal-500 border-4 text-teal-500
+  @apply border-teal-500 border-4 text-teal-500;
 }
+
+#start > svg {
+  transition: transform 0.2s ease-in-out;
+}
+
+#start:hover > svg {
+  transform: translate(5px, 0);
+}
+
+form {
+  transition: all 0.5s ease-in-out;
+}
+
+textarea {
+  overflow: hidden;
+  resize: none;
+}
+
+/*input[type="text"], input[type="email"], textarea {
+  @apply bg-gray-700 p-2 3xl:p-5 3xl:mr-5 3xl:my-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500 text-white;  
+}
+
+.fieldWrapper input{
+  @apply mb-2;
+}
+
+#id_sender, #id_message, #id_subject{
+  @apply w-full;
+}*/

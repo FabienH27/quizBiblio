@@ -6,43 +6,192 @@
     <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-48 3xl:w-64" />
     <div class="ml-8 text-center lg:text-left">
         <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">{{quiz.title}}</h1>
-        <h2 class="text-gray-400 mt-2 3xl:text-xl">{{userquiz}}</h2>
+        <div class="flex mt-2">
+            <h2 class="text-gray-400 mt-2 3xl:text-xl">Par {{userquiz}}</h2>
+            <h3 class="text-gray-400 mt-2 3xl:text-xl ml-10">&#x1F516; {{quiz.theme}}</h3>
+        </div>
         <p class="text-white mt-2 3xl:text-2xl">{{quiz.description}}</p>
+        {% if validList %}
+        <p class="text-white mt-2 text-2xl">&#x1F3C6; <span id="score">{{score}}</span> points</p>
+        {% endif %}
     </div>
 </section>
 
-<button class="flex items-center text-teal-500 mx-auto text-3xl 3xl:text-6xl my-10 focus:outline-none hover:text-white">Commencer
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1 3xl:h-16 3xl:w-16" viewBox="0 0 20 20" fill="currentColor">
+{% if not validList %}
+<button id="start"
+    class="flex items-center text-teal-500 mx-auto text-3xl 3xl:text-6xl mt-10 focus:outline-none hover:text-white">Commencer
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1 3xl:h-16 3xl:w-16" viewBox="0 0 20 20"
+        fill="currentColor">
         <path fill-rule="evenodd"
             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"
             clip-rule="evenodd" />
     </svg>
 </button>
+<div class="hidden">
+    <p id="timer" class="text-center text-white text-4xl font-title">0</p>
+</div>
+{% endif %}
 
-<section class="mb-36">
 
+<form class="opacity-0 hidden my-14" action="{% url 'play-quiz' quiz.id %}" method="post" id="quiz">
+    {% csrf_token %}
     {% for question, props in questions.items %}
-        <section class="max-w-xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
-            <h2 class="font-semibold 3xl:text-2xl">Question {{forloop.counter}}</h2>
-            {% if question.image %}
-            <img src="{{MEDIA_URL}}{{question.image.url}}" alt="{{question.title}} image" class="mx-auto w-48 3xl:w-64" />
+    <section
+        class="max-w-xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
+        <h2 class="font-semibold 3xl:text-2xl">Question {{forloop.counter}}</h2>
+        {% if question.image %}
+        <img src="{{MEDIA_URL}}{{question.image.url}}" alt="{{question.title}} image" class="mx-auto w-48 3xl:w-64" />
+        {% endif %}
+        <h1 class="text-teal-500 text-4xl mt-2 font-bold 3xl:text-6xl">{{question}}</h1>
+        {% if validList %}
+        <div class="hidden" id="infos-{{question.id}}">
+            <p id="message-{{question.id}}" class="text-teal-500 mt-2 font-bold 3xl:text-2xl">Bonne réponse !</p>
+            <p id="desc" class="font-display 3xl:text-xl">{{question.description}}</p>
+        </div>
+        {% endif %}
+    </section>
+    <section
+        class="max-w-lg 3xl:max-w-3xl mx-auto my-5 text-white font-display md:grid grid-cols-2 gap-10 flex justify-center items-center">
+        {% for prop in props %}
+        {% if validList %}
+        <p class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 "
+            id="{{prop.id}}">
+            {% if prop.image %}
+            <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" />
+            {% else %}
+            {{prop}}
             {% endif %}
-            <h1 class="text-teal-500 text-4xl mt-2 font-bold 3xl:text-6xl">{{question.questionText}}</h1>
-            <div class="hidden">
-                <p class="text-teal-500 mt-2 font-bold 3xl:text-2xl">Bonne réponse !</p>
-                <p class="font-display 3xl:text-xl">{{question.description}}</p>
-            </div>
-        </section>
-        <section class="max-w-lg 3xl:max-w-3xl mx-auto my-5 text-white font-display md:grid grid-cols-2 gap-10 items-baseline">
-            {% for prop in props %}
-            <div>
-                <input class="proposition" type="radio" name="proposition-{{question.id}}" id="proposition-{{question.id}}-{{forloop.counter}}">
-                <label class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8" for="proposition-1">
-                    {{prop}}
-                </label>
-            </div>
-            {% endfor %}
-        </section>  
+        </p>
+        {% else %}
+        <div>
+            <input class="proposition" type="checkbox" name="question-{{question.id}}" value="{{prop.id}}"
+                id="{{prop.id}}">
+            <label
+                class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 cursor-pointer"
+                for="{{prop.id}}">
+                {% if prop.image %}
+                <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" />
+                {% else %}
+                {{prop}}
+                {% endif %}
+            </label>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </section>
     {% endfor %}
-</section>
+    {% if not validList %}
+    <input type="submit" id="submitBtn"
+        class="mx-auto block bg-teal-500 px-8 py-4 text-white font-display font-bold rounded text-xl cursor-pointer hover:bg-white hover:text-teal-500">
+    {% else %}
+    <a href="{% url 'index' %}" class="mx-auto w-max block text-center bg-teal-500 px-8 py-4 text-white font-display font-bold rounded text-xl 
+        cursor-pointer hover:bg-white hover:text-teal-500">Menu principal</a>
+    {% endif %}
+</form>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block scripts %}
+{{validList|json_script:'valid'}}
+{{choices|json_script:'choices'}}
+{{choicesDict|json_script:'choicesDict'}}
+{{validDict|json_script:'validDict'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    let nbQuestions = "{{nbQuestion}}";
+    for (let i = 1; i <= nbQuestions; i++) {
+        let prop = $("input[name=question-" + i + "]:checked");
+        prop.attr("selected", false);
+    }
+
+    $(document).ready(() => {
+        let valids = JSON.parse(document.getElementById("valid").textContent);
+        let choices = JSON.parse(document.getElementById("choices").textContent);
+        let choicesDict = JSON.parse(document.getElementById("choicesDict").textContent);
+        let validDict = JSON.parse(document.getElementById("validDict").textContent);
+        /*for (let i = 0; i < nbQuestions; i++) {
+            $("#infos-" + (i + 1)).removeClass("hidden");
+            message = $("#message-" + (i + 1));
+            let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
+            for (let j = 0; j < choices.length; j++) {
+                let choice = $("#" + choices[j]);
+                if (choice.attr("id") == valid.attr("id")) {
+                    message.text("Bonne réponse \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
+                    choice.addClass("border-4 border-teal-400").removeClass("border-red-500");
+                } else {
+                    message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
+                    choice.addClass("border-4 border-red-500").removeClass("border-teal-400");
+                }
+            }
+        }*/
+        if (choices.length > 0) {
+            for (let i = 0; i < valids.length; i++) {
+                let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
+            }
+
+            for (let i = 0; i < choices.length; i++) {
+                let choice = $("#" + choices[i]).addClass("border-4");
+                if (valids.includes(parseInt(choice.attr("id")))) {
+                    choice.addClass("border-teal-400").removeClass("border-red-500");
+                } else {
+                    choice.addClass("border-red-500");
+                }
+            }
+        }
+            for (key in choicesDict) {
+                $("#infos-" + key.replace('question', '')).removeClass("hidden");
+                const array2Sorted = validDict[key].slice().sort();
+                var test = choicesDict[key].length === validDict[key].length && choicesDict[key].slice().sort().every(function (value, index) {
+                    return value === array2Sorted[index];
+                });
+                message = $("#message-" + key.replace('question', ''));
+                if (test == true) {
+                    message.text("Bonne réponse \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
+
+                } else {
+                    message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
+                }
+            }
+
+        window.addEventListener("pageshow", () => {
+            $('#quiz')[0].reset();
+        });
+
+        function hello() {
+            $("#quiz").removeClass("hidden");
+            if ($('form').css('opacity') == 0) {
+                $('form').css('opacity', 1);
+            }
+            else {
+                $('form').css('opacity', 0);
+            }
+            $("#start+div").removeClass("hidden");
+            var initialTime = Date.now();
+
+            setInterval(() => {
+                var timeDifference = Date.now() - initialTime;
+                var formatted = convertTime(timeDifference);
+                $("#timer").text('' + formatted);
+            })
+
+            function convertTime(miliseconds) {
+                var totalSeconds = Math.floor(miliseconds / 1000);
+                var minutes = Math.floor(totalSeconds / 60);
+                var seconds = totalSeconds - minutes * 60;
+                return minutes + ':' + seconds + "s";
+            }
+            $("#start").addClass("hidden");
+        }
+
+        if (!valids) {
+            document.getElementById("start").addEventListener("click", hello);
+        } else {
+            $('form').css('opacity', 1).removeClass("hidden");
+        }
+    });
+</script>
 {% endblock %}

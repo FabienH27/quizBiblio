@@ -36,3 +36,10 @@ class QuestionForm(forms.Form):
     class Meta:
         model = Question
         fields = ['questionText','image','description']
+
+
+class ContactForm(forms.Form):
+    subject = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder': 'Objet du message'}))
+    sender = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Votre adresse email'}))
+    message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Votre message', 'rows':4}))
+    cc_myself = forms.BooleanField(required=False)
