@@ -1,5 +1,8 @@
 {% extends 'admin/base.html' %}
 {% load static %}
+{% block extrahead %}
+    <link rel="shortcut icon" href="{% static 'quizApps/images/favicon.ico' %}" />
+{% endblock %}
 {% block branding %}
 {% block extrastyle %}
   <link rel='stylesheet' href="{% static 'admin/css/admin.css' %}">

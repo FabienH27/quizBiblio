@@ -69,6 +69,8 @@
     --primary: #14B8A6;
     --primary-fg: #eee;
 
+    --darker-primary: #0f8d7e;
+
     --body-fg: #eeeeee;
     --body-bg: #151C26;
     --body-quiet-color: #e0e0e0;
@@ -100,6 +102,10 @@
 
 html, body {
     height: 100%;
+}
+
+.inline-related h3{
+    background: var(--darker-primary)!important;
 }
 
 body {

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'nested_admin',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [
@@ -138,6 +139,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'quizApps.CustomUser'
 AUTHENTICATION_BACKENDS = ['quizApps.backends.EmailBackend'] # new
 LOGIN_REDIRECT_URL = '/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
-MEDIA_URL = 'uploads/'
