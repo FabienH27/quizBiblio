@@ -18,6 +18,7 @@ def index(request):
     quizzes = Quiz.objects.all()
     return render(request, 'quizApps/index.html', {"quizzes": quizzes})
 
+
 def register(request):
     if request.user.is_authenticated:
         return redirect('index')
@@ -53,7 +54,7 @@ def create_quiz(request):
         if request.POST.get("question1"):
             print("something")
         else:
-            message.update({"question1":"Veuillez saisir une question"})
+            message.update({"question1": "Veuillez saisir une question"})
         return render(request, 'quizApps/quiz-creation.html', {'quiz': quiz, "message": message})
 
         #quizTitle = request.POST.get('quizTitle')
@@ -99,7 +100,7 @@ def create_quiz(request):
 def play_quiz(request, quiz_id):
     quiz = Quiz.objects.get(id=quiz_id)
     questions = Question.objects.filter(quiz=quiz)
-    userquiz = UserQuiz.objects.get(quiz=quiz, user=request.user)
+    userquiz = UserQuiz.objects.get(quiz=quiz, utilisateur=request.user)
     props = Proposition.objects.filter(question__in=questions)
 
     questionsDict = {}
@@ -113,38 +114,56 @@ def play_quiz(request, quiz_id):
 
     if request.method == 'POST':
         validList = []
-        choices = []
+        choicesList = []
+        choicesDict = {}
+        validDict = {}
         messages = []
         score = userquiz.score
         for i in range(len(questions)):
-            choice = request.POST.get("question-"+(str(i+1)))
-            if choice is None:
-                choice = -1
-            choices.append(choice)
-            #validChoice = Question.objects.values_list(
-            #    'correct_id', flat=True).get(id=questions[i].id)
-            validChoice = Proposition.objects.values_list('pk', flat=True).get(is_correct=1, question_id=questions[i].id)
-            validList.append(validChoice)
-            if int(choice) == int(validChoice):
+            choices = request.POST.getlist("question-"+(str(i+1)))
+            for choice in choices:
+                choicesList.append(choice)
+
+            choices_int = [int(i) for i in choices]
+            choicesDict.update({"question"+(str(i+1)): choices_int})
+
+            validChoices = Proposition.objects.values_list(
+                'pk', flat=True).filter(is_correct=1, question_id=questions[i].id)
+
+            validDict.update({"question"+(str(i+1)): list(validChoices)})
+
+            for valid in validChoices:
+                validList.append(valid)
+
+        for (k, v), (k2, v2) in zip(choicesDict.items(), validDict.items()):
+            if(v == v2):
                 score += 10
 
         userquiz.score = score
         userquiz.save()
         request.session['validList'] = validList
-        request.session['choices'] = choices
+        request.session['choices'] = choicesList
+        request.session['choicesDict'] = choicesDict
+        request.session['validDict'] = validDict
         request.session['score'] = score
         request.session['nbQuestion'] = len(questionsDict)
         return HttpResponseRedirect(request.path)
     else:
         validList = request.session.get('validList', False)
-        choices = request.session.get('choices', False)
+        choicesList = request.session.get('choices', False)
+        choicesDict = request.session.get('choicesDict', False)
+        validDict = request.session.get('validDict', False)
         score = request.session.get('score', False)
         nbQuestion = request.session.get('nbQuestion', False)
 
         if(validList):
             del(request.session['validList'])
-        if(choices):
+        if(choicesList):
             del(request.session['choices'])
+        if(choicesDict):
+            del(request.session['choicesDict'])
+        if(validDict):
+            del(request.session['validDict'])
         if(score):
             del(request.session['score'])
         if(nbQuestion):
@@ -152,8 +171,10 @@ def play_quiz(request, quiz_id):
 
     return render(request, 'quizApps/play-quiz.html', {"quiz": quiz,
                                                        "userquiz": userquiz, "propositions": props,
-                                                       "questions": questionsDict, "validList": validList, "choices": choices, "nbQuestion": len(questionsDict), "score": score
+                                                       "questions": questionsDict, "validList": validList, "choices": choicesList,
+                                                       "nbQuestion": len(questionsDict), "score": score, "choicesDict": choicesDict, "validDict": validDict
                                                        })
+
 
 def contact_view(request):
 

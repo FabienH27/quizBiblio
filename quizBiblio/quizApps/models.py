@@ -33,11 +33,12 @@ class Quiz(models.Model):
 
 
 class UserQuiz(models.Model):
-    score = models.IntegerField(_('score'), blank=True, null=True)
+    score = models.IntegerField(_('score'), default=0)
     time = models.DateTimeField(
         _('time'), auto_now_add=False, blank=True, null=True)
     is_creator = models.BooleanField(default=True)
-    utilisateur = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,editable=False)
+    utilisateur = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, editable=False)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
 
     def __str__(self):

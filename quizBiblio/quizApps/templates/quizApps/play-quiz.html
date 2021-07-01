@@ -42,7 +42,7 @@
         {% if question.image %}
         <img src="{{MEDIA_URL}}{{question.image.url}}" alt="{{question.title}} image" class="mx-auto w-48 3xl:w-64" />
         {% endif %}
-        <h1 class="text-teal-500 text-4xl mt-2 font-bold 3xl:text-6xl">{{question.questionText}}</h1>
+        <h1 class="text-teal-500 text-4xl mt-2 font-bold 3xl:text-6xl">{{question}}</h1>
         {% if validList %}
         <div class="hidden" id="infos-{{question.id}}">
             <p id="message-{{question.id}}" class="text-teal-500 mt-2 font-bold 3xl:text-2xl">Bonne réponse !</p>
@@ -90,9 +90,14 @@
 </form>
 {% endblock %}
 
+{% block footer %}
+{% endblock %}
+
 {% block scripts %}
 {{validList|json_script:'valid'}}
 {{choices|json_script:'choices'}}
+{{choicesDict|json_script:'choicesDict'}}
+{{validDict|json_script:'validDict'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -106,19 +111,51 @@
     $(document).ready(() => {
         let valids = JSON.parse(document.getElementById("valid").textContent);
         let choices = JSON.parse(document.getElementById("choices").textContent);
-        for (let i = 0; i < nbQuestions; i++) {
+        let choicesDict = JSON.parse(document.getElementById("choicesDict").textContent);
+        let validDict = JSON.parse(document.getElementById("validDict").textContent);
+        /*for (let i = 0; i < nbQuestions; i++) {
             $("#infos-" + (i + 1)).removeClass("hidden");
             message = $("#message-" + (i + 1));
             let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
-            let choice = $("#" + choices[i]);
-            if (choice.attr("id") == valid.attr("id")) {
-                message.text("Bonne réponse \u{1F60E}")
-                choice.addClass("border-4 border-teal-400");
-            } else {
-                message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
-                choice.addClass("border-4 border-red-500");
+            for (let j = 0; j < choices.length; j++) {
+                let choice = $("#" + choices[j]);
+                if (choice.attr("id") == valid.attr("id")) {
+                    message.text("Bonne réponse \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
+                    choice.addClass("border-4 border-teal-400").removeClass("border-red-500");
+                } else {
+                    message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
+                    choice.addClass("border-4 border-red-500").removeClass("border-teal-400");
+                }
+            }
+        }*/
+        if (choices.length > 0) {
+            for (let i = 0; i < valids.length; i++) {
+                let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
+            }
+
+            for (let i = 0; i < choices.length; i++) {
+                let choice = $("#" + choices[i]).addClass("border-4");
+                if (valids.includes(parseInt(choice.attr("id")))) {
+                    choice.addClass("border-teal-400").removeClass("border-red-500");
+                } else {
+                    choice.addClass("border-red-500");
+                }
             }
         }
+            for (key in choicesDict) {
+                $("#infos-" + key.replace('question', '')).removeClass("hidden");
+                const array2Sorted = validDict[key].slice().sort();
+                var test = choicesDict[key].length === validDict[key].length && choicesDict[key].slice().sort().every(function (value, index) {
+                    return value === array2Sorted[index];
+                });
+                message = $("#message-" + key.replace('question', ''));
+                if (test == true) {
+                    message.text("Bonne réponse \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
+
+                } else {
+                    message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
+                }
+            }
 
         window.addEventListener("pageshow", () => {
             $('#quiz')[0].reset();
@@ -142,18 +179,18 @@
             })
 
             function convertTime(miliseconds) {
-            var totalSeconds = Math.floor(miliseconds/1000);
-            var minutes = Math.floor(totalSeconds/60);
-            var seconds = totalSeconds - minutes * 60;
-            return minutes + ':' + seconds + "s";
+                var totalSeconds = Math.floor(miliseconds / 1000);
+                var minutes = Math.floor(totalSeconds / 60);
+                var seconds = totalSeconds - minutes * 60;
+                return minutes + ':' + seconds + "s";
             }
             $("#start").addClass("hidden");
         }
 
-        if(!valids){
+        if (!valids) {
             document.getElementById("start").addEventListener("click", hello);
-        }else{
-            $('form').css('opacity', 1).removeClass("hidden");    
+        } else {
+            $('form').css('opacity', 1).removeClass("hidden");
         }
     });
 </script>
