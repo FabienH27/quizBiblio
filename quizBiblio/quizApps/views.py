@@ -16,7 +16,15 @@ from django.core.mail import send_mail
 
 def index(request):
     quizzes = Quiz.objects.all()
-    return render(request, 'quizApps/index.html', {"quizzes": quizzes})
+    quizInfos = UserQuiz.objects.filter(quiz=quizzes)
+    activeUser = None
+    activeUserInfos = {}
+    if request.user.is_authenticated:
+        try:
+            activeUser = UserQuiz.objects.filter(utilisateur=request.user).values_list('score','time')
+        except UserQuiz.DoesNotExist:
+            activeUser = None
+    return render(request, 'quizApps/index.html', {"quizzes": quizzes, "activeUser": activeUserInfos,"quizInfos":quizInfos})
 
 
 def register(request):
@@ -48,7 +56,7 @@ def logout_view(request):
 def play_quiz(request, quiz_id):
     quiz = Quiz.objects.get(id=quiz_id)
     questions = Question.objects.filter(quiz=quiz)
-    userquiz = UserQuiz.objects.get(quiz=quiz, utilisateur=request.user)
+    userquiz,created = UserQuiz.objects.get_or_create(quiz=quiz, utilisateur=request.user)
     props = Proposition.objects.filter(question__in=questions)
 
     questionsDict = {}
@@ -61,6 +69,7 @@ def play_quiz(request, quiz_id):
     questionsDict = dict(questionList)
 
     if request.method == 'POST':
+        userquiz,created = UserQuiz.objects.get_or_create(quiz=quiz, utilisateur=request.user)
         validList = []
         choicesList = []
         choicesDict = {}
@@ -74,12 +83,12 @@ def play_quiz(request, quiz_id):
 
 
             choices_int = [int(i) for i in choices]
-            choicesDict.update({"question"+(str(i+1)): choices_int})
+            choicesDict.update({"question"+str(questions[i].id): choices_int})
 
             validChoices = Proposition.objects.values_list(
                 'pk', flat=True).filter(is_correct=1, question_id=questions[i].id)
 
-            validDict.update({"question"+(str(i+1)): list(validChoices)})
+            validDict.update({"question"+str(questions[i].id): list(validChoices)})
 
             for valid in validChoices:
                 validList.append(valid)
@@ -89,6 +98,8 @@ def play_quiz(request, quiz_id):
                 score += 10
 
         userquiz.score = score
+        userquiz.time = request.POST.get("time")
+        userquiz.is_creator = False
         userquiz.save()
         request.session['validList'] = validList
         request.session['choices'] = choicesList

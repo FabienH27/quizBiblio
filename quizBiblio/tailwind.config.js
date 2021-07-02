@@ -1,7 +1,11 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: [],
+  purge: {
+    enabled:true,
+    preserveHtmlElements: false,
+    content: ['./quizApps/templates/quizApps/*.html']
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {

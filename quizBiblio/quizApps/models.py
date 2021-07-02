@@ -14,8 +14,7 @@ class Theme(models.Model):
 
 
 class CustomUser(AbstractUser):
-    email = models.EmailField(
-        _('email address'), help_text='Requis. Saisir une adresse email valide.', unique=True)
+    email = models.EmailField(help_text='Requis. Saisir une adresse email valide.', unique=True)
 
 
 class Quiz(models.Model):
@@ -34,8 +33,7 @@ class Quiz(models.Model):
 
 class UserQuiz(models.Model):
     score = models.IntegerField(_('score'), default=0)
-    time = models.DateTimeField(
-        _('time'), auto_now_add=False, blank=True, null=True)
+    time = models.IntegerField(_('time'), default=0)
     is_creator = models.BooleanField(default=True)
     utilisateur = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, editable=False)

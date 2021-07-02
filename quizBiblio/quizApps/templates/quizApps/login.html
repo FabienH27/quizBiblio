@@ -8,13 +8,15 @@
         padding: 8px;
         width: 100%;
         color: white;
+        height: 35px;
     }
 
     label {
         color: white;
     }
+
     .errorlist {
-        color:#EF4444;
+        color: #EF4444;
     }
 
     input:-webkit-autofill,
@@ -36,7 +38,7 @@
             {{ form.as_p }}
             <button type="submit" class="text-white bg-teal-500 px-8 py-3 mt-5 rounded-md hover:outline-none hover:bg-white hover:text-teal-500 3xl:text-5xl 3xl:mt-16 3xl:inline-block text-center
                 focus:outline-none focus:bg-white focus:text-teal-500">Se connecter</button>
-          </form>
+        </form>
     </section>
     <a href="{% url 'register' %}" class="font-display text-white text-sm my-2 3xl:text-3xl">Vous n'avez pas de compte ?
         S'inscrire</a>

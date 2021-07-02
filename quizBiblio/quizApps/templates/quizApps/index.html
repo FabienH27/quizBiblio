@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-<section class="flex h-screen lg:max-w-6xl 3xl:max-w-screen-3xl items-center -mt-10 mx-auto">
+<section class="flex lg:h-screen lg:max-w-6xl 3xl:max-w-screen-3xl items-center mx-auto">
     <section class="lg:flex mx-auto">
         <article class="max-w-lg 3xl:max-w-6xl mx-auto mt-8 text-center lg:text-left">
             <h1 class="text-white text-4xl lg:text-5xl 3xl:text-7xl font-bold text-center lg:text-left">Testez votre
@@ -10,13 +10,13 @@
                 et <span class="text-teal-500">musicale</span> !</h1>
             <p
                 class="font-display text-white font-normal text-sm 3xl:text-4xl text-center lg:text-left max-w-md 3xl:max-w-3xl my-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-            <a href="#button-all-quiz" class="text-white bg-teal-500 px-8 py-3
+                Développez vos connaissances sur différents thèmes et testez votre culture générale</p>
+            <a href="#button-all-quiz"
+                class="text-gray-800 bg-teal-500 px-8 py-3
                     rounded-md hover:bg-white hover:text-teal-500 3xl:text-5xl 3xl:inline-block 3xl:px-14 3xl:py-8">Commencer un quiz</a>
         </article>
-        <aside class="mt-20 lg:mt-0 3xl:max-w-screen-3xl ml-40">
-            <img src="{% static 'quizApps/images/demo2.png' %}" alt="app demo" width="500px">
+        <aside class="mt-20 lg:mt-0 3xl:max-w-screen-3xl mx-auto lg:ml-40">
+            <img src="{% static 'quizApps/images/demo2.png' %}" alt="app demo" width="450px">
         </aside>
     </section>
 </section>
@@ -24,31 +24,25 @@
 <section class="bg-gray-700 pt-8 pb-52">
     <div class="container mx-auto">
         <h1 class="text-white text-4xl text-center 3xl:text-7xl 3xl:my-16">Créez et jouez à de nombreux quiz !</h1>
-        <div class="uppercase mt-8 text-gray-400 flex justify-evenly text-center tab">
-            <button class="tablinks w-96" id="button-all-quiz" onclick="openMenu(event, 'all-quiz')">Tous les
-                quiz</button>
-            <!--<button class="tablinks w-96" id="button-my-quiz" onclick="openMenu(event, 'my-quiz')">Mes quiz</button>-->
-        </div>
-        <article class="font-display p-2 mt-8 mx-auto tabcontent " id="all-quiz">
+        <article class="font-display p-2 mt-8 mx-auto flex justify-center flex-wrap" id="button-all-quiz">
             {% for quiz in quizzes %}
             <a href="{% url 'play-quiz' quiz.id %}"
                 class="bg-gray-800 sm:flex text-center max-w-lg md:text-left p-5 mx-auto my-5 rounded-3xl items-center 3xl:max-w-3xl shadow-2xl card">
-                <img src="{{quiz.image}}"
+                <img src="{{quiz.image}}" alt="image {{quiz.id}}"
                     class="mx-auto md:mx-5 w-28 3xl:w-64 object-scale-down">
                 <div class="text-white">
                     <h1 class="text-2xl font-extrabold 3xl:text-6xl">{{quiz}}</h1>
                     <h2 class="text-gray-300 text-lg 3xl:text-4xl 3xl:mt-2">&#x1F516; {{quiz.theme}}</h2>
-                    {% for userquiz in quiz.userquiz_set.all %}
-                        <div class="text-sm my-2 3xl:text-2xl">
-                            <p>Mon Score : {{userquiz.score}}</p>
-                        </div>
-                        <div class="flex 3xl:flex-col text-md font-semibold font-title 3xl:text-3xl">
-                            <p class="text-teal-500 w-32 3xl:w-auto">{{quiz.question_set.count}} Questions</p>
-                            <p class="w-32 3xl:w-auto">Par {{userquiz}}</p>
-                        </div>
-                    {% endfor %}
+                    <div class="text-sm my-2 3xl:text-2xl">
+                    </div>
+                    <div class="flex 3xl:flex-col text-md font-semibold font-title 3xl:text-3xl">
+                        <p class="text-teal-500 w-32 3xl:w-auto">{{quiz.question_set.count}} Questions</p>
+                        <p class="w-32 3xl:w-auto">Par {{quiz.userquiz_set.first}}</p>
+                    </div>
                 </div>
             </a>
+            {% empty %}
+            <p class="text-white">Aucun quiz disponible.</p>
             {% endfor %}
         </article>
     </div>
@@ -56,94 +50,15 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
-        // Add smooth scrolling to all links
-        $("a").on('click', function (event) {
-            // Make sure this.hash has a value before overriding default behavior
-            if (this.hash !== "") {
-                // Prevent default anchor click behavior
-                event.preventDefault();
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
 
-                // Store hash
-                var hash = this.hash;
-
-                // Using jQuery's animate() method to add smooth page scroll
-                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-                $('html, body').animate({
-                    scrollTop: $(hash).offset().top
-                }, 800, function () {
-
-                    // Add hash (#) to URL when done scrolling (default click behavior)
-                    window.location.hash = hash;
-                });
-            } // End if
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
         });
     });
-</script>
-<script type="text/javascript">
-    /*const file = document.querySelector('#file');
-    file.addEventListener('change', (e) => {
-        // Get the selected file
-        const [file] = e.target.files;
-
-        // Get the file name and size
-        const { name: fileName, size } = file;
-        // Convert size in bytes to kilo bytes
-        if (size > 2000000) {
-            alert('File is too large');
-        } else {
-            const fileSize = (size / 1000).toFixed(2);
-            // Set the text content
-            const fileNameAndSize = `${fileName} - ${fileSize}KB`;
-            document.querySelector('.file-name').textContent = fileNameAndSize;
-        }
-    });
-
-    function DeleteImages() {
-        document.querySelector('#file').value = '';
-        document.querySelector('.file-name').textContent = '';
-        document.querySelector('#urlInput').value = '';
-    }
-
-    function UrlClick() {
-        document.querySelector('#localImage').style.visibility = 'hidden';
-        document.querySelector('#urlInput').classList.replace('hidden', 'visible');
-        document.querySelector('#localImage').style.visibility = 'hidden';
-        document.querySelector('#url').classList.add('hidden');
-        document.querySelector('#urlRemove').classList.replace('hidden', 'visible');
-        document.querySelector('#file').value = '';
-        document.querySelector('.file-name').textContent = '';
-    }
-
-    function Reset() {
-        document.querySelector('#localImage').style.visibility = 'visible';
-        document.querySelector('#urlInput').classList.replace('visible', 'hidden');
-        document.querySelector('#localImage').style.visibility = 'visible';
-        document.querySelector('#url').classList.replace('hidden', 'visible');
-        document.querySelector('#urlRemove').classList.replace('visible', 'hidden');
-        document.querySelector('#urlInput').value = "";
-    }*/
-
-    document.getElementById("button-all-quiz").click();
-
-    function openMenu(evt, cityName) {
-        // Declare all variables
-        var i, tabcontent, tablinks;
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(cityName).style.display = "grid";
-        evt.currentTarget.className += " active";
-    }
 </script>
 {% endblock %}

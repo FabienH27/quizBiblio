@@ -6,7 +6,7 @@
     <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-48 3xl:w-64" />
     <div class="ml-8 text-center lg:text-left">
         <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">{{quiz.title}}</h1>
-        <div class="flex mt-2">
+        <div class="flex mt-2 justify-center md:justify-start">
             <h2 class="text-gray-400 mt-2 3xl:text-xl">Par {{userquiz}}</h2>
             <h3 class="text-gray-400 mt-2 3xl:text-xl ml-10">&#x1F516; {{quiz.theme}}</h3>
         </div>
@@ -37,7 +37,7 @@
     {% csrf_token %}
     {% for question, props in questions.items %}
     <section
-        class="max-w-xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
+        class="max-w-2xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
         <h2 class="font-semibold 3xl:text-2xl">Question {{forloop.counter}}</h2>
         {% if question.image %}
         <img src="{{MEDIA_URL}}{{question.image.url}}" alt="{{question.title}} image" class="mx-auto w-48 3xl:w-64" />
@@ -51,13 +51,13 @@
         {% endif %}
     </section>
     <section
-        class="max-w-lg 3xl:max-w-3xl mx-auto my-5 text-white font-display md:grid grid-cols-2 gap-10 flex justify-center items-center">
+        class="max-w-screen-md 3xl:max-w-3xl mx-auto my-5 text-white font-display flex-wrap flex justify-evenly items-center">
         {% for prop in props %}
         {% if validList %}
         <p class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 "
             id="{{prop.id}}">
             {% if prop.image %}
-            <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" />
+            <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" width="200px"/>
             {% else %}
             {{prop}}
             {% endif %}
@@ -70,7 +70,7 @@
                 class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 cursor-pointer"
                 for="{{prop.id}}">
                 {% if prop.image %}
-                <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" />
+                <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" width="200px" />
                 {% else %}
                 {{prop}}
                 {% endif %}
@@ -87,6 +87,9 @@
     <a href="{% url 'index' %}" class="mx-auto w-max block text-center bg-teal-500 px-8 py-4 text-white font-display font-bold rounded text-xl 
         cursor-pointer hover:bg-white hover:text-teal-500">Menu principal</a>
     {% endif %}
+
+    <input type="hidden" name="time" id="time" value=""/>
+
 </form>
 {% endblock %}
 
@@ -114,21 +117,6 @@
         let choicesDict = JSON.parse(document.getElementById("choicesDict").textContent);
         let validDict = JSON.parse(document.getElementById("validDict").textContent);
 
-        /*for (let i = 0; i < nbQuestions; i++) {
-            $("#infos-" + (i + 1)).removeClass("hidden");
-            message = $("#message-" + (i + 1));
-            let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
-            for (let j = 0; j < choices.length; j++) {
-                let choice = $("#" + choices[j]);
-                if (choice.attr("id") == valid.attr("id")) {
-                    message.text("Bonne réponse \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
-                    choice.addClass("border-4 border-teal-400").removeClass("border-red-500");
-                } else {
-                    message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
-                    choice.addClass("border-4 border-red-500").removeClass("border-teal-400");
-                }
-            }
-        }*/
 
         for (let i = 0; i < valids.length; i++) {
             let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
@@ -176,6 +164,7 @@
                 var timeDifference = Date.now() - initialTime;
                 var formatted = convertTime(timeDifference);
                 $("#timer").text('' + formatted);
+                document.getElementById("time").value = Math.floor(timeDifference / 1000);
             })
 
             function convertTime(miliseconds) {

@@ -11,6 +11,8 @@ admin.site.site_header = 'QuizBiblio'  # default: "Django Administration"
 admin.site.index_title = 'QuizBiblio Administration'
 admin.site.site_title = 'Quizbiblio site admin'  # default: "Django site admin"
 
+admin.site.register(CustomUser)
+
 
 class UserQuizInline(nested_admin.NestedStackedInline):
     model = UserQuiz

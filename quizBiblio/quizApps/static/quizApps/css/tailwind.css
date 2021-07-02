@@ -73,14 +73,9 @@ textarea {
   resize: none;
 }
 
-/*input[type="text"], input[type="email"], textarea {
-  @apply bg-gray-700 p-2 3xl:p-5 3xl:mr-5 3xl:my-5 3xl:text-4xl focus:outline-none focus:placeholder-teal-500 text-white;  
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    @apply border-2 border-teal-500;
 }
-
-.fieldWrapper input{
-  @apply mb-2;
-}
-
-#id_sender, #id_message, #id_subject{
-  @apply w-full;
-}*/
