@@ -7,5 +7,5 @@
 {% block extrastyle %}
   <link rel='stylesheet' href="{% static 'admin/css/admin.css' %}">
 {% endblock %}
-<img src="{% static 'admin/Quiz-biblio-Dark.png' %}" alt="" class="brand_img">
+<a href="{% url 'admin:index' %}"><img src="{% static 'admin/Quiz-biblio-Dark.png' %}" alt="" class="brand_img"></a>
 {% endblock %}

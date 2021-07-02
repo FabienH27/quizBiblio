@@ -44,58 +44,6 @@ def logout_view(request):
     logout(request)
     return redirect('index')
 
-
-@login_required
-def create_quiz(request):
-    if request.method == 'POST':
-        quiz = QuizForm(request.POST, request.FILES)
-        quizTitle = request.POST.get('quizTitle')
-        message = {}
-        if request.POST.get("question1"):
-            print("something")
-        else:
-            message.update({"question1": "Veuillez saisir une question"})
-        return render(request, 'quizApps/quiz-creation.html', {'quiz': quiz, "message": message})
-
-        #quizTitle = request.POST.get('quizTitle')
-        #quizDescription = request.POST.get('quizDescription')
-        #quizImage = request.FILES.get('quizImage')
-        #quizUser = request.user.id
-        #nbQuestion = request.POST.get('numberQuestion')
-        # quiz, created = Quiz.objects.update_or_create(
-        #    title=quizTitle,
-        #    description=quizDescription,
-        #    theme = "ThemeTest",
-        #    image = quizImage,
-        # )
-        #user = CustomUser.objects.get(id=quizUser)
-        # quiz.user.add(user)
-        # looping over questions
-        # for i in range(int(nbQuestion)):
-        #    question, created = Question.objects.update_or_create(
-        #        questionText= request.POST.get("question"+(str(i+1))),
-        #        image = request.FILES.get('imageQfile'+(str(i+1))),
-        #        description=request.POST.get('explication-q'+(str(i+1))),
-        #    )
-        #    question.quiz.add(quiz)
-        #    propCount = request.POST.get('q'+(str(i+1))+'-propCount')
-        #
-        #    #Looping over possible answers
-        #    for j in range(int(propCount)):
-        #        if request.POST.get("q"+(str(i+1))+"-imageProp"+(str(j+1))) is None:
-        #            text = "image"
-        #        else:
-        #            text = request.POST.get('proposition'+(str(i+1))+'-'+(str(j+1)))
-        #        proposition, created = Proposition.objects.update_or_create(
-        #            propositionText= text,
-        #            image = request.FILES.get("q"+(str(i+1))+"-imageProp"+(str(j+1))),
-        #            question = question
-        #        )
-    else:
-        quiz = QuizForm()
-        return render(request, 'quizApps/quiz-creation.html', {'form': quiz})
-
-
 @login_required
 def play_quiz(request, quiz_id):
     quiz = Quiz.objects.get(id=quiz_id)
@@ -120,9 +68,10 @@ def play_quiz(request, quiz_id):
         messages = []
         score = userquiz.score
         for i in range(len(questions)):
-            choices = request.POST.getlist("question-"+(str(i+1)))
+            choices = request.POST.getlist("question-"+str(questions[i].id))
             for choice in choices:
                 choicesList.append(choice)
+
 
             choices_int = [int(i) for i in choices]
             choicesDict.update({"question"+(str(i+1)): choices_int})

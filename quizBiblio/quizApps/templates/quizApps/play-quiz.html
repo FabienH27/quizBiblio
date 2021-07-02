@@ -113,6 +113,7 @@
         let choices = JSON.parse(document.getElementById("choices").textContent);
         let choicesDict = JSON.parse(document.getElementById("choicesDict").textContent);
         let validDict = JSON.parse(document.getElementById("validDict").textContent);
+
         /*for (let i = 0; i < nbQuestions; i++) {
             $("#infos-" + (i + 1)).removeClass("hidden");
             message = $("#message-" + (i + 1));
@@ -128,34 +129,33 @@
                 }
             }
         }*/
-        if (choices.length > 0) {
-            for (let i = 0; i < valids.length; i++) {
-                let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
-            }
 
-            for (let i = 0; i < choices.length; i++) {
-                let choice = $("#" + choices[i]).addClass("border-4");
-                if (valids.includes(parseInt(choice.attr("id")))) {
-                    choice.addClass("border-teal-400").removeClass("border-red-500");
-                } else {
-                    choice.addClass("border-red-500");
-                }
+        for (let i = 0; i < valids.length; i++) {
+            let valid = $("#" + valids[i]).addClass("bg-teal-600").removeClass("bg-gray-700");
+        }
+
+        for (let i = 0; i < choices.length; i++) {
+            let choice = $("#" + choices[i]).addClass("border-4");
+            if (valids.includes(parseInt(choice.attr("id")))) {
+                choice.addClass("border-teal-400").removeClass("border-red-500");
+            } else {
+                choice.addClass("border-red-500");
             }
         }
-            for (key in choicesDict) {
-                $("#infos-" + key.replace('question', '')).removeClass("hidden");
-                const array2Sorted = validDict[key].slice().sort();
-                var test = choicesDict[key].length === validDict[key].length && choicesDict[key].slice().sort().every(function (value, index) {
-                    return value === array2Sorted[index];
-                });
-                message = $("#message-" + key.replace('question', ''));
-                if (test == true) {
-                    message.text("Bonne réponse \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
+        for (key in choicesDict) {
+            $("#infos-" + key.replace('question', '')).removeClass("hidden");
+            const array2Sorted = validDict[key].slice().sort();
+            var test = choicesDict[key].length === validDict[key].length && choicesDict[key].slice().sort().every(function (value, index) {
+                return value === array2Sorted[index];
+            });
+            message = $("#message-" + key.replace('question', ''));
+            if (test == true) {
+                message.text("Bonne réponse \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
 
-                } else {
-                    message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
-                }
+            } else {
+                message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
             }
+        }
 
         window.addEventListener("pageshow", () => {
             $('#quiz')[0].reset();
