@@ -2,17 +2,21 @@
 {% load static %}
 
 {% block body %}
-<section class="mx-auto mt-10 lg:flex max-w-3xl justify-center items-center">
-    <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-48 3xl:w-64" />
-    <div class="ml-8 text-center lg:text-left">
-        <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">{{quiz.title}}</h1>
-        <div class="flex mt-2 justify-center md:justify-start">
-            <h2 class="text-gray-400 mt-2 3xl:text-xl">Par {{userquiz}}</h2>
-            <h3 class="text-gray-400 mt-2 3xl:text-xl ml-10">&#x1F516; {{quiz.theme}}</h3>
+<section class="mx-auto mt-10 max-w-3xl justify-center items-center">
+    {% if quiz.image %}
+    <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-56 3xl:w-64" />
+    {% endif %}
+    <div class="ml-8 text-center max-w-2xl">
+        <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">Les meilleurs répliques - 1</h1>
+        <div class="flex mt-2 justify-center">
+            <h2 class="text-gray-400 mt-2 3xl:text-xl">Par {{quiz.userquiz_set.first}}</h2>
+            <h3 class="text-gray-400 mt-2 3xl:text-xl ml-10">&#x1F516; {{quiz.theme1}} {% if quiz.theme2 %} -
+                {{quiz.theme2}}{% endif %} </h3>
         </div>
         <p class="text-white mt-2 3xl:text-2xl">{{quiz.description}}</p>
         {% if validList %}
         <p class="text-white mt-2 text-2xl">&#x1F3C6; <span id="score">{{score}}</span> points</p>
+        <p class="text-white mt-2 text-md">Vous avez répondu correct à {{rightAnswers}} sur {{questions.items|length}} questions</p>
         {% endif %}
     </div>
 </section>
@@ -46,7 +50,7 @@
         {% if validList %}
         <div class="hidden" id="infos-{{question.id}}">
             <p id="message-{{question.id}}" class="text-teal-500 mt-2 font-bold 3xl:text-2xl">Bonne réponse !</p>
-            <p id="desc" class="font-display 3xl:text-xl">{{question.description}}</p>
+            <p id="desc" class="font-display 3xl:text-xl">{{question.explication}}</p>
         </div>
         {% endif %}
     </section>
@@ -57,7 +61,7 @@
         <p class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 "
             id="{{prop.id}}">
             {% if prop.image %}
-            <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" width="200px"/>
+            <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" width="200px" />
             {% else %}
             {{prop}}
             {% endif %}
@@ -88,7 +92,7 @@
         cursor-pointer hover:bg-white hover:text-teal-500">Menu principal</a>
     {% endif %}
 
-    <input type="hidden" name="time" id="time" value=""/>
+    <input type="hidden" name="time" id="time" value="" />
 
 </form>
 {% endblock %}

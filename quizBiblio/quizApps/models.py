@@ -18,10 +18,11 @@ class CustomUser(AbstractUser):
 
 
 class Quiz(models.Model):
-    title = models.CharField(_('titre'), max_length=30, unique=True, error_messages={
+    title = models.CharField(_('titre'), max_length=60, unique=True, error_messages={
                              'unique': 'Ce titre est déjà utilisé.'})
     description = models.TextField(_('description'), blank=True, null=True)
-    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
+    theme1 = models.ForeignKey(Theme,verbose_name='1er thème', on_delete=models.CASCADE, related_name="first_theme")
+    theme2 = models.ForeignKey(Theme,verbose_name='2nd thème (Facultatif)', on_delete=models.CASCADE, blank=True, null=True, related_name="second_theme")
     image = models.ImageField(_('image'), blank=True,
                               null=True, upload_to='uploads/')
     utilisateur = models.ManyToManyField(

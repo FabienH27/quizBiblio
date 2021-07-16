@@ -1075,3 +1075,7 @@ table#change-history tbody th {
 #userquiz_set-group fieldset h2, #userquiz_set-group fieldset div.items #userquiz_set-0 h3{
     display: none!important;
 }
+
+.inline-related h3{
+    margin-top: 25px!important;
+}
