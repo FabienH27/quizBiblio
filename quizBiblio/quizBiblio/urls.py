@@ -29,7 +29,7 @@ urlpatterns = [
     path("logout/", views.logout_view, name="logout"),
     path('play-quiz/<int:quiz_id>', views.play_quiz, name='play-quiz'),
     path('classement', views.rankings, name='classement'),
-    #path('contact', views.contact_view, name='contact'),
+    path('rankings-response', views.rankings_response, name='rankings-response')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

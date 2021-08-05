@@ -39,7 +39,6 @@ class UserQuiz(models.Model):
     utilisateur = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, editable=False)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.utilisateur.username
 

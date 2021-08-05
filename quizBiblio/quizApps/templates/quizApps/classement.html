@@ -1,32 +1,42 @@
 {% extends 'quizApps/base.html' %}
-{% load static %}
-
 
 {% block body %}
 <div class="overflow-x-auto">
-    <div class="min-w-screen min-h-screen flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
-        <div class="w-full lg:w-5/6">
-            <div class="bg-white shadow-md rounded my-6">
-                <table class="min-w-max w-full table-auto">
-                    <thead>
-                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                            <th class="py-3 px-6 text-left">Client</th>
-                            <th class="py-3 px-6 text-center">Points</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-600 text-sm font-light">
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-6 text-left">
-                                <span class="py-1 px-3 rounded-full text-xs">Admin</span>
-                            </td>
-                            <td class="py-3 px-6 text-center">
-                                <span class="bg-teal-200 text-teal-600 py-1 px-3 rounded-full text-xs">100</span>
-                            </td>
-                        </tr>
-                </table>
+    <div class="min-w-screen flex justify-center bg-gray-800 font-sans overflow-hidden">
+        <div class="max-w-screen-md lg:w-5/6">
+            <h1 class="text-center text-4xl text-white my-10">Classement par thèmes</h1>
+            <div class="flex justify-evenly flex-wrap">
+                {% for theme in themes %}
+                <button type="button" id={{theme.id}} onclick="callAjax($(this));return false;"
+                    class="text-gray-300 shadow-lg bg-gray-900 px-5 font-semibold py-2 m-2 rounded-full">{{theme}}</button>
+                {% endfor %}
+            </div>
+            <div class="bg-gray-900 shadow-md rounded my-6" id="table">
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block footer %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    function callAjax($this) {
+        let id = $this.attr("id");
+        $.ajax({
+            method: "GET",
+            url: "rankings-response",
+            "dataType": "html",
+            "data": { id: id },
+            success: function (data) {
+                $("#table").html(data);
+            }
+        });
+    }
+</script>
 {% endblock %}

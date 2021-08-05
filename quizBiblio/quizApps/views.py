@@ -1,16 +1,14 @@
 from django.contrib.auth import login, logout
-from django.shortcuts import get_object_or_404, render, redirect, reverse
+from django.shortcuts import render, redirect
 from django.contrib.auth import views as auth_views
-from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.core.exceptions import ValidationError
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models import Q
 import random
-import json
+from django.template.loader import render_to_string
 
-from .models import Quiz, Question, UserQuiz, Proposition, CustomUser
-from .forms import QuizForm, PropositionForm, QuestionForm, LoginForm, RegisterForm, ContactForm
+from .models import Quiz, Question, UserQuiz, Proposition, Theme
+from .forms import LoginForm, RegisterForm, ContactForm
 from django.core.mail import send_mail
 
 
@@ -52,6 +50,7 @@ class LoginView(auth_views.LoginView):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
 
 @login_required
 def play_quiz(request, quiz_id):
@@ -140,29 +139,23 @@ def play_quiz(request, quiz_id):
     return render(request, 'quizApps/play-quiz.html', {"quiz": quiz,
                                                        "userquiz": userquiz, "propositions": props,
                                                        "questions": questionsDict, "validList": validList, "choices": choicesList,
-                                                       "nbQuestion": len(questionsDict), "score": score, 
+                                                       "nbQuestion": len(questionsDict), "score": score,
                                                        "choicesDict": choicesDict, "validDict": validDict, "rightAnswers": rightAnswers
                                                        })
 
-#def contact_view(request):
-#
-#    if request.method == 'POST':
-#        form = ContactForm(request.POST)
-#        if form.is_valid():
-#            subject = form.cleaned_data['subject']
-#            message = form.cleaned_data['message']
-#            sender = form.cleaned_data['sender']
-#            cc_myself = form.cleaned_data['cc_myself']
-#
-#            recipients = ['info@example.com']
-#            if cc_myself:
-#                recipients.append(sender)
-#
-#            send_mail(subject, message, sender, recipients)
-#            return HttpResponseRedirect('/thanks/')
-#    else:
-#        form = ContactForm
-#    return render(request, 'quizApps/contact.html', {"form": form})
 
 def rankings(request):
-    return render(request, 'quizApps/classement.html')
+    themes = Theme.objects.all()
+    users = UserQuiz.objects.all().order_by('score')
+    return render(request, 'quizApps/classement.html', {"themes": themes, "users": users})
+
+
+def rankings_response(request):
+    theme_id = request.GET.get('id')
+    theme = Theme.objects.get(id=theme_id)
+    quizzes_by_theme = Quiz.objects.filter(
+        Q(theme1=theme) | Q(theme2=theme)).values_list('id', flat=True)
+    users = UserQuiz.objects.filter(quiz__in=quizzes_by_theme)
+    html = render_to_string('quizApps/classement_table.html', {'users': users})
+
+    return HttpResponse(html)
