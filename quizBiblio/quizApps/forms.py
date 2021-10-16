@@ -8,8 +8,9 @@ from .models import *
 
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(label=_('Email address'), 
-        widget=forms.TextInput(attrs={'autofocus': True}))
+    email = forms.EmailField(label=_('Email address'),
+                             widget=forms.TextInput(attrs={'autofocus': True}))
+
     class Meta:
         model = get_user_model()
         fields = ('email', 'username', 'password1', 'password2')

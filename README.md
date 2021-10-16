@@ -10,10 +10,10 @@ Made with Django, MySQL & TailwindCSS.
 
 ## Installation
 
-Npm is required.
+Npm & MySQL are required.
 
 Run the following commands (for windows) :
-```console
+```bash
 $ git clone https://github.com/FabienH27/quizBiblio.git
 $ cd quizBiblio
 $ python -m venv venv
@@ -25,7 +25,9 @@ $ cd quizBiblio
 - Generate a new key : `python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'` 
 - Copy this new key to the SECRET_KEY var in the `.env` file.
 - Add your database credentials to this file.
-```py
+```python
 $ python manage.py migrate
 $ python manage.py runserver
 ```
+
+> If on VsCode, TailwindCSS IntelliSense doesn't work, install it with npm : npm install -D tailwindcss@latest postcss@latest autoprefixer@latest

@@ -10,9 +10,7 @@
   "author": "FabienH27",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.2.6",
-    "postcss-cli": "^8.3.1",
-    "tailwindcss": "^2.2.4"
+    "postcss-cli": "^8.3.1"
   },
   "repository": {
     "type": "git",
@@ -22,5 +20,9 @@
     "url": "https://github.com/FabienH27/quizBiblio/issues"
   },
   "homepage": "https://github.com/FabienH27/quizBiblio#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "autoprefixer": "^10.3.7",
+    "postcss": "^8.3.9",
+    "tailwindcss": "^2.2.17"
+  }
 }
