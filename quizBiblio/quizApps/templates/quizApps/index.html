@@ -28,7 +28,7 @@
                     <span class="ml-8">{% if quiz.theme2 %}{{quiz.theme2}}{% endif %}</span>
                 </h2>
                 <div class="flex 3xl:flex-col text-lg font-semibold font-title 3xl:text-3xl justify-center text-white">
-                    <p class="text-teal-500 w-32 3xl:w-auto">{{quiz.question_set.count}} Questions</p>
+                    <p class="text-teal-500 w-32 3xl:w-auto">{{quiz.question_set.count}} Question {% if quiz.question_set.count > 1 %}s{% endif %}</p>
                     <p class="w-32 3xl:w-auto">Par {{quiz.userquiz_set.first}}</p>
                 </div>
             </a> {% empty %}

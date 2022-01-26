@@ -154,8 +154,14 @@ def rankings_response(request):
     theme_id = request.GET.get('id')
     theme = Theme.objects.get(id=theme_id)
     quizzes_by_theme = Quiz.objects.filter(
-        Q(theme1=theme) | Q(theme2=theme)).values_list('id', flat=True)
-    users = UserQuiz.objects.filter(quiz__in=quizzes_by_theme)
+        Q(theme1=theme)).values_list('id', flat=True)
+
+    users = UserQuiz.objects.filter(quiz__in=quizzes_by_theme).order_by('-score')
+
     html = render_to_string('quizApps/classement_table.html', {'users': users})
 
     return HttpResponse(html)
+
+
+def contact_response(request):
+    return render(request, 'quizApps/contact.html.')
