@@ -5,72 +5,72 @@
 
 .file,
 .fileProposition {
-  opacity: 0;
-  width: 0.1px;
-  height: 0.1px;
-  position: absolute;
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
 }
 
 /* Style the buttons inside the tab */
 .tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-  @apply 3xl:text-5xl;
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    @apply text-5xl;
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  @apply text-teal-200;
+    @apply text-teal-200;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  @apply font-bold;
-  @apply text-teal-500;
+    @apply font-bold;
+    @apply text-teal-500;
 }
 
 /* Style the tab content */
 .tabcontent {
-  display: none;
+    display: none;
 }
 
 .card {
-  transition: transform 0.1s ease-in-out;
+    transition: transform 0.1s ease-in-out;
 }
 
 .card:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .proposition {
-  @apply hidden;
+    @apply hidden;
 }
 
 .proposition:checked + label {
-  @apply border-teal-500 border-4 text-teal-500;
+    @apply border-teal-500 border-4 text-teal-500;
 }
 
 #start > svg {
-  transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
 }
 
 #start:hover > svg {
-  transform: translate(5px, 0);
+    transform: translate(5px, 0);
 }
 
 form {
-  transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 textarea {
-  overflow: hidden;
-  resize: none;
+    overflow: hidden;
+    resize: none;
 }
 
 input:focus,

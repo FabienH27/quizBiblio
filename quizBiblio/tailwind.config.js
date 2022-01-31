@@ -1,19 +1,14 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-    purge: {
-        enabled: true,
-        preserveHtmlElements: false,
-        content: ["./quizApps/templates/quizApps/*.html"],
-    },
-    darkMode: false, // or 'media' or 'class'
+    content: ["./quizApps/templates/quizApps/*.html"],
     theme: {
         colors: {
             transparent: "transparent",
             current: "currentColor",
             white: colors.white,
             teal: colors.teal,
-            gray: colors.gray,
+            gray: colors.slate,
             red: colors.red,
         },
         fontFamily: {
