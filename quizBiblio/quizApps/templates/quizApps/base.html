@@ -18,7 +18,7 @@
     <header class="pt-5">
         <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-around md:flex-row md:px-6">
             <div class="flex flex-row items-center justify-between">
-                <a href="{% url 'index' %}" class="text-white font-title font-bold text-3xl 3xl:text-6xl 3xl:m-8 justify-end">Quiz<span class="text-teal-500">Biblio</span></a>
+                <a href="{% url 'index' %}" class="text-white font-title font-bold text-3xl justify-end">Quiz<span class="text-teal-500">Biblio</span></a>
                 <button class="md:hidden rounded-lg focus:outline-none focus:shadow-outline text-white" @click="open = !open" aria-label="menuToggle">
                     <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
                       <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -30,7 +30,7 @@
                 <a href="{% url 'classement' %}" class="hover:text-teal-500 mx-5 text-white">Classement</a>
                 {% if not request.user.is_authenticated %}
                 <a href="{% url 'login' %}" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold rounded-lg hover:text-white">Se connecter</a>
-                <a href="{% url 'register' %}" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md 3xl:px-8 3xl:py-5 hover:bg-white hover:text-teal-500">S'inscrire</a>
+                <a href="{% url 'register' %}" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md hover:bg-white hover:text-teal-500">S'inscrire</a>
                 {% else %}
                 <div class="text-white px-5 border-r-2 border-white flex">
                     {% if 'quizApps.add_userquiz' in perms %}
@@ -50,15 +50,15 @@
     {% block footer %}
     <footer class="lg:flex justify-around mx-auto my-5">
         <div class="text-white font-title self-center text-center">
-            <h1 class="font-semibold text-3xl 3xl:text-6xl">QuizBiblio</h1>
-            <p class="text-lg text-gray-400 3xl:text-4xl max-w-lg mx-auto 3xl:max-w-5xl">Testez vos connaissances littéraires, cinématographiques et musicales.</p>
-            <p class="3xl:text-4xl">© 2021 - Fabien Hannon </p>
+            <h1 class="font-semibold text-3xl ">QuizBiblio</h1>
+            <p class="text-lg text-gray-400 max-w-lg mx-auto ">Testez vos connaissances littéraires, cinématographiques et musicales.</p>
+            <p>© 2021 - Fabien Hannon </p>
         </div>
         <!--<form class="text-white font-title text-center mt-10 md:mt-0">
-            <h1 class="font-semibold text-2xl 3xl:text-5xl">Un problème, une suggestion ?</h1>
+            <h1 class="font-semibold text-2xl">Un problème, une suggestion ?</h1>
             <a href="{% url 'contact' %}" class="border-white border-2 flex max-w-max
-            focus:outline-none text-center mx-auto px-5 py-2 my-5 3xl:text-4xl items-center text-white hover:bg-white hover:text-gray-800">Contact
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 3xl:h-16 3xl:w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            focus:outline-none text-center mx-auto px-5 py-2 my-5 3 items-center text-white hover:bg-white hover:text-gray-800">Contact
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg></a>
         </form>-->

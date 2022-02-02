@@ -4,16 +4,16 @@
 {% block body %}
 <section class="mx-auto mt-10 max-w-3xl justify-center items-center">
     {% if quiz.image %}
-    <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-56 3xl:w-64" />
+    <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-56" />
     {% endif %}
     <div class="ml-8 text-center max-w-2xl">
-        <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">{{ quiz.title }}</h1>
+        <h1 class="text-white text-5xl mt-5 font-bold">{{ quiz.title }}</h1>
         <div class="flex mt-2 justify-center">
-            <h2 class="text-gray-400 mt-2 3xl:text-xl">Par {{quiz.userquiz_set.first}}</h2>
-            <h3 class="text-gray-400 mt-2 3xl:text-xl ml-10">&#x1F516; {{quiz.theme1}} {% if quiz.theme2 %} -
+            <h2 class="text-gray-400 mt-2">Par {{quiz.userquiz_set.first}}</h2>
+            <h3 class="text-gray-400 mt-2">&#x1F516; {{quiz.theme1}} {% if quiz.theme2 %} -
                 {{quiz.theme2}}{% endif %} </h3>
         </div>
-        <p class="text-white mt-2 3xl:text-2xl">{{quiz.description}}</p>
+        <p class="text-white mt-2">{{quiz.description}}</p>
         {% if validList %}
         <p class="text-white mt-2 text-2xl">&#x1F3C6; <span id="score">{{score}}</span> points</p>
         <p class="text-white mt-2 text-md">Vous avez répondu correct à {{rightAnswers}} sur {{questions.items|length}} questions</p>
@@ -23,8 +23,8 @@
 
 {% if not validList %}
 <button id="start"
-    class="flex items-center text-teal-500 mx-auto text-3xl 3xl:text-6xl mt-10 focus:outline-none hover:text-white">Commencer
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1 3xl:h-16 3xl:w-16" viewBox="0 0 20 20"
+    class="flex items-center text-teal-500 mx-auto text-3xl  mt-10 focus:outline-none hover:text-white">Commencer
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1" viewBox="0 0 20 20"
         fill="currentColor">
         <path fill-rule="evenodd"
             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"
@@ -41,24 +41,24 @@
     {% csrf_token %}
     {% for question, props in questions.items %}
     <section
-        class="max-w-2xl 3xl:max-w-4xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 3xl:px-14 3xl:py-8 rounded-lg font-title shadow-lg">
-        <h2 class="font-semibold 3xl:text-2xl">Question {{forloop.counter}}</h2>
+        class="max-w-2xl mx-auto mt-5 bg-gray-700 text-white px-8 py-5 rounded-lg font-title shadow-lg">
+        <h2 class="font-semibold ">Question {{forloop.counter}}</h2>
         {% if question.image %}
-        <img src="{{MEDIA_URL}}{{question.image.url}}" alt="{{question.title}} image" class="mx-auto w-48 3xl:w-64" />
+        <img src="{{MEDIA_URL}}{{question.image.url}}" alt="{{question.title}} image" class="mx-auto w-48"/>
         {% endif %}
-        <h1 class="text-teal-500 text-4xl mt-2 font-bold 3xl:text-6xl">{{question}}</h1>
+        <h1 class="text-teal-500 text-4xl mt-2 font-bold ">{{question}}</h1>
         {% if validList %}
         <div class="hidden" id="infos-{{question.id}}">
-            <p id="message-{{question.id}}" class="text-teal-500 mt-2 font-bold 3xl:text-2xl">Bonne réponse !</p>
-            <p id="desc" class="font-display 3xl:text-xl">{{question.explication}}</p>
+            <p id="message-{{question.id}}" class="text-teal-500 mt-2 font-bold ">Bonne réponse !</p>
+            <p id="desc" class="font-display">{{question.explication}}</p>
         </div>
         {% endif %}
     </section>
     <section
-        class="max-w-screen-md 3xl:max-w-3xl mx-auto my-5 text-white font-display flex-wrap flex justify-evenly items-center">
+        class="max-w-screen-md mx-auto my-5 text-white font-display flex-wrap flex justify-evenly items-center">
         {% for prop in props %}
         {% if validList %}
-        <p class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 "
+        <p class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg"
             id="{{prop.id}}">
             {% if prop.image %}
             <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" width="200px" />
@@ -71,7 +71,7 @@
             <input class="proposition" type="checkbox" name="question-{{question.id}}" value="{{prop.id}}"
                 id="{{prop.id}}">
             <label
-                class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg 3xl:text-3xl 3xl:py-8 cursor-pointer"
+                class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg cursor-pointer"
                 for="{{prop.id}}">
                 {% if prop.image %}
                 <img src="{{MEDIA_URL}}{{prop.image.url}}" alt="image-prop-{{prop.id}}" width="200px" />

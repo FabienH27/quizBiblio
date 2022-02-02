@@ -1,4 +1,6 @@
-# QuizBiblio application
+<p align="center" >
+  <img src="quizBiblio/quizApps/static/admin/Quiz-biblio-Dark.png" />
+</p>
 
 ![Heart](https://forthebadge.com/images/badges/built-with-love.svg) ![python](https://forthebadge.com/images/badges/made-with-python.svg) ![JS](https://forthebadge.com/images/badges/made-with-javascript.svg)
 
