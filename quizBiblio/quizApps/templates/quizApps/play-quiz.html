@@ -7,7 +7,7 @@
     <img src="{{MEDIA_URL}}{{quiz.image.url}}" alt="{{quiz.title}} image" class="mx-auto w-56 3xl:w-64" />
     {% endif %}
     <div class="ml-8 text-center max-w-2xl">
-        <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">Les meilleurs répliques - 1</h1>
+        <h1 class="text-white text-5xl mt-5 font-bold 3xl:text-7xl">{{ quiz.title }}</h1>
         <div class="flex mt-2 justify-center">
             <h2 class="text-gray-400 mt-2 3xl:text-xl">Par {{quiz.userquiz_set.first}}</h2>
             <h3 class="text-gray-400 mt-2 3xl:text-xl ml-10">&#x1F516; {{quiz.theme1}} {% if quiz.theme2 %} -

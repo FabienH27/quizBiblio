@@ -1,15 +1,15 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth import views as auth_views
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from django.db.models import Q
+from django.db.models import Q, Sum
 import random
 from django.template.loader import render_to_string
 
-from .models import Quiz, Question, UserQuiz, Proposition, Theme
-from .forms import LoginForm, RegisterForm, ContactForm
-from django.core.mail import send_mail
+from .models import CustomUser, Quiz, Question, UserQuiz, Proposition, Theme
+from .forms import LoginForm, RegisterForm
 
 
 def index(request):
@@ -146,8 +146,7 @@ def play_quiz(request, quiz_id):
 
 def rankings(request):
     themes = Theme.objects.all()
-    users = UserQuiz.objects.all().order_by('score')
-    return render(request, 'quizApps/classement.html', {"themes": themes, "users": users})
+    return render(request, 'quizApps/classement.html', {"themes": themes})
 
 
 def rankings_response(request):
@@ -156,9 +155,16 @@ def rankings_response(request):
     quizzes_by_theme = Quiz.objects.filter(
         Q(theme1=theme)).values_list('id', flat=True)
 
-    users = UserQuiz.objects.filter(quiz__in=quizzes_by_theme).order_by('-score')
+    users = UserQuiz.objects.filter(quiz__in=quizzes_by_theme)
 
-    html = render_to_string('quizApps/classement_table.html', {'users': users})
+    result = users.values('utilisateur').annotate(total_score=Sum('score'))
+    scores = []
+    for res in result:
+        res_dict = dict(res)
+        user = CustomUser.objects.get(id=int(res_dict['utilisateur']))
+        scores.append({'username': user.username ,'score' : res_dict['total_score']})
+
+    html = render_to_string('quizApps/classement_table.html', {'users': scores})
 
     return HttpResponse(html)
 
