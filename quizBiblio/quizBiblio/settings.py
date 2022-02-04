@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'nested_admin',
-    'django_cleanup',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -111,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'quizApps.CustomUser'
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -136,6 +137,14 @@ LOGIN_URL = '/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'quizApps.CustomUser'
-AUTHENTICATION_BACKENDS = ['quizApps.backends.EmailBackend'] # new
-LOGIN_REDIRECT_URL = '/'
+# AUTH_USER_MODEL = 'quizApps.CustomUser'
+# AUTHENTICATION_BACKENDS = ['quizApps.backends.EmailBackend'] # new
+# LOGIN_REDIRECT_URL = '/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

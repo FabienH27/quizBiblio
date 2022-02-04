@@ -1,8 +1,4 @@
-<p align="center" >
-  <img src="quizBiblio/quizApps/static/admin/Quiz-biblio-Dark.png" />
-</p>
-
-![Heart](https://forthebadge.com/images/badges/built-with-love.svg) ![python](https://forthebadge.com/images/badges/made-with-python.svg) ![JS](https://forthebadge.com/images/badges/made-with-javascript.svg)
+# **⚠️Migrating to Django Rest Framework ⚠️**
 
 A quiz app to improve knowledge on Literature and Cinema
 
@@ -12,7 +8,7 @@ Made with Django, MySQL & TailwindCSS.
 
 ## Installation
 
-Npm & MySQL are required.
+MySQL is required.
 
 Run the following commands (for windows) :
 ```bash

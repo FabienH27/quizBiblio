@@ -1,21 +1,20 @@
+from django.conf import settings
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
+
+from rest_framework import serializers
 
 # Create your models here.
-
-
 class Theme(models.Model):
     name = models.CharField(max_length=40)
 
     def __str__(self):
         return self.name
 
-
 class CustomUser(AbstractUser):
-    email = models.EmailField(help_text='Requis. Saisir une adresse email valide.', unique=True)
-
+    email = models.EmailField(help_text=_('Required. Enter a valid email address.'), unique=True)
+    
 
 class Quiz(models.Model):
     title = models.CharField(_('titre'), max_length=60, unique=True, error_messages={
@@ -25,19 +24,26 @@ class Quiz(models.Model):
     theme2 = models.ForeignKey(Theme,verbose_name='2nd thème (Facultatif)', on_delete=models.CASCADE, blank=True, null=True, related_name="second_theme")
     image = models.ImageField(_('image'), blank=True,
                               null=True, upload_to='uploads/')
-    utilisateur = models.ManyToManyField(
-        get_user_model(), through='UserQuiz', related_name='quiz', blank=False)
+    user = models.ManyToManyField(
+        settings.AUTH_USER_MODEL , through='UserQuiz', related_name='quiz', blank=False)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        print(self)
+
+        if(self.theme2 == self.theme1):
+            raise serializers.ValidationError("Themes cannot be the same")
+        return super().save(*args, **kwargs)
 
 
 class UserQuiz(models.Model):
     score = models.IntegerField(_('score'), default=0)
     time = models.IntegerField(_('time'), default=0)
     is_creator = models.BooleanField(default=True)
-    utilisateur = models.ForeignKey(
-        get_user_model(), on_delete=models.CASCADE, editable=False)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, editable=False)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     def __str__(self):
         return self.utilisateur.username
