@@ -2,6 +2,8 @@
 
 A quiz app to improve knowledge on Literature and Cinema
 
+Server-side version of the app
+
 Live preview : https://quizbiblio.herokuapp.com/
 
 Made with Django, MySQL & TailwindCSS.
