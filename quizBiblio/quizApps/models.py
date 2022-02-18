@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
@@ -11,10 +10,6 @@ class Theme(models.Model):
 
     def __str__(self):
         return self.name
-
-class CustomUser(AbstractUser):
-    email = models.EmailField(help_text=_('Required. Enter a valid email address.'), unique=True)
-    
 
 class Quiz(models.Model):
     title = models.CharField(_('titre'), max_length=60, unique=True, error_messages={

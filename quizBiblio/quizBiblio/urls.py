@@ -33,11 +33,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from quizApps.views import QuizViewSet, ThemeViewSet, UserQuizViewSet, UserViewSet, GroupViewSet
+from quizApps.views import QuizViewSet, ThemeViewSet, UserQuizViewSet, GroupViewSet
 from quizApps.views import PropositionViewSet, QuestionViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
+# router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
 router.register(r'themes', ThemeViewSet)
 router.register(r'quizzes', QuizViewSet)
@@ -48,5 +48,6 @@ router.register(r'propositions',PropositionViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/', include(('auth_quizBiblio.routers', 'auth_quizBiblio'), namespace='auth-api')),
 ]
