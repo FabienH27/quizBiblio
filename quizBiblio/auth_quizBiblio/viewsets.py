@@ -9,6 +9,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework.exceptions import APIException, ValidationError
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -18,13 +19,12 @@ class UserViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.OrderingFilter]
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
-            return User.objects.all()
+        return User.objects.all()
 
     def get_object(self):
         lookup_field_value = self.kwargs[self.lookup_field]
 
-        obj = User.objects.get(lookup_field_value)
+        obj = User.objects.get(id=lookup_field_value)
         self.check_object_permissions(self.request, obj)
 
         return obj
@@ -55,6 +55,10 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         serializer = self.get_serializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
+
+        if(User.objects.filter(email = serializer.validated_data['email']).exists()):
+            raise ValidationError({"email" : "Cet email est déjà pris"},409)
+
         user = serializer.save()
         refresh = RefreshToken.for_user(user)
         res = {

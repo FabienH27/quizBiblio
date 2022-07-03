@@ -8,38 +8,39 @@ from .models import Proposition, Question
 
 User = get_user_model()
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        fields = ['username', 'email', 'groups']
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        fields = ['name']
 
-class ThemeSerializer(serializers.HyperlinkedModelSerializer):
+class ThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
-        fields = ['url','name']
+        fields = ['name']
 
-class QuizSerializer(serializers.HyperlinkedModelSerializer):
+class QuizSerializer(serializers.ModelSerializer):
+    theme1 = serializers.RelatedField(source='Theme', read_only=True)
     class Meta:
         model = Quiz
-        fields = ['url', 'title','description','theme1','theme2','image','user']
+        fields = ['title','description','theme1','theme2','image','user']
 
-class UserQuizSerializer(serializers.HyperlinkedModelSerializer):
+class UserQuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserQuiz
-        fields = ['url','score','time','is_creator','user','quiz']
+        fields = ['score','time','is_creator','user','quiz']
 
-class QuestionSerializer(serializers.HyperlinkedModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ['url','question','image', 'explication','quiz']
+        fields = ['question','image', 'explication','quiz']
 
 class PropositionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Proposition
-        fields = ['url','propositionText','image','question','is_correct']
+        fields = ['propositionText','image','question','is_correct']
