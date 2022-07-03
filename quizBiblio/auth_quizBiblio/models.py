@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.forms import ValidationError
 
 class UserManager(BaseUserManager):
 
@@ -39,7 +40,7 @@ class UserManager(BaseUserManager):
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(db_index=True, max_length=255, unique=True)
-    email = models.EmailField(db_index=True, unique=True,  null=True, blank=True)
+    email = models.EmailField(db_index=True, unique=True, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -50,3 +51,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.email}"
+
+    class Meta:
+        ordering = ['id']

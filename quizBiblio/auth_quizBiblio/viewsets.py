@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.exceptions import APIException, ValidationError
+import django.contrib.auth.password_validation as validators
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -59,6 +60,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         if(User.objects.filter(email = serializer.validated_data['email']).exists()):
             raise ValidationError({"email" : "Cet email est déjà pris"},409)
 
+        # serializer.validate(request.data)
         user = serializer.save()
         refresh = RefreshToken.for_user(user)
         res = {

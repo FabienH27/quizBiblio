@@ -13,7 +13,6 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'is_active', 'is_superuser']
@@ -40,6 +39,7 @@ class LoginSerializer(TokenObtainPairSerializer):
 class RegisterSerializer(UserSerializer):
     password = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)
     email = serializers.EmailField(required=True, write_only=True, max_length=128)
+    username = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)
 
     class Meta:
         model = User
@@ -53,15 +53,14 @@ class RegisterSerializer(UserSerializer):
         return user
 
     def validate(self, attrs):
-        user = User(**attrs)
-
         password = attrs.get('password')
+
         errors = dict()
         try:
             validators.validate_password(password=password, user=User)
         except ValidationError as e:
             errors['password'] = list(e.messages)
-        
+
         if errors:
             raise serializers.ValidationError(errors)
         
