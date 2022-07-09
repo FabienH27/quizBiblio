@@ -1,3 +1,4 @@
+from pickletools import read_long1
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 
@@ -13,22 +14,21 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'email', 'groups']
 
-
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ['name']
 
+class QuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Quiz
+        fields = ['title','description','first_theme', 'second_theme']
+        
+
 class ThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
         fields = ['name']
-
-class QuizSerializer(serializers.ModelSerializer):
-    theme1 = serializers.RelatedField(source='Theme', read_only=True)
-    class Meta:
-        model = Quiz
-        fields = ['title','description','theme1','theme2','image','user']
 
 class UserQuizSerializer(serializers.ModelSerializer):
     class Meta:

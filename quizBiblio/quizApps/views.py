@@ -1,8 +1,15 @@
+from http import HTTPStatus
+import imp
+from re import I
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+from django.forms import ValidationError
+from django.http import HttpResponse, JsonResponse
 
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.exceptions import APIException
 
 from .models import Question, Quiz, Theme, UserQuiz, Proposition
 from .serializers import PropositionSerializer, QuestionSerializer, QuizSerializer, ThemeSerializer, UserQuizSerializer, UserSerializer, GroupSerializer
@@ -26,6 +33,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
 class ThemeViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows themes to be viewed or edited.
@@ -34,6 +42,17 @@ class ThemeViewSet(viewsets.ModelViewSet):
     serializer_class = ThemeSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def create(self, request, *args, **kwargs):
+        serializer = ThemeSerializer(data = request.data)
+        serializer.is_valid(raise_exception=True)
+        theme = serializer.validated_data['name']
+        try:
+            Theme.objects.get(name=theme)
+            return JsonResponse({"error": "Ce thème existe déjà."})
+        except Theme.DoesNotExist:
+            Theme.objects.create(name=theme)
+            return JsonResponse({"theme": theme})
+
 class QuizViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows quizzes to be viewed or edited.
@@ -41,6 +60,13 @@ class QuizViewSet(viewsets.ModelViewSet):
     queryset = Quiz.objects.all().order_by('title')
     serializer_class = QuizSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        serializer = QuizSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        if(request.data['first_theme'] == request.data['second_theme']):
+            return JsonResponse({"error": "First and second themes can't be equals"}, status=HTTPStatus.BAD_REQUEST)
+        return super().create(request, *args, **kwargs)
 
 class UserQuizViewSet(viewsets.ModelViewSet):
     """

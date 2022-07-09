@@ -15,8 +15,8 @@ class Quiz(models.Model):
     title = models.CharField(_('titre'), max_length=60, unique=True, error_messages={
                              'unique': 'Ce titre est déjà utilisé.'})
     description = models.TextField(_('description'), blank=True, null=True)
-    theme1 = models.ForeignKey(Theme,verbose_name='1er thème', on_delete=models.CASCADE, related_name="first_theme")
-    theme2 = models.ForeignKey(Theme,verbose_name='2nd thème (Facultatif)', on_delete=models.CASCADE, blank=True, null=True, related_name="second_theme")
+    first_theme = models.ForeignKey(Theme,verbose_name='1er thème', on_delete=models.CASCADE, related_name="first_theme")
+    second_theme = models.ForeignKey(Theme,verbose_name='2nd thème (Facultatif)', on_delete=models.CASCADE, blank=True, null=True, related_name="second_theme")
     image = models.ImageField(_('image'), blank=True,
                               null=True, upload_to='uploads/')
     user = models.ManyToManyField(
@@ -24,13 +24,6 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        print(self)
-
-        if(self.theme2 == self.theme1):
-            raise serializers.ValidationError("Themes cannot be the same")
-        return super().save(*args, **kwargs)
 
 
 class UserQuiz(models.Model):

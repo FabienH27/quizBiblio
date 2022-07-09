@@ -8,6 +8,7 @@ from rest_framework_simplejwt.settings import api_settings
 from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import django.contrib.auth.password_validation as validators
+from django.utils.translation import gettext as _
 
 from .models import User
 
@@ -20,6 +21,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(TokenObtainPairSerializer):
+
+    default_error_messages = {
+        'no_active_account': _("Aucun compte trouvé. Veuillez vous assurer d'avoir bien saisi email et mot de passe.")
+    }
 
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -39,7 +44,6 @@ class LoginSerializer(TokenObtainPairSerializer):
 class RegisterSerializer(UserSerializer):
     password = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)
     email = serializers.EmailField(required=True, write_only=True, max_length=128)
-    username = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)
 
     class Meta:
         model = User
@@ -60,6 +64,8 @@ class RegisterSerializer(UserSerializer):
             validators.validate_password(password=password, user=User)
         except ValidationError as e:
             errors['password'] = list(e.messages)
+        
+        print(errors)
 
         if errors:
             raise serializers.ValidationError(errors)

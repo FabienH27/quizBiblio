@@ -58,7 +58,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
         serializer.is_valid(raise_exception=True)
 
         if(User.objects.filter(email = serializer.validated_data['email']).exists()):
-            raise ValidationError({"email" : "Cet email est déjà pris"},409)
+            raise ValidationError({"email" : "Cette adresse email est déjà prise"},409)
 
         # serializer.validate(request.data)
         user = serializer.save()

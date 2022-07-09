@@ -29,5 +29,3 @@ $ cd quizBiblio
 $ python manage.py migrate
 $ python manage.py runserver
 ```
-
-> If on VsCode, TailwindCSS IntelliSense doesn't work, install it with npm : npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
