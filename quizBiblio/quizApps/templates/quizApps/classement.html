@@ -2,7 +2,7 @@
 <div class="overflow-x-auto">
     <div class="min-w-screen flex justify-center bg-gray-800 font-sans overflow-hidden">
         <div class="max-w-screen-md lg:w-5/6">
-            <h1 class="text-center text-4xl text-white my-10">Classement par thème</h1>
+            <h1 class="text-center text-4xl text-white my-10">Ranking per theme</h1>
             <div class="flex justify-evenly flex-wrap">
                 {% for theme in themes %}
                 <button type="button" id="{{theme.id}}" onclick="callAjax($(this));return false;" class="text-gray-300 focus:bg-teal-500 focus:text-gray-900 shadow-lg bg-gray-900 px-10 font-semibold py-2 m-2 rounded-full">{{theme}}</button> 
@@ -11,9 +11,9 @@
             <div class="bg-gray-900 shadow-md rounded my-6" id="table">
             </div>
             {% if themes %}
-            <p class="text-gray-400 text-center" id="message">Choisissez un thème</p>
+            <p class="text-gray-400 text-center" id="message">Select a theme</p>
             {% else %}
-            <p class="text-gray-400 text-center">Aucun thème disponible.</p>
+            <p class="text-gray-400 text-center">No theme available.</p>
             {% endif %}
         </div>
     </div>

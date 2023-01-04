@@ -9,21 +9,21 @@
     <div class="ml-8 text-center max-w-2xl">
         <h1 class="text-white text-5xl mt-5 font-bold">{{ quiz.title }}</h1>
         <div class="flex mt-2 justify-center">
-            <h2 class="text-gray-400 mt-2">Par {{quiz.userquiz_set.first}}</h2>
+            <h2 class="text-gray-400 mt-2">By {{quiz.userquiz_set.first}}</h2>
             <h3 class="text-gray-400 mt-2">&#x1F516; {{quiz.theme1}} {% if quiz.theme2 %} -
                 {{quiz.theme2}}{% endif %} </h3>
         </div>
         <p class="text-white mt-2">{{quiz.description}}</p>
         {% if validList %}
         <p class="text-white mt-2 text-2xl">&#x1F3C6; <span id="score">{{score}}</span> points</p>
-        <p class="text-white mt-2 text-md">Vous avez répondu correct à {{rightAnswers}} sur {{questions.items|length}} questions</p>
+        <p class="text-white mt-2 text-md">You correctly answered {{rightAnswers}} out of {{questions.items|length}} questions</p>
         {% endif %}
     </div>
 </section>
 
 {% if not validList %}
 <button id="start"
-    class="flex items-center text-teal-500 mx-auto text-3xl  mt-10 focus:outline-none hover:text-white">Commencer
+    class="flex items-center text-teal-500 mx-auto text-3xl  mt-10 focus:outline-none hover:text-white">Start now
     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2 mt-1" viewBox="0 0 20 20"
         fill="currentColor">
         <path fill-rule="evenodd"
@@ -49,13 +49,13 @@
         <h1 class="text-teal-500 text-4xl mt-2 font-bold ">{{question}}</h1>
         {% if validList %}
         <div class="hidden" id="infos-{{question.id}}">
-            <p id="message-{{question.id}}" class="text-teal-500 mt-2 font-bold ">Bonne réponse !</p>
+            <p id="message-{{question.id}}" class="text-teal-500 mt-2 font-bold ">Correct !</p>
             <p id="desc" class="font-display">{{question.explication}}</p>
         </div>
         {% endif %}
     </section>
     <section
-        class="max-w-screen-md mx-auto my-5 text-white font-display flex-wrap flex justify-evenly items-center">
+        class="max-w-2xl mx-auto my-5 text-white font-display flex-wrap flex justify-evenly items-center">
         {% for prop in props %}
         {% if validList %}
         <p class="bg-gray-700 rounded-lg px-8 py-4 my-5 flex justify-center shadow-lg"
@@ -89,7 +89,7 @@
         class="mx-auto block bg-teal-500 px-8 py-4 text-white font-display font-bold rounded text-xl cursor-pointer hover:bg-white hover:text-teal-500">
     {% else %}
     <a href="{% url 'index' %}" class="mx-auto w-max block text-center bg-teal-500 px-8 py-4 text-white font-display font-bold rounded text-xl 
-        cursor-pointer hover:bg-white hover:text-teal-500">Menu principal</a>
+        cursor-pointer hover:bg-white hover:text-teal-500">Main menu</a>
     {% endif %}
 
     <input type="hidden" name="time" id="time" value="" />
@@ -142,10 +142,10 @@
             });
             message = $("#message-" + key.replace('question', ''));
             if (test == true) {
-                message.text("Bonne réponse \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
+                message.text("Correct \u{1F60E}").removeClass("text-red-500").addClass("text-teal-500");
 
             } else {
-                message.text("Mauvaise réponse \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
+                message.text("Wrong \u{1F625}").removeClass("text-teal-500").addClass("text-red-500");
             }
         }
 

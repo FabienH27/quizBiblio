@@ -2,11 +2,11 @@
 <section class="flex lg:h-screen lg:max-w-6xl items-center mx-auto">
     <section class="lg:flex mx-auto">
         <article class="max-w-lg  mx-auto mt-8 text-center lg:text-left">
-            <h1 class="text-white text-4xl lg:text-5xl font-bold text-center lg:text-left">Testez votre culture <span class="text-teal-500">littéraire, cinématographique</span> et <span class="text-teal-500">musicale</span> !</h1>
+            <h1 class="text-white text-4xl lg:text-5xl font-bold text-center lg:text-left"> Test your <span class="text-teal-500">literary, cinematographic </span> and <span class="text-teal-500">musical </span> culture !</h1>
             <p class="font-display text-white font-normal text-sm text-center lg:text-left max-w-md my-8">
-                Développez vos connaissances sur différents thèmes et testez votre culture générale</p>
+            Develop your knowledge on different topics and test your general knowledge</p>
             <a href="#button-all-quiz" class="text-gray-800 bg-teal-500 px-8 py-3
-                    rounded-md hover:bg-white hover:text-teal-500 ">Commencer un quiz</a>
+                    rounded-md hover:bg-white hover:text-teal-500 ">Start a quiz</a>
         </article>
         <aside class="mt-20 lg:mt-0 mx-auto lg:ml-40">
             <img src="{% static 'quizApps/images/demo2.png' %}" alt="app demo" width="450px">
@@ -16,7 +16,7 @@
 
 <section class="bg-gray-700 pt-8 pb-52">
     <div class="container mx-auto">
-        <h1 class="text-white text-4xl text-center">Jouez à de nombreux quiz !</h1>
+        <h1 class="text-white text-4xl text-center">Play many quizzes !</h1>
         <article class="font-display p-2 mt-8 mx-auto flex justify-center flex-wrap" id="button-all-quiz">
             {% for quiz in quizzes %}
             <a href="{% url 'play-quiz' quiz.id %}" class="bg-gray-800 text-center w-3/12 p-5 mx-auto my-5 rounded-3xl card">
@@ -28,11 +28,11 @@
                     <span class="ml-8">{% if quiz.theme2 %}{{quiz.theme2}}{% endif %}</span>
                 </h2>
                 <div class="flex  text-lg font-semibold font-title justify-center text-white">
-                    <p class="text-teal-500 w-32">{{quiz.question_set.count}} Question {% if quiz.question_set.count > 1 %}s{% endif %}</p>
-                    <p class="w-32">Par {{quiz.userquiz_set.first}}</p>
+                    <p class="text-teal-500 w-32">{{quiz.question_set.count}} Question{% if quiz.question_set.count > 1 %}s{% endif %}</p>
+                    <p class="w-32">By {{quiz.userquiz_set.first}}</p>
                 </div>
             </a> {% empty %}
-            <p class="text-white">Aucun quiz disponible.</p>
+            <p class="text-white">No quiz available.</p>
             {% endfor %}
         </article>
     </div>

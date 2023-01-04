@@ -27,18 +27,18 @@
                 </button>
             </div>
             <div :class="{'flex': open, 'hidden': !open}"  class=" flex-grow pb-4 md:pb-0 hidden md:flex justify-center md:justify-end md:flex-row items-center">
-                <a href="{% url 'classement' %}" class="hover:text-teal-500 mx-5 text-white">Classement</a>
+                <a href="{% url 'classement' %}" class="hover:text-teal-500 mx-5 text-white">Ranking</a>
                 {% if not request.user.is_authenticated %}
-                <a href="{% url 'login' %}" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold rounded-lg hover:text-white">Se connecter</a>
-                <a href="{% url 'register' %}" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md hover:bg-white hover:text-teal-500">S'inscrire</a>
+                <a href="{% url 'login' %}" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold rounded-lg hover:text-white">Log in</a>
+                <a href="{% url 'register' %}" class="text-white mx-2 bg-teal-500 px-5 py-2 rounded-md hover:bg-white hover:text-teal-500">Register</a>
                 {% else %}
                 <div class="text-white px-5 border-r-2 border-white flex">
                     {% if 'quizApps.add_userquiz' in perms %}
-                    <a href="{% url 'admin:index' %}" class="hover:text-teal-500">Créer un quiz</a>
+                    <a href="{% url 'admin:index' %}" class="hover:text-teal-500">Admin panel</a>
                     {% endif %}
                     <p class="ml-8">{{request.user}}</p>
                 </div>
-                <a href="{% url 'logout' %}" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold rounded-lg hover:text-white">Se déconnecter</a> 
+                <a href="{% url 'logout' %}" class="text-teal-500 mx-5 self-center text-center px-5 py-2 font-semibold rounded-lg hover:text-white">Log out</a> 
                 {% endif %}
             </div>
         </div>
@@ -51,17 +51,9 @@
     <footer class="lg:flex justify-around mx-auto my-5">
         <div class="text-white font-title self-center text-center">
             <h1 class="font-semibold text-3xl ">QuizBiblio</h1>
-            <p class="text-lg text-gray-400 max-w-lg mx-auto ">Testez vos connaissances littéraires, cinématographiques et musicales.</p>
+            <p class="text-lg text-gray-400 max-w-lg mx-auto ">Test your literary, cinematographic and musical culture.</p>
             <p>© 2021 - Fabien Hannon </p>
         </div>
-        <!--<form class="text-white font-title text-center mt-10 md:mt-0">
-            <h1 class="font-semibold text-2xl">Un problème, une suggestion ?</h1>
-            <a href="{% url 'contact' %}" class="border-white border-2 flex max-w-max
-            focus:outline-none text-center mx-auto px-5 py-2 my-5 3 items-center text-white hover:bg-white hover:text-gray-800">Contact
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg></a>
-        </form>-->
     </footer>
     {% endblock %}
 
